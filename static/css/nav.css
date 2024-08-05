@@ -1,0 +1,29 @@
+nav {
+    &.menu {
+        border-bottom: 1px solid var(--gray3);
+        display: flex;
+
+        >a {
+            padding: var(--size2);
+            position: relative;
+            background: var(--white);
+            border: 1px solid transparent;
+            color: var(--black);
+            border-radius: var(--size1) var(--size1) 0 0;
+
+
+            &.active {
+                border: 1px solid var(--gray3);
+
+                border-bottom: 1px solid var(--white);
+                top: 1px;
+                font-weight: 500;
+
+            }
+
+            &:hover {
+                background-color: var(--gray1);
+            }
+        }
+    }
+}

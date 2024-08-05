@@ -1,0 +1,30 @@
+table {
+  border-collapse: collapse;
+
+  th {
+    font-weight: 500;
+  }
+
+  th,
+  td {
+    padding: 0.25rem 0.25rem;
+
+
+    input:is([type=number], [type=text]) {
+      border: none;
+      outline: none;
+      text-align: inherit;
+      width: 100%;
+      color: inherit;
+      font-weight: 300;
+    }
+  }
+
+
+
+
+
+  &.bordered :is(td, th) {
+    border: 1px solid var(--gray30);
+  }
+}

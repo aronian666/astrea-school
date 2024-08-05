@@ -1,0 +1,83 @@
+:root {
+  --font-size: 16px;
+
+
+  /* Colors */
+  --primary: hsl(225, 90%, 50%);
+  --white: white;
+  --black: hsl(0, 0%, 0%);
+  --red: tomato;
+  --green: hsl(120, 71%, 37%);
+  --orange: hsl(35, 100%, 50%);
+  --blue: dodgerblue;
+
+
+
+  /* FI */
+  --fi0: 0.25;
+  --fi1: 0.5;
+  --fi2: 0.75;
+  --fi3: 1;
+  --fi4: 1.5;
+  --fi5: 2;
+
+
+  --gray5: color-mix(in oklab, var(--black) 5%, transparent);
+  --gray10: color-mix(in oklab, var(--black) 10%, transparent);
+  --gray20: color-mix(in oklab, var(--black) 20%, transparent);
+  --gray30: color-mix(in oklab, var(--black) 30%, transparent);
+  --gray40: color-mix(in oklab, var(--black) 40%, transparent);
+  --gray50: color-mix(in oklab, var(--black) 50%, transparent);
+  --gray60: color-mix(in oklab, var(--black) 60%, transparent);
+  --gray70: color-mix(in oklab, var(--black) 70%, transparent);
+  --gray80: color-mix(in oklab, var(--black) 80%, transparent);
+  --gray90: color-mix(in oklab, var(--black) 90%, transparent);
+
+
+  --color5: color-mix(in oklab, var(--color) 5%, transparent);
+  --color10: color-mix(in oklab, var(--color) 10%, transparent);
+  --color20: color-mix(in oklab, var(--color) 20%, transparent);
+  --color30: color-mix(in oklab, var(--color) 30%, transparent);
+  --color40: color-mix(in oklab, var(--color) 40%, transparent);
+  --color50: color-mix(in oklab, var(--color) 50%, transparent);
+  --color60: color-mix(in oklab, var(--color) 60%, transparent);
+  --color70: color-mix(in oklab, var(--color) 70%, transparent);
+  --color80: color-mix(in oklab, var(--color) 80%, transparent);
+  --color90: color-mix(in oklab, var(--color) 90%, transparent);
+
+
+  /* Sizes */
+  --size0: calc(var(--fi0) * 1rem);
+  --size1: calc(var(--fi1) * 1rem);
+  --size2: calc(var(--fi2) * 1rem);
+  --size3: calc(var(--fi3) * 1rem);
+  --size4: calc(var(--fi4) * 1rem);
+  --size5: calc(var(--fi5) * 1rem);
+  --normal: 0.875rem;
+  --small: 0.75rem;
+  --icon: 1.125rem;
+
+
+  --size0em: calc(var(--fi0) * 1em);
+  --size1em: calc(var(--fi1) * 1em);
+  --size2em: calc(var(--fi2) * 1em);
+  --size3em: calc(var(--fi3) * 1em);
+  --size4em: calc(var(--fi4) * 1em);
+  --size5em: calc(var(--fi5) * 1em);
+
+
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --black: white;
+    --white: rgb(35, 35, 35);
+    --primary: dodgerblue;
+  }
+}
+
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}

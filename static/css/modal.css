@@ -1,0 +1,57 @@
+dialog {
+  border: none;
+  margin: auto;
+  /* Overwrite global margin 0 */
+  min-width: 300px;
+  color: var(--black);
+  border-radius: var(--size2);
+  overflow: hidden;
+  transition: 0.3s;
+
+  &[open] {
+    display: var(--display);
+
+    @starting-style {
+      scale: 0;
+    }
+
+    &::backdrop {
+      animation: fade 0.5s;
+    }
+  }
+
+  &::backdrop {
+    background-color: #000000a0;
+  }
+
+  >article {
+    background: var(--white);
+    padding: clamp(var(--size3), 4vw, var(--size4));
+  }
+}
+
+
+
+[popover] {
+  inset-area: bottom;
+  margin: 0;
+  border: none;
+  transition: 0.3s;
+
+  &:popover-open {
+    display: var(--display);
+
+    @starting-style {
+      opacity: 0;
+      translate: 0 -1rem;
+    }
+  }
+
+  &.modal {
+    margin: auto;
+
+    &::backdrop {
+      background-color: black;
+    }
+  }
+}

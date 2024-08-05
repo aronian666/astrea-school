@@ -1,0 +1,30 @@
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+@keyframes rotate {
+  from {
+    --angle: var(--initial-angle, 0deg);
+  }
+
+  to {
+    --angle: var(--final-angle, 360deg);
+  }
+}
+
+@keyframes rotate-reverse {
+  from {
+    --angle: var(--final-angle, 360deg);
+  }
+
+  to {
+    --angle: var(--initial-angle, 0deg);
+  }
+}

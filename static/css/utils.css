@@ -1,0 +1,73 @@
+[data-display=hidden] {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: -50% -50%;
+  pointer-events: none;
+  opacity: 0;
+}
+
+
+/* Weight */
+.w300 {
+  font-weight: 300;
+}
+
+.w400 {
+  font-weight: 400;
+}
+
+.w500 {
+  font-weight: 500;
+}
+
+.w600 {
+  font-weight: 600;
+}
+
+.w700 {
+  font-weight: 700;
+}
+
+.w800 {
+  font-weight: 800;
+}
+
+.lineclamp {
+  display: -webkit-box;
+  -webkit-line-clamp: var(--lines, 1);
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.text-gradient {
+  background-image: linear-gradient(var(--color1, var(--primary)), var(--color2, transparent));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tleft {
+  text-align: left;
+}
+
+.tright {
+  text-align: right;
+}
+
+.tcenter {
+  text-align: center;
+}
+
+@media print {
+  body {
+    visibility: hidden;
+  }
+
+  #print {
+    visibility: visible;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
