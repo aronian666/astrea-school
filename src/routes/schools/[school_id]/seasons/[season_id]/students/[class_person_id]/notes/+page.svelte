@@ -66,7 +66,7 @@
             <tr>
               <th>{course}</th>
               {#each unique_competences as competence, index}
-                <th style="width: 6.5rem; font-weight: 400; font-size: var(--small)">COM {index}</th>
+                <th style="width: 6.5rem; font-weight: 400; font-size: var(--small)">COM {index + 1}</th>
               {/each}
               <th style="width: 6.5rem;">Numeral</th>
             </tr>
