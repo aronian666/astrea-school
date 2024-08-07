@@ -1,27 +1,20 @@
 <script lang="ts">
-  import { Aside, Button, Details, Icon, Popover } from "$lib/components";
-  import { page } from "$app/stores";
+  import Menu from "$lib/components/Menu.svelte";
+
   export let data;
-  let options: AsideOption[] = [
-    {
-      paths: [
-        {
-          icon: "iconamoon:home",
-          href: "",
-          name: "Inicio",
-          match: true,
-        },
-      ],
-    },
-    {
-      title: "Niveles",
-      paths: Object.entries(data.levels).map(([level, class_season_courses]) => ({
-        href: `levels/${level}`,
-        name: `${class_season_courses?.length} ${level}`,
-      })),
-    },
+  const options = [
+    { name: "Todos", href: "", match: true },
+    ...Object.keys(data.levels).map((level) => ({ name: level, href: `levels/${level}` })),
   ];
 </script>
 
-<Aside {options} root="/seasons/{$page.params.season_id}" />
+<hgroup>
+  <h1>
+    {data.season.name}
+  </h1>
+  <small>{data.season.school?.name}</small>
+</hgroup>
+
+<Menu {options} root="/seasons/{data.season.id}" />
+
 <slot></slot>

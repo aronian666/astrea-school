@@ -9,52 +9,46 @@
   console.log(data.session);
 </script>
 
-<main>
-  <section class="flex direction gap0">
-    <div style="height: 5rem; background: linear-gradient(135deg, dodgerblue, var(--green));"></div>
-    <div class="flex content items" style="height: 3rem; --c: space-between">
-      <div class="flex gap0 wrap">
-        <picture>
-          <img src={user.user_metadata.picture} alt={user.user_metadata.name} />
-        </picture>
-        <h1 style="place-self: center;">{user.user_metadata.name}</h1>
-      </div>
-      <Button
-        onclick="edit_profile.showModal()"
-        data-size="tiny"
-        style="--color:var(--primary); border-radius: 0.25rem"
-      >
-        Editar perfil
-      </Button>
+<section class="flex direction gap0">
+  <div style="height: 5rem; background: linear-gradient(100deg, tomato, var(--black));"></div>
+  <div class="flex content items" style="height: 3rem; --c: space-between">
+    <div class="flex gap0 wrap">
+      <picture>
+        <img src={user.user_metadata.picture} alt={user.user_metadata.name} />
+      </picture>
+      <h1 style="place-self: center;">{user.user_metadata.name}</h1>
     </div>
-    <div class="panel flex gap3 direction" style="background-color: var(--white);">
-      <div class="grid gap0">
-        <h4>Correo electronico</h4>
-        <p class="w300">{user.email}</p>
-      </div>
-      <div class="grid gap0">
-        <h4>teléfono</h4>
-        <p class="w300">
-          {#if user.user_metadata.phone}
-            {user.user_metadata.phone}
-          {:else}
-            Todavía no has añadido un numero de teléfono.
-          {/if}
-        </p>
-      </div>
-      <div class="grid gap0">
-        <h4>DNI</h4>
-        <p class="w300">
-          {#if user.user_metadata.dni}
-            {user.user_metadata.dni} <small>({data.person?.full_name})</small>
-          {:else}
-            Todavía no has añadido un DNI.
-          {/if}
-        </p>
-      </div>
+    <Button onclick="edit_profile.showModal()" data-size="tiny" style="--color: var(--black); border-radius: 0.25rem">
+      Editar perfil
+    </Button>
+  </div>
+  <div class="panel flex gap3 direction" style="background-color: var(--white);">
+    <div class="grid gap0">
+      <h4>Correo electronico</h4>
+      <p class="w300">{user.email}</p>
     </div>
-  </section>
-</main>
+    <div class="grid gap0">
+      <h4>teléfono</h4>
+      <p class="w300">
+        {#if user.user_metadata.phone}
+          {user.user_metadata.phone}
+        {:else}
+          Todavía no has añadido un numero de teléfono.
+        {/if}
+      </p>
+    </div>
+    <div class="grid gap0">
+      <h4>DNI</h4>
+      <p class="w300">
+        {#if user.user_metadata.dni}
+          {user.user_metadata.dni} <small>({data.person?.full_name})</small>
+        {:else}
+          Todavía no has añadido un DNI.
+        {/if}
+      </p>
+    </div>
+  </div>
+</section>
 
 <Modal id="edit_profile" let:dialog>
   <Form

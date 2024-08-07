@@ -1,20 +1,34 @@
 <script>
   import { page } from "$app/stores";
+  import { BreadCrumb, Icon, Table } from "$lib/components";
 
   export let data;
-  page;
 </script>
 
-<main class="flex direction gap5">
-  <h1>Mis cursos</h1>
-  <section class="grid gap3 auto-fill">
-    {#each Object.entries(data.levels) as [level, class_season_courses]}
-      <a class="panel" href="{$page.url.pathname}/levels/{level}">
-        <div>
-          {level}
+<section class="flex direction">
+  <Table
+    array={data.class_season_courses}
+    let:item
+    header={[{ name: "Curso" }, { name: "Nivel" }, { name: "Grado" }, { name: "Seccion" }, { name: "Notas" }]}
+  >
+    <tr>
+      <td>{item.season_course?.course?.name}</td>
+      <td class="tcenter">{item.classes.level?.name}</td>
+      <td class="tcenter">{item.classes.grade}</td>
+      <td class="tcenter">{item.classes.section?.name}</td>
+      <td>
+        <div class="flex items content">
+          <a
+            class="button"
+            data-shape="square"
+            data-size="tiny"
+            data-style="tonal"
+            href="/seasons/{$page.params.season_id}/class_season_courses/{item.id}"
+          >
+            <Icon icon="ph:notepad" />
+          </a>
         </div>
-        <small>{class_season_courses?.length} cursos</small>
-      </a>
-    {/each}
-  </section>
-</main>
+      </td>
+    </tr>
+  </Table>
+</section>

@@ -3,5 +3,5 @@
 </script>
 
 <section>
-  <h1>{data.class_person.person?.full_name}</h1>
+  <h1>{data.school_user.school?.name}</h1>
 </section>

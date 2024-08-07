@@ -18,19 +18,12 @@
 </script>
 
 <main class="flex direction gap5">
-  <BreadCrumb
-    names={[
-      "Escuelas",
-      data.school_user.school?.name,
-      "Temporadas",
-      "Temporada",
-      "Clases",
-      `${data.class.level?.name} ${data.class.grade} ${data.class.section?.name}`,
-    ]}
-  />
   <hgroup class="flex content items" style="--c: space-between">
     <h1>{data.class.level?.name} {data.class.grade} {data.class.section?.name}</h1>
-    <Button onclick="assing_person.showModal()">Agregar persona</Button>
+    <Button onclick="assing_person.showModal()">
+      <Icon icon="ph:user-plus" />
+      Agregar persona
+    </Button>
   </hgroup>
   <section class="flex direction">
     <Table array={data.class.class_season_courses} let:item header={[{ name: "Curso" }, { name: "Profesor" }]}>
@@ -50,8 +43,11 @@
               data-size="small"
               data-style="tonal"
               onclick="assing_person.showModal()"
-              on:click={() => (class_school_courses = [item])}>Asignar persona</Button
+              data-shape="square"
+              on:click={() => (class_school_courses = [item])}
             >
+              <Icon icon="ph:user-plus" />
+            </Button>
             <a
               class="button"
               data-size="small"

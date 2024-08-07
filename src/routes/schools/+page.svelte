@@ -7,11 +7,12 @@
   export let data;
 </script>
 
-<main class="flex direction gap5">
-  <hgroup>
-    <h1>Instituciones</h1>
-    <small> Lista de las sus instituciones </small>
-  </hgroup>
+<section class="flex direction gap3">
+  <nav class="flex gap1">
+    <a class="button" data-size="tiny" data-style="tonal" href="">Todas</a>
+    <a class="button" data-size="tiny" data-style="tonal" href="">Activas</a>
+    <a class="button" data-size="tiny" data-style="tonal" href="">Archivadas</a>
+  </nav>
   <section class="grid auto-fill gap2" style="grid-auto-rows: 7rem; --width: 13rem">
     {#each data.school_users as { school, role }}
       <a href="/schools/{school?.id}" class="panel">
@@ -28,7 +29,7 @@
       Agregar
     </Button>
   </section>
-</main>
+</section>
 
 <Modal id="add_school">
   <Form

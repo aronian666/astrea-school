@@ -8,9 +8,9 @@
 <aside class="flex direction" data-position="1">
   <div class="flex direction">
     {#each options as option}
-      <section class="flex direction gap1" style="padding: var(--size1) 0">
+      <section class="flex direction gap1">
         {#if option.title}
-          <h3 style="padding-left: var(--size3)">{option.title}</h3>
+          <h3>{option.title}</h3>
         {/if}
         <div class="flex direction">
           {#each option.paths as path}
@@ -34,6 +34,32 @@
     {/each}
   </div>
 </aside>
+
+<footer>
+  {#each options as option}
+    <section class="grid auto-fit" style="--width:5rem">
+      {#each option.paths as path}
+        {@const href = [root, path.href].filter(Boolean).join("/")}
+        <a
+          {href}
+          data-active={path.match ? $page.url.pathname === href : $page.url.pathname.startsWith(href)}
+          class="button flex direction"
+          style="--c: start; gap:0; padding: var(--size0)"
+          data-style="text"
+          data-shape="padding"
+          data-size="small"
+        >
+          {#if path.icon}
+            <Icon icon={path.icon} normal="light" width="1.5rem" />
+          {/if}
+          <small>
+            {path.name}
+          </small>
+        </a>
+      {/each}
+    </section>
+  {/each}
+</footer>
 
 <style>
   aside {

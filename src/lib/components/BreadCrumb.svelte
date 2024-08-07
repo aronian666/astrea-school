@@ -1,33 +1,27 @@
 <script lang="ts">
-  import { page } from "$app/stores";
-  export let link: string | undefined = undefined;
-  $: paths = (link || $page.url.pathname).split("/").filter(Boolean);
-  export let names: Array<string | undefined> = [];
+  export let origin = "";
+  export let paths: { name: string; path: string }[];
 </script>
 
-<ul>
+<nav>
   {#each paths as path, index}
-    {#if names.length > 0 && names[index]}
-      <li>
-        <a href={[$page.url.origin, paths.slice(0, index + 1).join("/")].join("/")}>
-          {names[index] || path}
-        </a>
-      </li>
-    {/if}
+    <a
+      href="{origin}/{paths
+        .slice(0, index)
+        .map(({ path }) => path)
+        .join('/')}"
+    >
+      {path.name}
+    </a>
   {/each}
-</ul>
+</nav>
 
 <style>
-  ul {
-    list-style: none;
-    display: flex;
-    gap: 0.2rem;
-  }
-  li:not(:last-child):after {
+  a:not(:last-child):after {
     content: "/";
   }
   a {
-    font-size: 0.9rem;
+    font-size: var(--small);
   }
   a:hover {
     text-decoration: underline;

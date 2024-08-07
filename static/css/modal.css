@@ -43,7 +43,7 @@ dialog {
 
     @starting-style {
       opacity: 0;
-      translate: 0 -1rem;
+      translate: var(--translate, 0 -1rem);
     }
   }
 

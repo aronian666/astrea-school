@@ -5,20 +5,19 @@
   export let data;
 </script>
 
-<main class="flex direction gap5">
-  <h1>{data.levels[$page.params.level]?.[0].classes.level?.name}</h1>
-  <section class="flex direction">
-    <Table
-      array={data.levels[$page.params.level]}
-      let:item
-      header={[{ name: "Curso" }, { name: "Grado" }, { name: "Seccion" }]}
-    >
-      <tr>
-        <td>{item.season_course?.course?.name}</td>
-        <td>{item.classes.grade}</td>
-        <td>{item.classes.section?.name}</td>
+<section class="flex direction">
+  <Table
+    array={data.levels[$page.params.level]}
+    let:item
+    header={[{ name: "Curso" }, { name: "Grado" }, { name: "Seccion" }, { name: "Notas" }]}
+  >
+    <tr>
+      <td>{item.season_course?.course?.name}</td>
+      <td class="tcenter">{item.classes.grade}</td>
+      <td class="tcenter">{item.classes.section?.name}</td>
 
-        <td>
+      <td>
+        <div class="flex items content">
           <a
             class="button"
             data-shape="square"
@@ -28,8 +27,8 @@
           >
             <Icon icon="ph:notepad" />
           </a>
-        </td>
-      </tr>
-    </Table>
-  </section>
-</main>
+        </div>
+      </td>
+    </tr>
+  </Table>
+</section>
