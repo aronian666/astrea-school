@@ -1,6 +1,8 @@
 <script>
+  import { groupBy } from "$lib/utils/groupBy.js";
+
   export let data;
-  const levels = Object.groupBy(data.class_season_courses, ({ classes }) => JSON.stringify(classes.level));
+  const levels = groupBy(data.class_season_courses, ({ classes }) => JSON.stringify(classes.level));
 </script>
 
 <main>

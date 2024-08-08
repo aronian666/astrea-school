@@ -1,6 +1,8 @@
 <script>
+  import { groupBy } from "$lib/utils/groupBy.js";
+
   export let data;
-  const courses = Object.groupBy(data.class_season_courses, ({ season_course }) =>
+  const courses = groupBy(data.class_season_courses, ({ season_course }) =>
     JSON.stringify(season_course?.course?.name),
   );
 </script>

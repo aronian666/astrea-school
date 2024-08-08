@@ -1,9 +1,10 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { Button, Icon, Modal, Table } from "$lib/components";
+  import { groupBy } from "$lib/utils/groupBy.js";
 
   export let data;
-  const levels = Object.groupBy(data.school_courses, (school_course) => JSON.stringify(school_course.level));
+  const levels = groupBy(data.school_courses, (school_course) => JSON.stringify(school_course.level));
   $: season_ids = data.season_courses.map(({ course_id, level_id }) => `${course_id}-${level_id}`);
   let selected_school_course = data.school_courses[0];
   let selected_season_course = data.season_courses[0];

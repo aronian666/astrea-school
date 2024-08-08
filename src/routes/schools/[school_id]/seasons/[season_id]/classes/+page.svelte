@@ -1,15 +1,16 @@
 <script lang="ts">
   import { Table } from "$lib/components";
   import { page } from "$app/stores";
+  import { groupBy } from "$lib/utils/groupBy.js";
   export let data;
-  const levels = Object.groupBy(data.classes, (clas) => String(clas.level?.name));
+  const levels = groupBy(data.classes, (clas) => String(clas.level?.name));
 </script>
 
 <main class="flex direction gap5">
   <h1>Clases</h1>
   <div class="grid auto-fit gap3">
     {#each Object.entries(levels) as [level, classesByLevel]}
-      {@const classesByGrade = Object.groupBy(classesByLevel || [], (clas) => clas.grade)}
+      {@const classesByGrade = groupBy(classesByLevel || [], (clas) => clas.grade)}
       <section class="flex direction gap2 panel">
         <h2>{level}</h2>
         <Table array={Object.entries(classesByGrade)} header={[{ name: "Grado" }, { name: "Secciones" }]} let:item>

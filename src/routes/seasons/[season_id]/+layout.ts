@@ -1,3 +1,4 @@
+import { groupBy } from '$lib/utils/groupBy.js';
 import { error } from '@sveltejs/kit';
 
 export const load = async ({ parent, params: { season_id } }) => {
@@ -8,8 +9,8 @@ export const load = async ({ parent, params: { season_id } }) => {
   ])
   if (season && class_season_courses) {
     class_season_courses.sort((a, b) => a.classes.grade - b.classes.grade + a.classes.section_id - b.classes.section_id)
-    const levels = Object.groupBy(class_season_courses, ({ classes }) => String(classes.level?.name))
-    const courses = Object.groupBy(class_season_courses, ({ season_course }) => String(season_course?.course?.name))
+    const levels = groupBy(class_season_courses, ({ classes }) => String(classes.level?.name))
+    const courses = groupBy(class_season_courses, ({ season_course }) => String(season_course?.course?.name))
     //Object.entries(levels).forEach(([_, class_season_courses]) => class_season_courses?.sort((a, b) => a.classes.grade - b.classes.grade + a.classes.section_id - b.classes.section_id))
     return { class_season_courses, levels, courses, season }
 

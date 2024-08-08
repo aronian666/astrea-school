@@ -59,8 +59,8 @@
     <Field required label="Correo electronico" type="email" name="email"></Field>
     <Field>
       <div class="flex items content" style="--c: space-between">
-        <label for="password"> Contraseña </label>
-        <small>
+        <label for="password" class="w500"> Contraseña </label>
+        <small style="color: var(--primary)">
           <a href="/auth/recovery">¿Olvidaste tu contraseña?</a>
         </small>
       </div>
@@ -84,7 +84,7 @@
     {/if}
     <p>
       {signUp ? "¿Ya tienes una cuenta? Inicia sesión " : "¿No tienes una cuenta? Registrate "}
-      <a href={"/auth" + (signUp ? "" : "?signUp=true")}>aquí.</a>
+      <a href={"/auth" + (signUp ? "" : "?signUp=true")} style="color: var(--primary)">aquí.</a>
     </p>
     <button data-style="gradient" type="submit">
       <Icon {loading} />

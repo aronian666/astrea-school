@@ -1,11 +1,12 @@
 <script lang="ts">
   import { Icon, Table } from "$lib/components";
   import { formatNumber } from "$lib/utils/formatNumber.js";
+  import { groupBy } from "$lib/utils/groupBy.js";
   import { setColor, setNote } from "$lib/utils/models.js";
 
   export let data;
   let cycle = data.class_person.class?.season?.cycles[1].id;
-  const courses = Object.groupBy(data.class_person.class.class_season_courses, ({ season_course }): string => {
+  const courses = groupBy(data.class_person.class.class_season_courses, ({ season_course }): string => {
     //@ts-ignore
     if (season_course?.course?.course) return String(season_course?.course?.course.name);
     return String(season_course?.course?.name);

@@ -3,9 +3,10 @@
   import { message } from "$lib/stores/message";
   import type { Tables, TablesInsert } from "$lib/types/supabase.js";
   import { page } from "$app/stores";
+  import { groupBy } from "$lib/utils/groupBy.js";
 
   export let data;
-  $: levels = Object.groupBy(data.school_courses, (school_course) => String(school_course.level?.name));
+  $: levels = groupBy(data.school_courses, (school_course) => String(school_course.level?.name));
 
   let insert_school_course: TablesInsert<"school_courses"> = {
     course_id: 0,

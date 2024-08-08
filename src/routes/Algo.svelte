@@ -3,15 +3,15 @@
 </script>
 
 <header>
-  <div class="flex content" style="--c: space-between; grid-column: 1/-1;padding: var(--size3">
+  <nav class="flex content items" style="--c: space-between">
     <picture style="width: 2.5rem">
       <img src="/images/logo.svg" alt="" />
     </picture>
     <div class="flex gap0">
-      <a class="button" href="/auth">Iniciar session</a>
+      <a class="button" href="/auth">Iniciar sesión </a>
       <a class="button" data-style="tonal" style="--color: var(--primary)" href="/auth?signUp=true">Registrarse</a>
     </div>
-  </div>
+  </nav>
 </header>
 
 <main class="grid">
@@ -55,6 +55,9 @@
 </main>
 
 <style>
+  header > nav {
+    grid-column: 2 / span 1;
+  }
   main {
     grid-column: 1/-1;
     grid-row: 1/-1;
