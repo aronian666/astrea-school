@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { invalidateAll } from "$app/navigation";
+  import { goto, invalidateAll } from "$app/navigation";
   import { Form, Icon, Modal, Field, Person, Button } from "$lib/components";
   import { message } from "$lib/stores/message";
   import { formToJson } from "$lib/utils/filter.js";
@@ -60,6 +60,7 @@
       if (error) return message.set({ message: error.message, details: "No hay detalles" });
       await invalidateAll();
       dialog.close();
+      await goto("/");
     }}
   >
     <h3>Editar perfil</h3>
