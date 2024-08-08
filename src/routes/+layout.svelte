@@ -31,10 +31,10 @@
   <main class="flex direction gap4">
     <header class="flex content items" style="--c: space-between">
       <nav class="flex gap0" style="--c: center">
-        <button data-size="tiny" data-style="tonal" data-shape="square">
+        <button data-size="tiny" data-style="tonal" data-shape="square" on:click={() => history.back()}>
           <Icon icon="iconamoon:arrow-left-2" />
         </button>
-        <button data-size="tiny" data-style="tonal" data-shape="square">
+        <button data-size="tiny" data-style="tonal" data-shape="square" on:click={() => history.forward()}>
           <Icon icon="iconamoon:arrow-right-2" />
         </button>
       </nav>
