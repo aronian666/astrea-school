@@ -7,14 +7,14 @@ export const load = async ({ parent, params: { class_season_course_id } }) => {
     person:persons(full_name, id),
     season_course:season_courses(course:courses(name), competences(id, name)),
     notes(*),
-    class:classes(
+    class:classes!inner(
       grade,
       section:sections(name), 
       level:levels(name), 
-      class_persons(id, person:persons(full_name)),
+      class_persons!inner(id, person:persons(full_name)),
       season:seasons(cycles(*))
     )
-  `).eq("id", class_season_course_id).single()
+  `).eq("id", class_season_course_id).eq("class.class_persons.status_id", 1).single()
   if (err) throw error(500, err)
   // @ts-ignore
   class_season_course.class?.class_persons.sort((a, b) => a.person?.full_name?.localeCompare(String(b.person?.full_name)))

@@ -70,7 +70,7 @@
     onSubmit={async () => {
       const { data: new_class_school_courses, error } = await data.supabase
         .from("class_season_courses")
-        .update({ person_dni: person.dni })
+        .update({ person_dni: person.dni || null })
         .in(
           "id",
           class_school_courses.map(({ id }) => id),
