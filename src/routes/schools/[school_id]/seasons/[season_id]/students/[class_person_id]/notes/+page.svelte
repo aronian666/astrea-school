@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Icon, Table } from "$lib/components";
   import { formatNumber } from "$lib/utils/formatNumber.js";
-  import { groupBy } from "$lib/utils/groupBy.js";
+  import { groupBy } from "$lib/utils/groupBy";
   import { setColor, setNote } from "$lib/utils/models.js";
 
   export let data;

@@ -1,4 +1,4 @@
-import { groupBy } from '$lib/utils/groupBy.js';
+import { groupBy } from '$lib/utils/groupBy';
 import { error } from '@sveltejs/kit';
 
 export const load = async ({ parent, params: { season_id } }) => {

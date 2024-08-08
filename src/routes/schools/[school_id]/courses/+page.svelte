@@ -3,7 +3,7 @@
   import { message } from "$lib/stores/message";
   import type { Tables, TablesInsert } from "$lib/types/supabase.js";
   import { page } from "$app/stores";
-  import { groupBy } from "$lib/utils/groupBy.js";
+  import { groupBy } from "$lib/utils/groupBy";
 
   export let data;
   $: levels = groupBy(data.school_courses, (school_course) => String(school_course.level?.name));

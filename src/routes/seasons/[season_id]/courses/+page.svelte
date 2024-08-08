@@ -1,5 +1,5 @@
 <script>
-  import { groupBy } from "$lib/utils/groupBy.js";
+  import { groupBy } from "$lib/utils/groupBy";
 
   export let data;
   const courses = groupBy(data.class_season_courses, ({ season_course }) =>

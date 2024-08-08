@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { Button, Icon, Modal, Table } from "$lib/components";
-  import { groupBy } from "$lib/utils/groupBy.js";
+  import { groupBy } from "$lib/utils/groupBy";
 
   export let data;
   const levels = groupBy(data.school_courses, (school_course) => JSON.stringify(school_course.level));

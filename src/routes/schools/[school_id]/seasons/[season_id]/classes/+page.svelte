@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Table } from "$lib/components";
   import { page } from "$app/stores";
-  import { groupBy } from "$lib/utils/groupBy.js";
+  import { groupBy } from "$lib/utils/groupBy";
   export let data;
   const levels = groupBy(data.classes, (clas) => String(clas.level?.name));
 </script>
