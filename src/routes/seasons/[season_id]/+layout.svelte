@@ -3,8 +3,8 @@
 
   export let data;
   const options = [
-    { name: "Todos", href: "", match: true },
-    ...Object.keys(data.levels).map((level) => ({ name: level, href: `levels/${level}` })),
+    { name: "Cursos", href: "", match: true },
+    { name: "Tutoria", href: "behaviors" },
   ];
 </script>
 

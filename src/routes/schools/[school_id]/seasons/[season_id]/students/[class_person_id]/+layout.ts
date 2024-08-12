@@ -11,16 +11,19 @@ export const load = async ({ params: { class_person_id, season_id }, parent }) =
         id,
         season_course:season_courses(
           course:courses(id, name, course:course_id(name)),
-          competences(*)
+          competences(*),
+          order
         )
       ),
       level:levels(name),
       grade,
       section:sections(name),
       season:seasons(
+        name,
         cycles(id, name)
       )
-    )`).eq("id", class_person_id).not("class.class_season_courses.person_dni", "is", null).single()
+    )`).eq("id", class_person_id)
+    .not("class.class_season_courses.person_dni", "is", null).single()
   if (err1) throw error(500, err1)
   class_person.class?.season?.cycles.sort((a, b) => a.id - b.id)
   return { class_person }

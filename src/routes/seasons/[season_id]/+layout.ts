@@ -3,17 +3,25 @@ import { error } from '@sveltejs/kit';
 
 export const load = async ({ parent, params: { season_id } }) => {
   const { supabase, session } = await parent()
-  const [{ data: season, error: err1 }, { data: class_season_courses, error: err2 }] = await Promise.all([
-    supabase.from("seasons").select("id, name, school:schools(name)").eq("id", season_id).single(),
-    supabase.from("class_season_courses").select("*, season_course:season_courses(course:courses(name)), classes!inner(grade, section_id, section:sections(name), level:levels(name, id, icon),season_id)").eq("person_dni", session.user.user_metadata.dni).eq("classes.season_id", season_id).order("grade", { referencedTable: "classes" })
-  ])
-  if (season && class_season_courses) {
-    class_season_courses.sort((a, b) => a.classes.grade - b.classes.grade + a.classes.section_id - b.classes.section_id)
-    const levels = groupBy(class_season_courses, ({ classes }) => String(classes.level?.name))
-    const courses = groupBy(class_season_courses, ({ season_course }) => String(season_course?.course?.name))
-    //Object.entries(levels).forEach(([_, class_season_courses]) => class_season_courses?.sort((a, b) => a.classes.grade - b.classes.grade + a.classes.section_id - b.classes.section_id))
-    return { class_season_courses, levels, courses, season }
+  const { data: season, error: err } = await
+    supabase.from("seasons").select(`
+    id, 
+    name, 
+    school:schools(name),
+    cycles(id, name),
+    season_levels(
+      level:levels(name),
+      season_level_courses(
+        class_season_level_courses!inner(
+          id,
+          season_level_course:season_level_courses(course:courses(name)),
+          class:classes(person:persons(id, dni, full_name), grade, section_id, section:sections(name), level:levels(name, id, icon))
+        )
+      )
+    ),
+    classes!inner(id, grade, level:levels(name), section:sections(name))
+  `).eq("id", season_id).eq("season_levels.season_level_courses.class_season_level_courses.person_dni", session.user.user_metadata.dni).eq("classes.person_dni", session.user.user_metadata.dni).single()
 
-  }
-  throw error(500, (err1 || err2)?.message)
+  if (err) throw error(500, err)
+  return { season }
 };

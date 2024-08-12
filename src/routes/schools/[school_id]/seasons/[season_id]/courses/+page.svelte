@@ -1,6 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { Button, Icon, Modal, Table } from "$lib/components";
+  import { message } from "$lib/stores/message";
   import { groupBy } from "$lib/utils/groupBy";
 
   export let data;
@@ -19,6 +20,9 @@
         <h2>{level.name}</h2>
         <div class="grid gap0">
           {#each school_courses || [] as school_course}
+            {@const season_course = data.season_courses.find(
+              ({ level_id, course_id }) => school_course.level_id === level_id && course_id === school_course.course_id,
+            )}
             <div class="flex content items" style="--c: space-between">
               <label class="flex content items gap1">
                 <input
@@ -45,27 +49,42 @@
                       });
                     if (error) return e.preventDefault();
                   }}
-                  checked={season_ids.includes(`${school_course.course?.id}-${school_course.level?.id}`)}
+                  checked={Boolean(season_course)}
                 />
                 {school_course.course?.name}
               </label>
-              <Button
-                data-style="text"
-                on:click={() => {
-                  //season_course = data.season_courses.find(({ course_id }) => school_course.course_id === course_id);
-                  selected_school_course = school_course;
-                  //@ts-ignore
-                  selected_season_course = data.season_courses.find(
-                    ({ course_id, level_id }) => school_course.course_id === course_id && level_id === level.id,
-                  );
-                }}
-                data-size="tiny"
-                data-shape="square"
-                style="--c: center"
-                onclick="competences_modal.showModal()"
-              >
-                <Icon icon="ph:eye" />
-              </Button>
+              {#if season_course}
+                <div class="flex items">
+                  <input
+                    type="number"
+                    value={season_course?.order}
+                    on:change={async (e) => {
+                      const { error: err } = await data.supabase
+                        .from("season_courses")
+                        .update({ order: Number(e.currentTarget.value) })
+                        .eq("id", season_course.id);
+                      if (err) return message.set(err);
+                    }}
+                  />
+                  <Button
+                    data-style="text"
+                    on:click={() => {
+                      //season_course = data.season_courses.find(({ course_id }) => school_course.course_id === course_id);
+                      selected_school_course = school_course;
+                      //@ts-ignore
+                      selected_season_course = data.season_courses.find(
+                        ({ course_id, level_id }) => school_course.course_id === course_id && level_id === level.id,
+                      );
+                    }}
+                    data-size="tiny"
+                    data-shape="square"
+                    style="--c: center"
+                    onclick="competences_modal.showModal()"
+                  >
+                    <Icon icon="ph:eye" />
+                  </Button>
+                </div>
+              {/if}
             </div>
           {/each}
         </div>

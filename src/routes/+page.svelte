@@ -6,8 +6,10 @@
   export let data;
 </script>
 
-{#if data.session && data.class_season_courses && data.school_users}
-  {@const seasons = groupBy(data.class_season_courses, ({ season_course }) => JSON.stringify(season_course?.season))}
+{#if data.session && data.class_season_level_courses && data.school_users}
+  {@const seasons = groupBy(data.class_season_level_courses, ({ season_level_course }) =>
+    JSON.stringify(season_level_course?.season_level?.season),
+  )}
   {#if !data.session.user.user_metadata.dni}
     <section class="panel flex items gap0">
       <iconify-icon style="color: orange" width="1.5rem" icon="ph:warning" />
@@ -22,7 +24,7 @@
         <h2>Instituciones</h2>
       </hgroup>
       <div class="grid auto-fill gap2">
-        {#each Object.entries(seasons) as [season_string, class_season_courses]}
+        {#each Object.entries(seasons) as [season_string, class_season_level_courses]}
           {@const season = JSON.parse(season_string)}
           <a class="panel flex direction gap0" href="/seasons/{season?.id}">
             <hgroup>
@@ -31,7 +33,7 @@
               </h4>
               <small style="color: var(--gray60)">{season.school?.name}</small>
             </hgroup>
-            <p>{class_season_courses?.length} cursos</p>
+            <p>{class_season_level_courses?.length} cursos</p>
           </a>
         {/each}
       </div>
