@@ -51,11 +51,6 @@
 </main>
 
 <style>
-  :global(body) {
-    background-image: url("/images/background1.webp");
-    background-repeat: no-repeat;
-    background-position: 100%;
-  }
   main {
     grid-row: auto;
   }
