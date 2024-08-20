@@ -8,13 +8,6 @@
 </script>
 
 <section class="flex direction gap1">
-  <hgroup class="grid">
-    <h2>
-      {data.clas.level?.name}
-      {data.clas.grade}
-      {data.clas.section?.name}
-    </h2>
-  </hgroup>
   <form>
     <div class="grid gap1 auto-fit">
       {#each data.clas.season?.cycles || [] as cycle}
