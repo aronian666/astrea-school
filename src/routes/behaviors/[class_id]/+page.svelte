@@ -35,10 +35,14 @@
     {@const behavior = item.behaviors.find(({ cycle_id }) => cycle_id === cycle_selected.id)}
     <tr class="input">
       <td>
-        {index + 1}
-        {item.person?.full_name}
+        <small>
+          <b>
+            {index + 1}
+          </b>
+          {item.person?.full_name}
+        </small>
       </td>
-      <td style="color: {Number(behavior?.value) < 11 ? 'var(--red)' : 'var(--primary)'}">
+      <td style="color: {Number(behavior?.value) < 11 ? 'var(--red)' : 'var(--blue)'}">
         <input
           type="number"
           value={behavior?.value ?? ""}
@@ -94,7 +98,7 @@
               td.style.color = "var(--red)";
             } else {
               //@ts-ignore
-              td.style.color = "var(--primary)";
+              td.style.color = "var(--blue)";
             }
           }}
         />

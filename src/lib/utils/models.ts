@@ -9,5 +9,5 @@ export function setNote(value: number | undefined) {
 export function setColor(value: number | undefined) {
   if (value === undefined) return ""
   if (value < 10.5) return "var(--red)"
-  return "var(--primary)"
+  return "var(--blue)"
 }

@@ -40,21 +40,16 @@
               </td>
               <td>
                 <div class="flex items content gap0">
-                  {#if !clas.person}
-                    <Button
-                      onclick="assign_person.showModal()"
-                      on:click={() => (clase = clas)}
-                      data-shape="square"
-                      data-size="small"
-                      data-style="text"
-                    >
-                      <Icon icon="ph:user-plus" />
-                    </Button>
-                  {:else}
-                    <Button onclick="assign_person.showModal()" data-style="text" data-size="small">
-                      {clas.person.full_name}
-                    </Button>
-                  {/if}
+                  <Button
+                    onclick="assign_person.showModal()"
+                    on:click={() => (clase = clas)}
+                    data-shape="square"
+                    data-size="small"
+                    data-style="text"
+                  >
+                    <Icon icon="ph:user-plus" />
+                  </Button>
+                  {clas.person?.full_name}
                 </div>
               </td>
             </tr>

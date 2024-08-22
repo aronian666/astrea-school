@@ -7,7 +7,7 @@
 
 <h1>{data.clas.level?.name} {data.clas.grade} {data.clas.section?.name}</h1>
 {#if $page.url.pathname.split("/").length !== 3}
-  <nav style="overflow-x: auto; padding: var(--size0) 0">
+  <nav style="overflow-x: auto">
     <div class="flex gap1" style="width: max-content;">
       {#each data.clas.class_season_level_courses || [] as { season_level_course, id }}
         {@const url = `/classes/${data.clas.id}/courses/${id}`}

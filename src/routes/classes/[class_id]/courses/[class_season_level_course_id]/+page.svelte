@@ -5,15 +5,14 @@
   import { setNote } from "$lib/utils/models.js";
 
   export let data;
-  let cycle_id = data.class_season_level_course.class?.season?.cycles[1].id;
+  let cycle_id = data.clas.season?.cycles[1].id!;
   $: notes = data.class_season_level_course.notes.filter((note) => cycle_id === note.cycle_id);
 </script>
 
 <form>
   <Field>
-    <label for="" class="w500"> Bimestre </label>
-    <div class="grid auto-fit gap1" style="--width: 5rem">
-      {#each data.class_season_level_course.class?.season?.cycles || [] as cycle}
+    <div class="grid auto-fit gap1" style="--width: 10rem">
+      {#each data.clas.season?.cycles || [] as cycle}
         <label>
           <input data-display="hidden" type="radio" value={cycle.id} bind:group={cycle_id} />
           {cycle.name}
@@ -53,7 +52,7 @@
       </tr>
     </thead>
     <tbody>
-      {#each data.class_season_level_course.class?.class_persons || [] as class_person, index}
+      {#each data.clas?.class_persons || [] as class_person, index}
         <tr class="input">
           <td>
             <span class="w500">
@@ -61,11 +60,11 @@
             </span>
             {class_person.person?.full_name}
           </td>
-          {#each data.class_season_level_course.season_level_course?.competences || [] as competence}
+          {#each data.class_season_level_course.season_level_course?.competences || [] as competence (`${competence.id}-${class_person.id}-${cycle_id}`)}
             {@const competence_note = notes.find(
               (note) => note.competence_id === competence.id && class_person.id === note.class_person_id,
             )}
-            <td style="color: {Number(competence_note?.value) < 11 ? 'var(--red)' : 'var(--primary)'}">
+            <td style="color: {Number(competence_note?.value) < 11 ? 'var(--red)' : 'var(--blue)'}">
               <input
                 type="number"
                 value={competence_note?.value ?? ""}
@@ -96,23 +95,24 @@
                 on:input={(e) => {
                   const input = e.currentTarget;
                   const value = Number(input.value);
-                  if (value < 0 || value > 20) return (input.value = "0");
                   const td = input.parentNode;
                   const span = input.nextElementSibling;
-
+                  if (value < 0 || value > 20) return (input.value = "0");
                   //@ts-ignore
-                  span.innerHTML = setNote(value);
+                  if (input.value === "") span.innerHTML = "";
+                  //@ts-ignore
+                  else span.innerHTML = setNote(value);
                   if (value < 11) {
                     //@ts-ignore
                     td.style.color = "var(--red)";
                   } else {
                     //@ts-ignore
-                    td.style.color = "var(--primary)";
+                    td.style.color = "var(--blue)";
                   }
                 }}
               />
               <span
-                class="tcenter w600"
+                class="tcenter w700"
                 style="position: absolute; z-index: 1; top: 50%; translate: 0 -50%; right: 0.5rem"
               >
                 {setNote(competence_note?.value)}
@@ -128,5 +128,8 @@
 <style>
   td {
     font-size: var(--small);
+  }
+  tr td:first-child {
+    padding: 0 0.25rem;
   }
 </style>

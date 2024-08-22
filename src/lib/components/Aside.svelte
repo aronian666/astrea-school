@@ -35,7 +35,7 @@
   </div>
 </aside>
 
-<footer>
+<footer style="padding: var(--size0) 0;">
   {#each options as option}
     <section class="grid auto-fit" style="--width:5rem">
       {#each option.paths as path}

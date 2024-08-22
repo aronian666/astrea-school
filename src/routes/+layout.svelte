@@ -29,7 +29,7 @@
 {#if data.session}
   <Aside root="" {options} />
   <main class="flex direction gap4">
-    <header class="flex content items" style="--c: space-between">
+    <header class="flex content items" style="--c: space-between; padding: var(--size0) 0 ">
       <nav class="flex gap0" style="--c: center">
         <button data-size="tiny" data-style="tonal" data-shape="square" on:click={() => history.back()}>
           <Icon icon="iconamoon:arrow-left-2" />

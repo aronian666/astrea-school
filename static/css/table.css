@@ -3,6 +3,7 @@ table {
 
   th {
     font-weight: 500;
+    padding: var(--size1) 0;
   }
 
   td {
