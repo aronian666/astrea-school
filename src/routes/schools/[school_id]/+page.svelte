@@ -1,30 +1,40 @@
 <script lang="ts">
-  import { page } from "$app/stores";
-  import { Icon } from "$lib/components/index.js";
-  import { formatNumber } from "$lib/utils";
+  import { Icon } from "$lib/components";
 
   export let data;
 </script>
 
-<section>
-  <h1>{data.school_user.school?.name}</h1>
-</section>
-<section class="grid gap2 auto-fill">
-  {#each data.seasons as season}
-    <a
-      class="panel flex auto-fit wrap"
-      style="--gap: var(--size3)"
-      href="/schools/{$page.params.school_id}/seasons/{season.id}"
-    >
-      <h3 style="--max: 100%" class="tcenter">{season.name}</h3>
-      <div style="--min: 5rem" class="grid content items gap0">
-        <Icon icon="ph:student" width="1.5rem" />
-        {season.count}
+<section class="flex wrap auto-fit" style="--gap: var(--size3)">
+  <picture class="panel" style="aspect-ratio: 1; --max: 30%">
+    <img src={data.school_user.school.logo} alt={data.school_user.school.name} />
+  </picture>
+  <div style="--max: 70%">
+    <hgroup class="flex gap0 content" style="--c: space-between">
+      <h1>{data.school_user.school.name}</h1>
+      <button
+        data-shape="square"
+        popovertarget="store_options"
+        style="anchor-name: --store_options; --c: center"
+        data-size="small"
+        data-style="tonal"
+      >
+        <Icon icon="ph:dots-three-outline" />
+      </button>
+      <div
+        popover="auto"
+        class="panel menu"
+        id="store_options"
+        style="position-anchor: --store_options; inset-area: bottom span-left; --display: grid; --c: start"
+      >
+        <button data-style="text" data-size="small" data-shape="menu">
+          <Icon icon="ph:trash" normal="light" />
+          Eliminar
+        </button>
+        <button data-style="text" data-size="small" data-shape="menu">
+          <Icon icon="ph:pen" normal="light" />
+          Editar
+        </button>
       </div>
-      <div style="--min: 5rem" class="grid content items gap0">
-        <Icon icon="ph:currency-dollar" width="1.5rem" active="bold" />
-        {formatNumber(season.sum)}
-      </div>
-    </a>
-  {/each}
+    </hgroup>
+  </div>
 </section>

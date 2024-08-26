@@ -37,7 +37,8 @@ button,
 
   &[data-shape=menu] {
     gap: calc(var(--height) / 3.33);
-    border-radius: calc(var(--height) / 5);
+    border-radius: 0;
+    font-weight: normal;
   }
 
   &[data-style=gradient] {

@@ -1,7 +1,8 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { Icon } from "$lib/components/index.js";
-  import { formatNumber } from "$lib/utils/formatNumber.js";
+  import { formatNumber } from "$lib/utils";
+
   export let data;
 </script>
 
@@ -23,4 +24,8 @@
       </div>
     </a>
   {/each}
+  <a href="seasons/new" class="panel flex content items direction gap0 w600">
+    Agregar
+    <Icon icon="ph:plus" active="bold" width="1.5rem" />
+  </a>
 </section>

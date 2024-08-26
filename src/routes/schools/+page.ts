@@ -5,7 +5,7 @@ export const load = async ({ parent }) => {
   const { data: school_users, error: err } = await supabase
     .from("school_users")
     .select(`
-      school:schools(name, id), 
+      school:schools!inner(name, id, seasons(name, id, start, finish)), 
       role:roles(name)
     `)
     .eq("user_id", session.user.id)

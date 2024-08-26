@@ -12,7 +12,7 @@
 }
 
 .flex.auto-fit {
-  --gap: 0;
+  --gap: 0rem;
   --min: 10rem;
   --max: 25%;
   gap: var(--gap);

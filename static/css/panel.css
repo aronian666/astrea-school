@@ -22,6 +22,11 @@
     --inner-size-shadow: 5px;
   }
 
+  &.menu {
+    padding: var(--size1) 0;
+    border-radius: var(--size1);
+  }
+
   &.gradient {
     --border-color: transparent;
     --gradient-color1: hls(from var(--border-color) (h - 50) s l);

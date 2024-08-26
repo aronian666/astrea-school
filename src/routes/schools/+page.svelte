@@ -2,33 +2,37 @@
   import { goto } from "$app/navigation";
   import { Field, Form, Icon, Modal, Button } from "$lib/components";
   import { message } from "$lib/stores/message";
-  import type { TablesInsert } from "$lib/types/supabase";
+  import { ExtendedDate } from "$lib/utils/extendedDate.js";
   import { formToJson } from "$lib/utils/filter";
   export let data;
 </script>
 
+<section class="flex gap0">
+  <Button data-size="small" data-style="gradient" onclick="add_season.showModal()">Nueva temporada</Button>
+  <Button data-size="small" data-style="tonal" style="--color: var(--primary)" onclick="add_school.showModal()"
+    >Nueva institucion</Button
+  >
+</section>
+
 <section class="flex direction gap3">
-  <nav class="flex gap1">
-    <a class="button" data-size="tiny" data-style="tonal" href="">Todas</a>
-    <a class="button" data-size="tiny" data-style="tonal" href="">Activas</a>
-    <a class="button" data-size="tiny" data-style="tonal" href="">Archivadas</a>
-  </nav>
-  <section class="grid auto-fill gap2" style="grid-auto-rows: 7rem; --width: 13rem">
-    {#each data.school_users as { school, role }}
-      <a href="/schools/{school?.id}" class="panel">
-        <h3>{school?.name}</h3>
-        <small style="color: var(--gray70)">{role?.name}</small>
-      </a>
-    {/each}
-    <Button
-      class="panel flex direction"
-      style="--color:var(--white); height: auto; color: var(--primary)"
-      onclick="add_school.showModal()"
-    >
-      <Icon icon="ph:plus" normal="light" active="bold" />
-      Agregar
-    </Button>
-  </section>
+  {#each data.school_users as { school, role }}
+    <div>
+      <h3>{school.name}</h3>
+    </div>
+    <div class="grid auto-fill gap2" style="grid-auto-rows: 7rem; --width: 13rem">
+      {#each school.seasons as season}
+        <a class="panel" href="/schools/{school.id}/seasons/{season.id}">
+          <h4>
+            {season.name}
+          </h4>
+          <small>
+            {new ExtendedDate(season.start).toIntl({ day: "2-digit", year: "numeric", month: "2-digit" })}
+            - {new ExtendedDate(season.finish).toIntl({ day: "2-digit", year: "numeric", month: "2-digit" })}
+          </small>
+        </a>
+      {/each}
+    </div>
+  {/each}
 </section>
 
 <Modal id="add_school">
@@ -65,6 +69,50 @@
     <button data-style="gradient">
       <Icon icon="ph:sing-plus" {loading} />
       Agregar
+    </button>
+  </Form>
+</Modal>
+
+<Modal id="add_season">
+  <Form
+    let:loading
+    onSubmit={async (e) => {
+      const { season, start, end } = formToJson(new FormData(e.currentTarget));
+      Object.assign(season, {
+        user_id: data.session.user.id,
+        period: `[${start}, ${end})`,
+      });
+      const { data: newSeason, error: err } = await data.supabase.from("seasons").insert(season).select("id").single();
+      if (err) return message.set(err);
+      await goto(`/schools/${season.school_id}/seasons/${newSeason.id}`);
+    }}
+  >
+    <h2>Agregar temporada</h2>
+    <Field>
+      <label for="season[school_id]"> Institucion </label>
+      <select name="season[school_id]" id="season[school_id]">
+        {#each data.school_users as { school }}
+          <option value={school.id}>{school.name}</option>
+        {/each}
+      </select>
+    </Field>
+    <Field>
+      <label for="season[name]"> Nombre de la temporada </label>
+      <input type="text" name="season[name]" id="season[name]" />
+    </Field>
+    <div class="grid gap3 auto-fit">
+      <Field>
+        <label for="start"> Inicio </label>
+        <input type="date" required name="start" id="start" />
+      </Field>
+      <Field>
+        <label for="end"> Fin </label>
+        <input type="date" required name="end" id="end" />
+      </Field>
+    </div>
+    <button>
+      <Icon icon="ph:plus" {loading} active="bold" />
+      Crear temporada
     </button>
   </Form>
 </Modal>

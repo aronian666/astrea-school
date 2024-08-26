@@ -6,7 +6,7 @@
 
   export let data;
   let cycle_id = data.clas.season?.cycles[1].id!;
-  $: notes = data.class_season_level_course.notes.filter((note) => cycle_id === note.cycle_id);
+  $: notes = data.class_season_course.notes.filter((note) => cycle_id === note.cycle_id);
 </script>
 
 <form>
@@ -26,7 +26,7 @@
     <thead>
       <tr>
         <th>Estudiante</th>
-        {#each data.class_season_level_course.season_level_course?.competences || [] as competence, index}
+        {#each data.class_season_course.season_course?.competences || [] as competence, index}
           <th>
             <div class="flex items content">
               <button
@@ -60,7 +60,7 @@
             </span>
             {class_person.person?.full_name}
           </td>
-          {#each data.class_season_level_course.season_level_course?.competences || [] as competence (`${competence.id}-${class_person.id}-${cycle_id}`)}
+          {#each data.class_season_course.season_course?.competences || [] as competence (`${competence.id}-${class_person.id}-${cycle_id}`)}
             {@const competence_note = notes.find(
               (note) => note.competence_id === competence.id && class_person.id === note.class_person_id,
             )}
@@ -77,7 +77,7 @@
                     .from("notes")
                     .upsert({
                       class_person_id: class_person.id,
-                      class_season_level_course_id: data.class_season_level_course.id,
+                      class_season_course_id: data.class_season_course.id,
                       competence_id: competence.id,
                       cycle_id: Number(cycle_id),
                       value,
@@ -89,7 +89,7 @@
                     (note) => note.competence_id === competence.id && class_person.id === note.class_person_id,
                   );
                   if (note) return Object.assign(note, new_note);
-                  data.class_season_level_course.notes.push(new_note);
+                  data.class_season_course.notes.push(new_note);
                   data = data;
                 }}
                 on:input={(e) => {

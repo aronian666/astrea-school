@@ -14,7 +14,7 @@
     last_name1: "",
     last_name2: "",
   };
-  let class_school_courses: typeof data.class.class_season_courses = [];
+  let class_season_courses: typeof data.class.class_season_courses = [];
 </script>
 
 <main class="flex direction gap5">
@@ -29,12 +29,10 @@
     <Table array={data.class.class_season_courses} let:item header={[{ name: "Curso" }, { name: "Profesor" }]}>
       <tr>
         <td>
-          <div>
-            <label class="flex items content" style="--c: start">
-              <input type="checkbox" value={item} bind:group={class_school_courses} />
-              {item.season_course?.course?.name}
-            </label>
-          </div>
+          <label class="flex items content gap0" style="--c: start">
+            <input type="checkbox" value={item} bind:group={class_season_courses} />
+            {item.season_course.course.name}
+          </label>
         </td>
         <td>{item.person?.full_name || ""}</td>
         <td>
@@ -44,7 +42,7 @@
               data-style="tonal"
               onclick="assing_person.showModal()"
               data-shape="square"
-              on:click={() => (class_school_courses = [item])}
+              on:click={() => (class_season_courses = [item])}
             >
               <Icon icon="ph:user-plus" />
             </Button>
@@ -73,11 +71,11 @@
         .update({ person_dni: person.dni || null })
         .in(
           "id",
-          class_school_courses.map(({ id }) => id),
+          class_season_courses.map(({ id }) => id),
         )
         .select("person:persons(*)");
       if (error) return message.set(error);
-      class_school_courses.forEach((v) =>
+      class_season_courses.forEach((v) =>
         Object.assign(v, { person_id: person.id, person: new_class_school_courses[0].person }),
       );
       data = data;

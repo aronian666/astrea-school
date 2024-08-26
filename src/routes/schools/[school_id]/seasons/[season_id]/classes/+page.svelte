@@ -19,7 +19,7 @@
   <h1>Clases</h1>
   <div class="grid auto-fit gap3">
     {#each Object.entries(levels) as [level, classesByLevel]}
-      {@const classesByGrade = groupBy(classesByLevel || [], (clas) => clas.grade)}
+      {@const classesByGrade = groupBy(classesByLevel, (clas) => clas.grade)}
       <section class="flex direction gap2 panel">
         <h2>{level}</h2>
         <Table
@@ -38,8 +38,8 @@
                   </a>
                 </div>
               </td>
-              <td>
-                <div class="flex items content gap0">
+              <td class="tleft">
+                {#if !clas.person}
                   <Button
                     onclick="assign_person.showModal()"
                     on:click={() => (clase = clas)}
@@ -49,8 +49,9 @@
                   >
                     <Icon icon="ph:user-plus" />
                   </Button>
+                {:else}
                   {clas.person?.full_name}
-                </div>
+                {/if}
               </td>
             </tr>
           {/each}
