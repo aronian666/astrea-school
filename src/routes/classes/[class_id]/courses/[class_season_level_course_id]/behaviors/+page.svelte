@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { Table } from "$lib/components";
   import { message } from "$lib/stores/message";
-  import { setNote } from "$lib/utils/models.js";
+  import { onKeyDownExcel, onPasteExcel, opInputExcel, setNote } from "$lib/utils";
 
   export let data;
   let cycle_selected = data.clas.season?.cycles[1]!;
@@ -26,7 +25,7 @@
       </tr>
     </thead>
     <tbody>
-      {#each data.clas.class_persons as class_person, index (`${cycle_selected.id}-${class_person.id}`)}
+      {#each data.clas.class_persons as class_person, y (`${cycle_selected.id}-${class_person.id}`)}
         {@const behavior = data.behaviors.find(
           ({ cycle_id, class_person_id }) => cycle_id === cycle_selected.id && class_person_id === class_person.id,
         )}
@@ -34,7 +33,7 @@
           <td>
             <small>
               <b>
-                {index + 1}
+                {y + 1}
               </b>
               {class_person.person?.full_name}
             </small>
@@ -45,6 +44,9 @@
               value={behavior?.value ?? ""}
               min="0"
               max="20"
+              id="input0-{y}"
+              on:paste={(e) => onPasteExcel(e, { x: 0, y })}
+              on:keydown={(e) => onKeyDownExcel(e, { x: 0, y })}
               on:change={async (e) => {
                 const input = e.currentTarget;
                 const value = Number(input.value);
@@ -55,7 +57,7 @@
                     .update({
                       class_person_id: class_person.id,
                       cycle_id: cycle_selected.id,
-                      class_season_level_course_id: data.class_season_level_course.id,
+                      class_season_course_id: data.class_season_course.id,
                       value,
                     })
                     .eq("id", behavior.id)
@@ -69,7 +71,7 @@
                     .insert({
                       class_person_id: class_person.id,
                       cycle_id: cycle_selected.id,
-                      class_season_level_course_id: data.class_season_level_course.id,
+                      class_season_course_id: data.class_season_course.id,
                       value,
                     })
                     .select()
@@ -82,27 +84,13 @@
                   ({ cycle_id, class_person_id }) =>
                     cycle_id === cycle_selected.id && class_person.id === class_person_id,
                 );
+                //@ts-ignore
                 if (index !== -1) data.behaviors[index] = new_behavior;
+                //@ts-ignore
                 else data.behaviors.push(new_behavior);
                 data = data;
               }}
-              on:input={(e) => {
-                const input = e.currentTarget;
-                const value = Number(input.value);
-                if (value < 0 || value > 20) return (input.value = "0");
-                const td = input.parentNode;
-                const span = input.nextElementSibling;
-
-                //@ts-ignore
-                span.innerHTML = setNote(value);
-                if (value < 11) {
-                  //@ts-ignore
-                  td.style.color = "var(--red)";
-                } else {
-                  //@ts-ignore
-                  td.style.color = "var(--blue)";
-                }
-              }}
+              on:input={opInputExcel}
             />
             <span
               class="tcenter w600"

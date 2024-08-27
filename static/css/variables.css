@@ -3,7 +3,7 @@
 
 
   /* Colors */
-  --primary: rgb(255, 98, 0);
+  --primary: hsl(0, 100%, 50%);
   --white: white;
   --black: hsl(0, 0%, 0%);
   --red: tomato;

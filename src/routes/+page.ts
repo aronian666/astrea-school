@@ -1,4 +1,3 @@
-import type { Tables } from '$lib/types/supabase.js';
 import { error, redirect } from '@sveltejs/kit';
 
 export const load = async ({ parent }) => {

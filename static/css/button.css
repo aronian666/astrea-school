@@ -45,7 +45,7 @@ button,
     --initial-angle: 45deg;
     --final-angle: 135deg;
     --angle: var(--initial-angle);
-    --gradient-color1: hsl(from var(--color) calc(h - 80) s l);
+    --gradient-color1: hsl(from var(--color) calc(h + 40) s l);
     --gradient-color2: hsl(from var(--color) calc(h - 40) s l);
     background: linear-gradient(var(--angle), var(--color), var(--gradient-color1));
 

@@ -2,7 +2,7 @@
   import { Field, Icon, Table } from "$lib/components";
   import { message } from "$lib/stores/message";
   import { debounce } from "$lib/utils/debounce.js";
-  import { setNote } from "$lib/utils/models.js";
+  import { onKeyDownExcel, onPasteExcel, opInputExcel, setNote } from "$lib/utils/models.js";
 
   export let data;
   let cycle_id = data.clas.season?.cycles[1].id!;
@@ -52,15 +52,15 @@
       </tr>
     </thead>
     <tbody>
-      {#each data.clas?.class_persons || [] as class_person, index}
+      {#each data.clas?.class_persons || [] as class_person, y}
         <tr class="input">
           <td>
             <span class="w500">
-              {index + 1}
+              {y + 1}
             </span>
             {class_person.person?.full_name}
           </td>
-          {#each data.class_season_course.season_course?.competences || [] as competence (`${competence.id}-${class_person.id}-${cycle_id}`)}
+          {#each data.class_season_course.season_course?.competences || [] as competence, x (`${competence.id}-${class_person.id}-${cycle_id}`)}
             {@const competence_note = notes.find(
               (note) => note.competence_id === competence.id && class_person.id === note.class_person_id,
             )}
@@ -70,6 +70,9 @@
                 value={competence_note?.value ?? ""}
                 min="0"
                 max="20"
+                id="input{x}-{y}"
+                on:keydown={(e) => onKeyDownExcel(e, { x, y })}
+                on:paste={(e) => onPasteExcel(e, { x, y })}
                 on:change={async (e) => {
                   const input = e.currentTarget;
                   const value = Number(input.value);
@@ -92,24 +95,7 @@
                   data.class_season_course.notes.push(new_note);
                   data = data;
                 }}
-                on:input={(e) => {
-                  const input = e.currentTarget;
-                  const value = Number(input.value);
-                  const td = input.parentNode;
-                  const span = input.nextElementSibling;
-                  if (value < 0 || value > 20) return (input.value = "0");
-                  //@ts-ignore
-                  if (input.value === "") span.innerHTML = "";
-                  //@ts-ignore
-                  else span.innerHTML = setNote(value);
-                  if (value < 11) {
-                    //@ts-ignore
-                    td.style.color = "var(--red)";
-                  } else {
-                    //@ts-ignore
-                    td.style.color = "var(--blue)";
-                  }
-                }}
+                on:input={opInputExcel}
               />
               <span
                 class="tcenter w700"

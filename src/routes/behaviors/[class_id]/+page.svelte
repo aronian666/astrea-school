@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Table } from "$lib/components";
   import { message } from "$lib/stores/message";
-  import { setNote } from "$lib/utils/models.js";
+  import { setNote, opInputExcel, onPasteExcel, onKeyDownExcel } from "$lib/utils";
 
   export let data;
   let cycle_selected = data.clas.season?.cycles[1]!;
@@ -30,14 +30,14 @@
     class="bordered"
     array={data.clas.class_persons}
     let:item
-    let:index
+    let:index={y}
   >
     {@const behavior = item.behaviors.find(({ cycle_id }) => cycle_id === cycle_selected.id)}
     <tr class="input">
       <td>
         <small>
           <b>
-            {index + 1}
+            {y + 1}
           </b>
           {item.person?.full_name}
         </small>
@@ -48,6 +48,7 @@
           value={behavior?.value ?? ""}
           min="0"
           max="20"
+          id="input0-{y}"
           on:change={async (e) => {
             const input = e.currentTarget;
             const value = Number(input.value);
@@ -80,27 +81,15 @@
             }
             if (error) return message.set(error);
             let index = item.behaviors.findIndex(({ cycle_id }) => cycle_id === cycle_selected.id);
+            //@ts-ignore
             if (index !== -1) item.behaviors[index] = new_behavior;
+            //@ts-ignore
             else item.behaviors.push(new_behavior);
             data = data;
           }}
-          on:input={(e) => {
-            const input = e.currentTarget;
-            const value = Number(input.value);
-            if (value < 0 || value > 20) return (input.value = "0");
-            const td = input.parentNode;
-            const span = input.nextElementSibling;
-
-            //@ts-ignore
-            span.innerHTML = setNote(value);
-            if (value < 11) {
-              //@ts-ignore
-              td.style.color = "var(--red)";
-            } else {
-              //@ts-ignore
-              td.style.color = "var(--blue)";
-            }
-          }}
+          on:input={opInputExcel}
+          on:paste={(e) => onPasteExcel(e, { x: 0, y })}
+          on:keydown={(e) => onKeyDownExcel(e, { x: 0, y })}
         />
         <span class="tcenter w600" style="position: absolute; z-index: 1; top: 50%; translate: 0 -50%; right: 0.5rem">
           {setNote(behavior?.value)}

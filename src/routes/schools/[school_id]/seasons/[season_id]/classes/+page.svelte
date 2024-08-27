@@ -13,53 +13,66 @@
     last_name2: "",
   };
   let clase = data.classes[0];
+  let newClass: TablesInsert<"classes"> = {
+    grade: data.levels[0].grades[0],
+    level_id: data.levels[0].id,
+    season_id: Number($page.params.season_id),
+    section_id: 0,
+  };
 </script>
 
-<main class="flex direction gap5">
-  <h1>Clases</h1>
-  <div class="grid auto-fit gap3">
-    {#each Object.entries(levels) as [level, classesByLevel]}
-      {@const classesByGrade = groupBy(classesByLevel, (clas) => clas.grade)}
-      <section class="flex direction gap2 panel">
-        <h2>{level}</h2>
-        <Table
-          array={Object.entries(classesByGrade)}
-          header={[{ name: "Grado" }, { name: "Secciones" }, { name: "Acesor" }]}
-          let:item
-        >
-          {#each item[1] || [] as clas}
-            <tr>
-              <td class="tcenter">{item[0]}</td>
+<section class="flex content items gap0 wrap" style="--c: space-between">
+  <hgroup>
+    <h1>Clases</h1>
+    <small>Agrege las claes que quiere, adicionalmente puede ponerle nombres personalizados.</small>
+  </hgroup>
+  <Button data-style="gradient" onclick="add_class.showModal()">
+    <Icon icon="ph:plus" active="bold" />
+    Agregar
+  </Button>
+</section>
+<div class="grid auto-fit gap3">
+  {#each Object.entries(levels) as [level, classesByLevel]}
+    {@const classesByGrade = groupBy(classesByLevel, (clas) => clas.grade)}
+    <section class="flex direction gap2 panel">
+      <h3>{level}</h3>
+      <Table
+        array={Object.entries(classesByGrade)}
+        header={[{ name: "Grado" }, { name: "Secciones" }, { name: "Acesor" }]}
+        let:item
+      >
+        {#each item[1] || [] as clas}
+          <tr>
+            <td class="tcenter">{item[0]}</td>
 
-              <td>
-                <div class="flex content">
-                  <a data-size="small" data-shape="square" data-style="tonal" class="button" href="classes/{clas.id}">
-                    {clas.section?.name}
-                  </a>
-                </div>
-              </td>
-              <td class="tleft">
-                {#if !clas.person}
-                  <Button
-                    onclick="assign_person.showModal()"
-                    on:click={() => (clase = clas)}
-                    data-shape="square"
-                    data-size="small"
-                    data-style="text"
-                  >
-                    <Icon icon="ph:user-plus" />
-                  </Button>
-                {:else}
-                  {clas.person?.full_name}
-                {/if}
-              </td>
-            </tr>
-          {/each}
-        </Table>
-      </section>
-    {/each}
-  </div>
-</main>
+            <td>
+              <div class="flex content">
+                <a data-size="small" data-shape="square" data-style="tonal" class="button" href="classes/{clas.id}">
+                  {clas.section?.name}
+                </a>
+              </div>
+            </td>
+            <td class="tleft">
+              {#if !clas.person}
+                <Button
+                  onclick="assign_person.showModal()"
+                  on:click={() => (clase = clas)}
+                  data-shape="square"
+                  data-size="small"
+                  data-style="text"
+                >
+                  <Icon icon="ph:user-plus" />
+                </Button>
+              {:else}
+                {clas.person?.full_name}
+              {/if}
+            </td>
+          </tr>
+        {/each}
+      </Table>
+    </section>
+  {/each}
+</div>
 
 <Modal id="assign_person" let:dialog>
   <Form
@@ -82,5 +95,26 @@
       <label for="person[dni]">DNI</label>
     </Person>
     <button> <Icon {loading} /> Asignar </button>
+  </Form>
+</Modal>
+
+<Modal id="add_class" let:dialog>
+  <Form let:loading onSubmit={async () => {}}>
+    <Field>
+      <label for="level">Nivel</label>
+      <select name="level" id="level">
+        {#each data.levels as level}
+          <option value={level.id}>{level.name}</option>
+        {/each}
+      </select>
+    </Field>
+    <Field>
+      <label for="grade">Grado</label>
+      <select name="grade" id="grade">
+        {#each data.levels as level}
+          <option value={level.id}>{level.name}</option>
+        {/each}
+      </select>
+    </Field>
   </Form>
 </Modal>
