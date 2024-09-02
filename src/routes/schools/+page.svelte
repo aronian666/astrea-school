@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { Field, Form, Icon, Modal, Button } from "$lib/components";
+  import { Field, Form, Icon, Modal, Button, Header } from "$lib/components";
   import { message } from "$lib/stores/message";
   import { ExtendedDate } from "$lib/utils/extendedDate.js";
   import { formToJson } from "$lib/utils/filter";
@@ -8,30 +8,27 @@
 </script>
 
 <section class="flex gap0">
-  <Button data-size="small" data-style="gradient" onclick="add_season.showModal()">Nueva temporada</Button>
-  <Button data-size="small" data-style="tonal" style="--color: var(--primary)" onclick="add_school.showModal()"
-    >Nueva institucion</Button
-  >
+  <Button data-style="gradient" onclick="add_season.showModal()">Nueva temporada</Button>
+  <Button data-style="tonal" style="--color: var(--primary)" onclick="add_school.showModal()">Nueva institucion</Button>
 </section>
-
 <section class="flex direction gap3">
   {#each data.school_users as { school, role }}
-    <div>
+    <section class="grid gap2">
       <h3>{school.name}</h3>
-    </div>
-    <div class="grid auto-fill gap2" style="grid-auto-rows: 7rem; --width: 13rem">
-      {#each school.seasons as season}
-        <a class="panel" href="/schools/{school.id}/seasons/{season.id}">
-          <h4>
-            {season.name}
-          </h4>
-          <small>
-            {new ExtendedDate(season.start).toIntl({ day: "2-digit", year: "numeric", month: "2-digit" })}
-            - {new ExtendedDate(season.finish).toIntl({ day: "2-digit", year: "numeric", month: "2-digit" })}
-          </small>
-        </a>
-      {/each}
-    </div>
+      <div class="grid auto-fill gap1" style="grid-auto-rows: 8rem">
+        {#each school.seasons as season}
+          <a class="panel" href="/schools/{school.id}/seasons/{season.id}">
+            <h4>
+              {season.name}
+            </h4>
+            <small class="gray70">
+              {new ExtendedDate(season.start).toIntl({ day: "2-digit", year: "numeric", month: "2-digit" })}
+              - {new ExtendedDate(season.finish).toIntl({ day: "2-digit", year: "numeric", month: "2-digit" })}
+            </small>
+          </a>
+        {/each}
+      </div>
+    </section>
   {/each}
 </section>
 

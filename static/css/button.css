@@ -3,7 +3,7 @@ button,
   --color: var(--primary);
   --constrast-color: rgb(from var(--color) clamp(0, calc((0.2126 * r + 0.7152 * g + 0.0722 * b - 165) * -1000), 255) clamp(0, calc((0.2126 * r + 0.7152 * g + 0.0722 * b - 165) * -1000), 255) clamp(0, calc((0.2126 * r + 0.7152 * g + 0.0722 * b - 165) * -1000), 255));
   --bg-percentage: 95%;
-  --height: 2.5rem;
+  --height: 2.75em;
 
   height: var(--height);
   color: var(--constrast-color);
@@ -14,7 +14,7 @@ button,
   gap: calc(var(--height) / 10);
   padding: 0 calc(var(--height) / 2.5);
   cursor: pointer;
-  border-radius: 10rem;
+  border-radius: 10em;
   font-size: var(--normal);
   font-family: inherit;
   transition: 0.1s translate;
@@ -31,7 +31,7 @@ button,
   }
 
   &[data-shape=padding] {
-    padding: calc(1rem - var(--border-size));
+    padding: calc(1em - var(--border-size));
     height: auto;
   }
 
@@ -45,7 +45,7 @@ button,
     --initial-angle: 45deg;
     --final-angle: 135deg;
     --angle: var(--initial-angle);
-    --gradient-color1: hsl(from var(--color) calc(h + 40) s l);
+    --gradient-color1: hsl(from var(--color) calc(h + 50) s l);
     --gradient-color2: hsl(from var(--color) calc(h - 40) s l);
     background: linear-gradient(var(--angle), var(--color), var(--gradient-color1));
 
@@ -103,11 +103,13 @@ button,
   }
 
   &[data-size=small] {
-    --height: 2.25rem;
+    font-size: var(--small);
   }
 
   &[data-size=tiny] {
-    --height: 2rem;
+    font-size: var(--small);
+    --height: 2.25em;
+    font-weight: normal;
   }
 
   &:not([data-style]):hover {
@@ -137,7 +139,7 @@ button,
   }
 
   &:active {
-    translate: 0 0.25rem;
+    translate: 0 0.25em;
   }
 }
 

@@ -8,20 +8,14 @@
   export let session: Session;
 </script>
 
-<header class="flex content items" style="--c: space-between; padding: var(--size0) 0 ">
-  <nav class="flex gap0" style="--c: center">
-    <button data-size="tiny" data-style="tonal" data-shape="square" on:click={() => history.back()}>
-      <Icon icon="iconamoon:arrow-left-2" />
-    </button>
-    <button data-size="tiny" data-style="tonal" data-shape="square" on:click={() => history.forward()}>
-      <Icon icon="iconamoon:arrow-right-2" />
-    </button>
-  </nav>
+<header class="flex content items" style="--c: space-between">
+  <a href="/" class="button" data-shape="square" data-style="text" style="--color: var(--primary)">
+    <img src="/images/logo.svg" alt="Logo de la empresa" />
+  </a>
   <button
     popovertarget="user_popover"
     style="padding: 0; border-radius: 50%; overflow: hidden; anchor-name: --user"
     name="Boton del usuario"
-    data-size="tiny"
     data-shape="square"
   >
     <img src={session.user.user_metadata.avatar_url} alt={session.user.email} style="width: 2.5rem; aspect-ratio: 1" />

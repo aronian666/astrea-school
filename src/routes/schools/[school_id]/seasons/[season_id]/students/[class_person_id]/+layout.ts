@@ -3,9 +3,9 @@ import { error } from '@sveltejs/kit';
 export const load = async ({ params: { class_person_id, season_id }, parent }) => {
   const { supabase } = await parent()
   const { data: class_person, error: err1 } = await supabase.from("class_persons").select(`
-    person:persons(full_name),
+    *,
+    person:persons(*),
     notes(*),
-    orders(*),
     class:classes!inner(
       class_season_courses!inner(
         id,

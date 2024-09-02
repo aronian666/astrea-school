@@ -7,9 +7,9 @@ const moves = {
 };
 export function setNote(value: number | undefined) {
   if (value === undefined) return "";
-  if (value < 11) return "C";
-  if (value < 14) return "B";
-  if (value < 18) return "A";
+  if (value < 10.5) return "C";
+  if (value < 13.5) return "B";
+  if (value < 17.5) return "A";
   return "AD";
 }
 
@@ -53,7 +53,7 @@ export function opInputExcel(e: Event & { currentTarget: EventTarget & HTMLInput
   const td = input.parentNode! as HTMLElement;
   const span = input.nextElementSibling!;
   span.innerHTML = setNote(value);
-  if (value < 11) {
+  if (value < 10.5) {
     td.style.color = "var(--red)";
   } else {
     td.style.color = "var(--blue)";

@@ -66,41 +66,43 @@
 </div>
 
 <Modal id="competences_modal">
-  <h2>Competencias de {selected_season_course.course.name}</h2>
-  <section class="grid gap0">
-    {#each selected_season_course.course.competences as competence}
-      <label>
-        <input
-          type="checkbox"
-          value={competence.id}
-          checked={selected_season_course.competences.some(({ id }) => id === competence.id)}
-          on:click={async (e) => {
-            const instance = data.supabase.from("season_course_competences");
-            if (e.currentTarget.checked) {
-              const { error } = await instance.upsert({
-                competence_id: competence.id,
-                season_course_id: selected_season_course.id,
-              });
-              if (error) return (e.currentTarget.checked = false);
-              else selected_season_course.competences.push(competence);
-            } else {
-              const { error } = await instance
-                .delete()
-                .match({ competence_id: competence.id, season_course_id: selected_season_course.id });
-              if (error) return (e.currentTarget.checked = true);
-              else
-                selected_season_course.competences = selected_season_course.competences.filter(
-                  ({ id }) => competence.id != id,
-                );
-            }
-            selected_season_course = selected_season_course;
-            data = data;
-          }}
-        />
-        {competence.name}
-      </label>
-    {/each}
-  </section>
+  {#if selected_season_course}
+    <h2>Competencias de {selected_season_course.course.name}</h2>
+    <section class="grid gap0">
+      {#each selected_season_course.course.competences as competence}
+        <label>
+          <input
+            type="checkbox"
+            value={competence.id}
+            checked={selected_season_course.competences.some(({ id }) => id === competence.id)}
+            on:click={async (e) => {
+              const instance = data.supabase.from("season_course_competences");
+              if (e.currentTarget.checked) {
+                const { error } = await instance.upsert({
+                  competence_id: competence.id,
+                  season_course_id: selected_season_course.id,
+                });
+                if (error) return (e.currentTarget.checked = false);
+                else selected_season_course.competences.push(competence);
+              } else {
+                const { error } = await instance
+                  .delete()
+                  .match({ competence_id: competence.id, season_course_id: selected_season_course.id });
+                if (error) return (e.currentTarget.checked = true);
+                else
+                  selected_season_course.competences = selected_season_course.competences.filter(
+                    ({ id }) => competence.id != id,
+                  );
+              }
+              selected_season_course = selected_season_course;
+              data = data;
+            }}
+          />
+          {competence.name}
+        </label>
+      {/each}
+    </section>
+  {/if}
 </Modal>
 
 <Modal id="add_course" let:dialog>

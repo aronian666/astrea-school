@@ -60,9 +60,7 @@
     <Field>
       <div class="flex items content" style="--c: space-between">
         <label for="password" class="w500"> Contraseña </label>
-        <small style="color: var(--primary)">
-          <a href="/auth/recovery">¿Olvidaste tu contraseña?</a>
-        </small>
+        <a href="/auth/recovery" style="color: var(--primary)" class="small">¿Olvidaste tu contraseña?</a>
       </div>
       <input bind:this={inputPassword} id="password" type="password" name="password" required minlength="6" />
     </Field>
@@ -95,6 +93,7 @@
 
 <style>
   main {
-    grid-column: 2 / span 1;
+    grid-column: 1 / -1;
+    grid-row: 1/-1;
   }
 </style>

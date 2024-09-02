@@ -10,7 +10,7 @@
     <a
       {href}
       class="button"
-      data-size="tiny"
+      data-size="small"
       data-style="tonal"
       data-active={option.match ? $page.url.pathname === href : $page.url.pathname.startsWith(href)}>{option.name}</a
     >

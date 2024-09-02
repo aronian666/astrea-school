@@ -29,13 +29,16 @@
   });
 </script>
 
-{#if data.session && !excluded.some((regexp) => regexp.test($page.url.pathname))}
-  <Aside root="" {options} />
+{#if data.session}
+  <Header session={data.session} />
+  {#if !excluded.some((regexp) => regexp.test($page.url.pathname))}
+    <Aside root="" {options} />
+  {/if}
   <main class="flex direction gap4">
-    <Header session={data.session} />
     <slot />
   </main>
 {:else}
   <slot />
 {/if}
+
 <Message />

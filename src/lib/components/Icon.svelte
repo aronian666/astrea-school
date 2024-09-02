@@ -5,7 +5,7 @@
   export let active: Style = "fill";
   export let loading = false;
   export let style = "";
-  export let width = "1.125rem";
+  export let width = "1.5em";
 </script>
 
 {#if loading}

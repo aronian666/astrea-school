@@ -3,7 +3,7 @@
 
 
   /* Colors */
-  --primary: hsl(0, 100%, 50%);
+  --primary: dodgerblue;
   --white: white;
   --black: hsl(0, 0%, 0%);
   --red: tomato;
@@ -55,6 +55,7 @@
   --size5: calc(var(--fi5) * 1rem);
   --normal: 0.875rem;
   --small: 0.75rem;
+  --tiny: 0.625rem;
   --icon: 1.125rem;
 
 
