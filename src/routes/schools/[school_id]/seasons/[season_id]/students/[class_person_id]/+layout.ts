@@ -6,6 +6,7 @@ export const load = async ({ params: { class_person_id, season_id }, parent }) =
     *,
     person:persons(*),
     notes(*),
+    behaviors(*),
     class:classes!inner(
       class_season_courses!inner(
         id,

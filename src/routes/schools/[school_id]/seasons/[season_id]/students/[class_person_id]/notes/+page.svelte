@@ -11,6 +11,7 @@
     if (season_course?.course?.course) return String(season_course?.course?.course.name);
     return String(season_course?.course?.name);
   });
+  console.log(data.class_person.behaviors);
 </script>
 
 <section class="grid gap1">
@@ -109,6 +110,14 @@
         </table>
       </section>
     {/each}
+  </div>
+  <div>
+    <b>Comportamiento</b>
+    <span
+      >{formatNumber(
+        data.class_person.behaviors.reduce((a, b) => a + b.value, 0) / data.class_person.behaviors.length,
+      )}</span
+    >
   </div>
 </div>
 

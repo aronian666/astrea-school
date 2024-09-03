@@ -33,10 +33,12 @@
   <Header session={data.session} />
   {#if !excluded.some((regexp) => regexp.test($page.url.pathname))}
     <Aside root="" {options} />
-  {/if}
-  <main class="flex direction gap4">
+    <main class="flex direction gap4">
+      <slot />
+    </main>
+  {:else}
     <slot />
-  </main>
+  {/if}
 {:else}
   <slot />
 {/if}
