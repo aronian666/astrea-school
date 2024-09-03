@@ -33,7 +33,12 @@
         {@const popoverId = `options${class_person.id}`}
         {@const debt = class_person.view_carts.reduce((a, b) => a + Number(b.final_value), 0)}
         <tr>
-          <td class="small">{index + 1} {class_person.person.full_name}</td>
+          <td>
+            <a href="/schools/{$page.params.school_id}/seasons/{$page.params.season_id}/students/{class_person.id}">
+              {index + 1}
+              {class_person.person.full_name}
+            </a>
+          </td>
           <td>
             <div class="grid content">
               <button data-size="tiny" data-style="tonal" style="--color: {!debt ? 'var(--green)' : 'var(--red)'}">
