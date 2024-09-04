@@ -3,11 +3,11 @@ table {
 
   th {
     font-weight: 500;
-    padding: var(--size1) 0;
+    padding: var(--size0);
   }
 
   td {
-    padding: 0.25rem;
+    padding: var(--size0);
   }
 
   tr.input td {

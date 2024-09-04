@@ -11,7 +11,8 @@
     if (season_course?.course?.course) return String(season_course?.course?.course.name);
     return String(season_course?.course?.name);
   });
-  console.log(data.class_person.behaviors);
+  $: behaviors = data.class_person.behaviors.filter((b) => b.cycle_id === cycle.id);
+  $: behavior = Math.round(behaviors.reduce((a, b) => a + b.value, 0) / behaviors.length);
 </script>
 
 <section class="grid gap1">
@@ -56,7 +57,7 @@
     </picture>
   </section>
   <div class="flex direction gap3">
-    {#each Object.entries(courses) as [course, class_season_courses]}
+    {#each Object.entries(courses).sort(([a], [b]) => a.localeCompare(b)) as [course, class_season_courses]}
       {@const competences = (
         class_season_courses.sort((a, b) => Number(a.season_course?.order) - Number(b.season_course?.order)) || []
       )
@@ -97,7 +98,7 @@
               </tr>
             {/each}
             <tr class="w500">
-              <td> Promedio </td>
+              <td> Literal </td>
               {#each unique_competences as competence}
                 {@const notes = all_notes.filter(({ competence_id }) => competence.id === competence_id)}
                 {@const average = Math.round(notes.reduce((a, b) => a + b.value, 0) / notes.length)}
@@ -111,12 +112,30 @@
       </section>
     {/each}
   </div>
-  <div>
-    <b>Comportamiento</b>
-    <span
-      >{formatNumber(
-        data.class_person.behaviors.reduce((a, b) => a + b.value, 0) / data.class_person.behaviors.length,
-      )}</span
+  <div class="grid content">
+    <table class="bordered">
+      <thead>
+        <tr>
+          <th colspan="2">Comportamiento</th>
+        </tr>
+        <tr>
+          <th class="small">Numeral</th>
+          <th class="small">Literal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="color: {setColor(behavior)}">
+          <td class="tcenter">{behavior}</td>
+          <td class="tcenter">{setNote(behavior)}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="flex content" style="--c: space-around; margin-top: var(--size5)">
+    <small style="border-top: 1px solid black; padding: var(--size1) var(--size2); ">Firma del docente o tutor(a)</small
+    >
+    <small style="border-top: 1px solid black; padding: var(--size1) var(--size2); "
+      >Firma y sello del director(a)</small
     >
   </div>
 </div>
