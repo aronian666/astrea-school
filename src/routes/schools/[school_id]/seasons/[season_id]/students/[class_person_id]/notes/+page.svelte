@@ -48,7 +48,7 @@
         <span>{data.class_person.class.section?.name}</span>
         <b>BIMESTRE</b>
         <span>{cycle?.name}</span>
-        <b>Anio</b>
+        <b>Año</b>
         <span>{data.class_person.class.season?.name}</span>
       </div>
     </section>
