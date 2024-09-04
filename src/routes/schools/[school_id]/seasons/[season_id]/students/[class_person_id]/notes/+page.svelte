@@ -33,7 +33,7 @@
 <div id="print" class="flex direction gap4">
   <section class="flex items content" style="--c: space-around">
     <picture style="width: 5rem;">
-      <img src="/images/sfa.svg" alt="" />
+      <img src="/images/sfa.jpg" alt="" />
     </picture>
     <section class="flex direction gap3">
       <h2 class="tcenter">"BOLETA DE NOTAS DEL EDUCANDO"</h2>
