@@ -32,7 +32,7 @@
 
 <div id="print" class="flex direction gap4">
   <section class="flex items content" style="--c: space-around">
-    <picture style="width: 5rem;">
+    <picture style="width: 6rem;">
       <img src="/images/sfa.jpg" alt="" />
     </picture>
     <section class="flex direction gap3">
@@ -48,11 +48,11 @@
         <span>{data.class_person.class.section?.name}</span>
         <b>BIMESTRE</b>
         <span>{cycle?.name}</span>
-        <b>Año</b>
+        <b>AÑO</b>
         <span>{data.class_person.class.season?.name}</span>
       </div>
     </section>
-    <picture style="width: 5rem;">
+    <picture style="width: 9rem;">
       <img src="/images/logosfa.svg" alt="" />
     </picture>
   </section>
