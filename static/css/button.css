@@ -1,71 +1,55 @@
 button,
 .button {
+  --height: var(--size700);
   --color: var(--primary);
   --constrast-color: rgb(from var(--color) clamp(0, calc((0.2126 * r + 0.7152 * g + 0.0722 * b - 165) * -1000), 255) clamp(0, calc((0.2126 * r + 0.7152 * g + 0.0722 * b - 165) * -1000), 255) clamp(0, calc((0.2126 * r + 0.7152 * g + 0.0722 * b - 165) * -1000), 255));
-  --bg-percentage: 95%;
-  --height: 2.75em;
-
+  --bg-percentage: 94%;
+  --shadow-size: 0px;
   height: var(--height);
+  padding: 0 calc(var(--height) / 3);
+  border: none;
+  cursor: pointer;
+  border-radius: calc(var(--height) / 5);
+  font-size: var(--normal);
+  display: flex;
+  align-items: var(--i, center);
+  place-content: var(--c, center);
   color: var(--constrast-color);
   background-color: color-mix(in srgb, var(--color) var(--bg-percentage), transparent);
-  display: flex;
-  place-content: var(--c, center);
-  place-items: var(--i, center);
-  gap: calc(var(--height) / 10);
-  padding: 0 calc(var(--height) / 2.5);
-  cursor: pointer;
-  border-radius: 10em;
-  font-size: var(--normal);
-  font-family: inherit;
-  transition: 0.1s translate;
-  font-weight: 500;
-  border: none;
+  gap: calc(var(--height) / 8);
+  transition: 0.2s;
+  font-weight: 600;
+  box-shadow: 0 0 0 var(--shadow-size) color-mix(in srgb, var(--color) var(--border-percentage), transparent);
 
-  &:has(>iconify-icon) {
-    --padding-left: calc(var(--height) / 3.33);
-  }
 
+  /* Shapes */
   &[data-shape=square] {
     padding: 0;
     aspect-ratio: 1;
   }
 
-  &[data-shape=padding] {
-    padding: calc(1em - var(--border-size));
-    height: auto;
+  &[data-radius=circle] {
+    border-radius: 10rem;
   }
 
-  &[data-shape=menu] {
-    gap: calc(var(--height) / 3.33);
-    border-radius: 0;
-    font-weight: normal;
-  }
-
-  &[data-style=gradient] {
-    --initial-angle: 45deg;
-    --final-angle: 135deg;
-    --angle: var(--initial-angle);
-    --gradient-color1: hsl(from var(--color) calc(h + 50) s l);
-    --gradient-color2: hsl(from var(--color) calc(h - 40) s l);
-    background: linear-gradient(var(--angle), var(--color), var(--gradient-color1));
-
-    animation-name: rotate-reverse;
-    animation-fill-mode: forwards;
-    animation-duration: 0.2s;
+  /* styles */
+  &[data-style=text] {
+    color: var(--color);
+    --bg-percentage: 0%;
 
     &:hover {
-      animation-name: rotate;
-      animation-duration: 0.2s;
+      --bg-percentage: 10%;
     }
 
+    &[data-active=true] {
+      --bg-percentage: 10%;
+    }
   }
 
   &[data-style=outline] {
-    --color: var(--black);
-    --border-percentage: 50%;
+    --border-percentage: 75%;
     --bg-percentage: 0%;
-
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color) var(--border-percentage), transparent);
+    --shadow-size: 1px;
     color: var(--color);
 
     &:hover {
@@ -73,47 +57,79 @@ button,
     }
   }
 
-  &[data-style=text] {
-    --color: var(--black);
+  &[data-style=tonal] {
     color: var(--color);
-    --bg-percentage: 0%;
+    --bg-percentage: 8%;
 
     &:hover {
-      --bg-percentage: 10%;
+      --bg-percentage: 12%
     }
 
-    &[data-active=true] {
-      --bg-percentage: 10%;
+    &:is([data-active=true], :has(input:checked)) {
+      --bg-percentage: 100%;
+      color: var(--constrast-color);
+
+      &[data-hover=outline] {
+        color: var(--color);
+        --border-percentage: 100%;
+        --bg-percentage: 8%;
+        --shadow-size: 1px;
+      }
     }
   }
 
-  &[data-style=tonal] {
-    --color: var(--black);
-    color: var(--color);
-    --bg-percentage: 7%;
+  &[data-style=gradient] {
+    --initial-angle: 45deg;
+    --final-angle: 135deg;
+    --angle: var(--initial-angle);
+    --gradient-color1: hsl(from var(--color) calc(h + 70) s l);
+    --gradient-color2: hsl(from var(--color) calc(h - 70) s l);
+    background: linear-gradient(var(--angle), var(--color), var(--gradient-color1));
+
+    animation-name: rotate-reverse;
+    animation-fill-mode: forwards;
+    animation-duration: 0.3s;
 
     &:hover {
-      --bg-percentage: 10%
+      animation-name: rotate;
+      animation-duration: 0.3s;
     }
 
-    &[data-active=true] {
-      --bg-percentage: 100%;
-      color: var(--constrast-color);
-    }
+  }
+
+  /* Sizes */
+  &[data-size=large] {
+    --height: var(--size800);
+    font-size: var(--size100);
+    font-weight: 800;
+  }
+
+  &[data-size=medium] {
+    --height: var(--size600);
   }
 
   &[data-size=small] {
+    --height: var(--size500);
     font-size: var(--small);
   }
 
   &[data-size=tiny] {
-    font-size: var(--small);
-    --height: 2.25em;
-    font-weight: normal;
+    --height: var(--size400);
+    font-size: var(--size90);
   }
 
-  &:not([data-style]):hover {
-    --bg-percentage: 100%;
+  /* global */
+
+  &:active {
+    translate: 0 0.25em;
+  }
+
+  &:is([data-active=false], :has(input:not(:checked))) {
+    font-weight: 400;
+  }
+
+  &:is([data-active=true], :has(input:checked)) {
+    font-weight: 700;
   }
 
   &[disabled] {
@@ -121,28 +137,10 @@ button,
     pointer-events: none;
   }
 
-  &[data-active=false] {
-    font-weight: 400;
-  }
-
-  &[data-active=true] {
-
-    iconify-icon {
-      &[data-status=active] {
-        display: block;
-      }
-
-      &[data-status=default] {
-        display: none;
-      }
-    }
-  }
-
-  &:active {
-    translate: 0 0.25em;
+  &:not([data-style]):hover {
+    --bg-percentage: 100%;
   }
 }
-
 
 button,
 .button,

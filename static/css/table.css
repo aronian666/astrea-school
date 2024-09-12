@@ -1,13 +1,6 @@
 table {
-  border-collapse: collapse;
-
-  th {
-    font-weight: 500;
-    padding: var(--size0);
-  }
-
   td {
-    padding: var(--size0);
+    padding: var(--size70);
   }
 
   tr.input td {
@@ -24,14 +17,5 @@ table {
       background-color: var(--white);
       padding: 0.25rem;
     }
-  }
-
-
-
-
-
-
-  &.bordered :is(td, th) {
-    border: 1px solid var(--gray30);
   }
 }

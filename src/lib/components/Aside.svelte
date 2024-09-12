@@ -6,7 +6,7 @@
 </script>
 
 <aside class="flex direction" data-position="1">
-  <div class="flex direction">
+  <div class="flex direction" style="--c: start">
     {#each options as option}
       <section class="flex direction gap1">
         {#if option.title}
@@ -17,11 +17,12 @@
             {@const href = [root, path.href].filter(Boolean).join("/")}
             <a
               {href}
-              data-active={path.match ? $page.url.pathname === href : $page.url.pathname.startsWith(href)}
+              data-active={path.match
+                ? $page.url.pathname === href
+                : $page.url.pathname.startsWith(href)}
               class="button"
               style="--c: start"
               data-style="text"
-              data-shape="menu"
             >
               {#if path.icon}
                 <Icon icon={path.icon} normal="light" width="1.5rem" />
@@ -42,7 +43,9 @@
         {@const href = [root, path.href].filter(Boolean).join("/")}
         <a
           {href}
-          data-active={path.match ? $page.url.pathname === href : $page.url.pathname.startsWith(href)}
+          data-active={path.match
+            ? $page.url.pathname === href
+            : $page.url.pathname.startsWith(href)}
           class="button flex direction"
           style="--c: start; gap:0; padding: var(--size0)"
           data-style="text"

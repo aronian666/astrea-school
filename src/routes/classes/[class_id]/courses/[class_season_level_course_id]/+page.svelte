@@ -2,19 +2,31 @@
   import { Field, Icon, Table } from "$lib/components";
   import { message } from "$lib/stores/message";
   import { debounce } from "$lib/utils/debounce.js";
-  import { onKeyDownExcel, onPasteExcel, opInputExcel, setNote } from "$lib/utils/models.js";
+  import {
+    onKeyDownExcel,
+    onPasteExcel,
+    opInputExcel,
+    setNote,
+  } from "$lib/utils/models.js";
 
   export let data;
   let cycle_id = data.clas.season?.cycles[1].id!;
-  $: notes = data.class_season_course.notes.filter((note) => cycle_id === note.cycle_id);
+  $: notes = data.class_season_course.notes.filter(
+    (note) => cycle_id === note.cycle_id,
+  );
 </script>
 
 <form>
   <Field>
     <div class="grid auto-fit gap1" style="--width: 10rem">
       {#each data.clas.season?.cycles || [] as cycle}
-        <label>
-          <input data-display="hidden" type="radio" value={cycle.id} bind:group={cycle_id} />
+        <label class="button" data-style="tonal">
+          <input
+            data-display="none"
+            type="radio"
+            value={cycle.id}
+            bind:group={cycle_id}
+          />
           {cycle.name}
         </label>
       {/each}
@@ -62,9 +74,15 @@
           </td>
           {#each data.class_season_course.season_course?.competences || [] as competence, x (`${competence.id}-${class_person.id}-${cycle_id}`)}
             {@const competence_note = notes.find(
-              (note) => note.competence_id === competence.id && class_person.id === note.class_person_id,
+              (note) =>
+                note.competence_id === competence.id &&
+                class_person.id === note.class_person_id,
             )}
-            <td style="color: {Number(competence_note?.value) < 11 ? 'var(--red)' : 'var(--blue)'}">
+            <td
+              style="color: {Number(competence_note?.value) < 11
+                ? 'var(--red)'
+                : 'var(--blue)'}"
+            >
               <input
                 type="number"
                 value={competence_note?.value ?? ""}
@@ -89,7 +107,9 @@
                     .single();
                   if (error) return message.set(error);
                   let note = notes.find(
-                    (note) => note.competence_id === competence.id && class_person.id === note.class_person_id,
+                    (note) =>
+                      note.competence_id === competence.id &&
+                      class_person.id === note.class_person_id,
                   );
                   if (note) return Object.assign(note, new_note);
                   data.class_season_course.notes.push(new_note);

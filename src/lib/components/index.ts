@@ -7,6 +7,7 @@ export { default as Table } from "./Table.svelte"
 export { default as BreadCrumb } from "./BreadCrumb.svelte"
 export { default as Select } from "./Select.svelte"
 export { default as Header } from "./Header.svelte"
+export { default as Fieldset } from "./Fieldset.svelte"
 
 export { default as Popover } from "./Popover.svelte"
 export { default as Dates } from "./Dates.svelte"

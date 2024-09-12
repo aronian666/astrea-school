@@ -1,14 +1,3 @@
-@keyframes fade {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-
-}
-
 @keyframes rotate {
   from {
     --angle: var(--initial-angle, 0deg);

@@ -1,16 +1,17 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
-  import { Form, Field, Icon } from "$lib/components";
+  import { Form, Field, Icon, Fieldset } from "$lib/components";
   import { formToJson } from "$lib/utils/filter.js";
 
   export let data;
   let inputPassword: HTMLInputElement;
   $: signUp = $page.url.searchParams.get("signUp");
-  async function onSubmit(event: SubmitEvent) {
-    //@ts-ignore
+  const onSubmit: tOnSubmit = async (event) => {
     const formData = new FormData(event.currentTarget);
-    const user = formToJson<{ email: string; password: string; name: string }>(formData);
+    const user = formToJson<{ email: string; password: string; name: string }>(
+      formData,
+    );
     if (signUp) {
       const { error: err } = await data.supabase.auth.signUp({
         email: user.email,
@@ -30,7 +31,7 @@
     });
     if (err) return alert(err.message);
     return await goto("/");
-  }
+  };
 </script>
 
 <main class="flex items content">
@@ -41,6 +42,7 @@
     <button
       type="button"
       data-style="outline"
+      data-size="large"
       on:click={async () => {
         await data.supabase.auth.signInWithOAuth({
           provider: "google",
@@ -53,38 +55,60 @@
       <iconify-icon icon="devicon:google"></iconify-icon>
       Ingresar con google
     </button>
-    {#if signUp}
-      <Field label="Nombre" name="name" required />
-    {/if}
-    <Field required label="Correo electronico" type="email" name="email"></Field>
-    <Field>
-      <div class="flex items content" style="--c: space-between">
-        <label for="password" class="w500"> Contraseña </label>
-        <a href="/auth/recovery" style="color: var(--primary)" class="small">¿Olvidaste tu contraseña?</a>
-      </div>
-      <input bind:this={inputPassword} id="password" type="password" name="password" required minlength="6" />
-    </Field>
-
-    {#if signUp}
-      <Field required title="Repetir contrasena" let:setError>
-        <label for="repeat_password">Repetir contraseña </label>
+    <div class="grid gap3">
+      {#if signUp}
+        <label>
+          <span>Nombre</span>
+          <input type="text" name="name" required placeholder=" " />
+        </label>
+      {/if}
+      <label>
+        <span>Correo electronico</span>
+        <input type="email" name="email" required placeholder=" " />
+      </label>
+      <label>
+        <span>Contraseña</span>
         <input
+          bind:this={inputPassword}
+          id="password"
           type="password"
-          name="repeat_password"
-          id="repeat_password"
-          on:blur={(e) => {
-            if (e.currentTarget.value !== inputPassword.value)
-              setError(e.currentTarget, "Las contrasenas no son iguales");
-            else setError(e.currentTarget, "");
-          }}
+          name="password"
+          required
+          minlength="6"
+          placeholder=" "
         />
-      </Field>
-    {/if}
-    <p>
-      {signUp ? "¿Ya tienes una cuenta? Inicia sesión " : "¿No tienes una cuenta? Registrate "}
-      <a href={"/auth" + (signUp ? "" : "?signUp=true")} style="color: var(--primary)">aquí.</a>
-    </p>
-    <button data-style="gradient" type="submit">
+      </label>
+      {#if signUp}
+        <Fieldset let:handleError>
+          <label>
+            <span>Repetir contrasena</span>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              required
+              minlength="6"
+              placeholder=" "
+              on:change={(e) => {
+                if (e.currentTarget.value !== inputPassword.value)
+                  handleError(e, "Las contrasenas no son iguales");
+                else handleError(e, "");
+              }}
+            />
+          </label>
+        </Fieldset>
+      {/if}
+      <span>
+        {signUp
+          ? "¿Ya tienes una cuenta? Inicia sesión "
+          : "¿No tienes una cuenta? Registrate "}
+        <a
+          href={"/auth" + (signUp ? "" : "?signUp=true")}
+          style="color: var(--primary)">aquí.</a
+        >
+      </span>
+    </div>
+    <button data-style="gradient" type="submit" data-size="large">
       <Icon {loading} />
       {signUp ? "Registrarse" : "Iniciar sesión"}
     </button>

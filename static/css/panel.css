@@ -1,46 +1,5 @@
 .panel {
-  --border-color: var(--primary);
-  --border-size: 0px;
-  --size-shadow: 2px;
-  --inner-size-shadow: 2px;
-  --angle: 0deg;
-  --inner-shadow: transparent;
-  padding: calc(var(--size3em) - var(--border-size));
-  background: var(--white);
-  border-radius: var(--size2em);
-  border: var(--border-size) solid var(--border-color);
-  box-shadow: 0 0 2px var(--gray10),
-    0 var(--size-shadow) calc(var(--size-shadow) * 2) var(--gray20),
-    inset 0 0 0px var(--inner-size-shadow) var(--inner-shadow);
-
-  transition: .1s box-shadow;
-
-  color: inherit;
-
-  &:hover {
-    --size-shadow: 8px;
-    --inner-size-shadow: 5px;
-  }
-
-  &.menu {
-    padding: var(--size1) 0;
-    border-radius: var(--size1);
-  }
-
-  &.gradient {
-    --border-color: transparent;
-    --gradient-color1: hls(from var(--border-color) (h - 50) s l);
-    --gradient-color2: hls(from var(--border-color) (h + 50) s l);
-    animation: rotate 3s linear infinite;
-    background:
-      linear-gradient(var(--color) 0 0) padding-box,
-      /*this is your grey background*/
-      conic-gradient(from var(--angle), var(--border-color), var(--gradient-color1), var(--gradient-color2), var(--border-color)) border-box;
-  }
-
-  &:hover.gradient.hover {
-    --border-color: transparent;
-  }
-
-
+  box-shadow: 0 0 0 1px var(--gray30);
+  padding: var(--size100);
+  border-radius: var(--size100);
 }

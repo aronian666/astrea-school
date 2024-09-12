@@ -1,26 +1,54 @@
 :root {
-  --font-size: 16px;
-
-
-  /* Colors */
-  --primary: dodgerblue;
   --white: white;
-  --black: hsl(0, 0%, 0%);
-  --red: tomato;
-  --green: hsl(120, 71%, 37%);
-  --orange: hsl(35, 100%, 50%);
-  --blue: dodgerblue;
+  --black: black;
+  --primary: hsl(210, 100%, 50%);
+  --red: red;
+  --blue: blue;
 
+  --small: 0.8125rem;
+  --normal: 0.875rem;
 
+  --d70: 0.25;
+  --d80: 0.5;
+  --d90: 0.75;
+  --d100: 1;
+  --d200: 1.25;
+  --d300: 1.5;
+  --d400: 1.75;
+  --d500: 2;
+  --d600: 2.25;
+  --d700: 2.5;
+  --d800: 2.75;
+  --d900: 3;
+  --d1000: 3.25;
 
-  /* FI */
-  --fi0: 0.25;
-  --fi1: 0.5;
-  --fi2: 0.75;
-  --fi3: 1;
-  --fi4: 1.5;
-  --fi5: 2;
+  --size70: calc(var(--d70) * 1rem);
+  --size80: calc(var(--d80) * 1rem);
+  --size90: calc(var(--d90) * 1rem);
+  --size100: calc(var(--d100) * 1rem);
+  --size200: calc(var(--d200) * 1rem);
+  --size300: calc(var(--d300) * 1rem);
+  --size400: calc(var(--d400) * 1rem);
+  --size500: calc(var(--d500) * 1rem);
+  --size600: calc(var(--d600) * 1rem);
+  --size700: calc(var(--d700) * 1rem);
+  --size800: calc(var(--d800) * 1rem);
+  --size900: calc(var(--d900) * 1rem);
+  --size1000: calc(var(--d1000) * 1rem);
 
+  --size70em: calc(var(--d70) * 1em);
+  --size80em: calc(var(--d80) * 1em);
+  --size90em: calc(var(--d90) * 1em);
+  --size100em: calc(var(--d100) * 1em);
+  --size200em: calc(var(--d200) * 1em);
+  --size300em: calc(var(--d300) * 1em);
+  --size400em: calc(var(--d400) * 1em);
+  --size500em: calc(var(--d500) * 1em);
+  --size600em: calc(var(--d600) * 1em);
+  --size700em: calc(var(--d700) * 1em);
+  --size800em: calc(var(--d800) * 1em);
+  --size900em: calc(var(--d900) * 1em);
+  --size1000em: calc(var(--d1000) * 1em);
 
   --gray5: color-mix(in oklab, var(--black) 5%, transparent);
   --gray10: color-mix(in oklab, var(--black) 10%, transparent);
@@ -32,48 +60,15 @@
   --gray70: color-mix(in oklab, var(--black) 70%, transparent);
   --gray80: color-mix(in oklab, var(--black) 80%, transparent);
   --gray90: color-mix(in oklab, var(--black) 90%, transparent);
-
-
-  --color5: color-mix(in oklab, var(--color) 5%, transparent);
-  --color10: color-mix(in oklab, var(--color) 10%, transparent);
-  --color20: color-mix(in oklab, var(--color) 20%, transparent);
-  --color30: color-mix(in oklab, var(--color) 30%, transparent);
-  --color40: color-mix(in oklab, var(--color) 40%, transparent);
-  --color50: color-mix(in oklab, var(--color) 50%, transparent);
-  --color60: color-mix(in oklab, var(--color) 60%, transparent);
-  --color70: color-mix(in oklab, var(--color) 70%, transparent);
-  --color80: color-mix(in oklab, var(--color) 80%, transparent);
-  --color90: color-mix(in oklab, var(--color) 90%, transparent);
-
-
-  /* Sizes */
-  --size0: calc(var(--fi0) * 1rem);
-  --size1: calc(var(--fi1) * 1rem);
-  --size2: calc(var(--fi2) * 1rem);
-  --size3: calc(var(--fi3) * 1rem);
-  --size4: calc(var(--fi4) * 1rem);
-  --size5: calc(var(--fi5) * 1rem);
-  --normal: 0.875rem;
-  --small: 0.75rem;
-  --tiny: 0.625rem;
-  --icon: 1.125rem;
-
-
-  --size0em: calc(var(--fi0) * 1em);
-  --size1em: calc(var(--fi1) * 1em);
-  --size2em: calc(var(--fi2) * 1em);
-  --size3em: calc(var(--fi3) * 1em);
-  --size4em: calc(var(--fi4) * 1em);
-  --size5em: calc(var(--fi5) * 1em);
-
-
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --black: white;
-    --white: rgb(35, 35, 35);
-    --primary: dodgerblue;
+    --white: #121212;
+    --primary: skyblue;
+    --red: hsl(9, 100%, 70%);
+    --blue: hsl(204, 100%, 61%);
   }
 }
 

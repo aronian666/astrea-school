@@ -12,7 +12,6 @@
       {#each data.clas.class_season_courses || [] as { season_course, id }}
         {@const url = `/classes/${data.clas.id}/courses/${id}`}
         <a
-          data-size="tiny"
           style="width: max-content"
           class="button"
           data-style="tonal"
@@ -25,3 +24,13 @@
 {/if}
 
 <slot />
+
+<style>
+  nav::-webkit-scrollbar {
+    display: none;
+  }
+  nav {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+  }
+</style>

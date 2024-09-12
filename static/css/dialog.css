@@ -1,0 +1,26 @@
+dialog {
+  --start: scale(0);
+  --end: scale(1);
+  border: none;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  padding: var(--size100);
+  transition: 0.3s, display 0.3s allow-discrete;
+  transform: var(--start);
+
+
+  &[open] {
+    display: var(--display);
+    transform: var(--end);
+
+    @starting-style {
+      transform: var(--start);
+    }
+  }
+
+  &:-internal-dialog-in-top-layer {
+    max-width: none;
+    max-height: none;
+  }
+}

@@ -1,5 +1,5 @@
 type tInputEvent<El = HTMLInputElement, E = Event> = E & { currentTarget: EventTarget & El }
-type tOnSubmit = ((e: tInputEvent<HTMLFormElement, SubmitEvent>) => Promise<void> | void)
+type tOnSubmit = ((e: tInputEvent<HTMLFormElement, SubmitEvent>) => Promise<any> | any)
 type tOnChange<EL = HTMLInputElement> = ((this: EL, e: tInputEvent<EL>) => Promise<void> | void) | undefined
 type tOnInput = ((this: HTMLInputElement, e: tInputEvent<HTMLInputElement>) => Promise<void> | void) | undefined
 type tOnKeypress = ((this: HTMLInputElement, e: tInputEvent<HTMLInputElement, KeyboardEvent>) => Promise<void> | void) | undefined

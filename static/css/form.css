@@ -1,143 +1,86 @@
-label {
-  cursor: pointer;
-
-  >iconify-icon {
-    &[data-status=active] {
-      display: none;
-    }
-  }
-
-  &:hover {
-    >iconify-icon {
-      &[data-status=active] {
-        display: block;
-        color: var(--primary);
-      }
-
-      &[data-status=default] {
-        display: none;
-      }
-    }
-  }
-}
-
 form {
   display: grid;
-  gap: var(--size3);
+  gap: var(--size600);
+}
 
-  label {
-    cursor: pointer;
-    transition: 0.3s;
+fieldset {
+  display: grid;
+  gap: var(--size70);
+  border: none;
 
-    >iconify-icon {
-      &[data-status=active] {
-        display: none;
-      }
-    }
+}
 
-    &:hover {
-      >iconify-icon {
-        &[data-status=active] {
-          display: block;
-          color: var(--primary);
-        }
+label {
+  --color: var(--gray70);
+  --padding: var(--size100);
+  --shadow-size: 1px;
+  --border-radius: calc(0.75 * var(--padding));
+  font-size: 1rem;
+  display: grid;
+  position: relative;
+  box-shadow: 0 0 0 var(--shadow-size) var(--color);
+  border-radius: var(--border-radius);
+  transition: .2s ease;
 
-        &[data-status=default] {
-          display: none;
-        }
-      }
-    }
-
-    &:has(input[data-display=hidden]) {
-      padding: var(--size2);
-      border-radius: var(--size1);
-      background-color: var(--gray5);
-
-      &:hover {
-        background-color: color-mix(in srgb, var(--primary) 5%, transparent) !important;
-      }
-    }
-
-    &:has(input[data-display=hidden]:checked) {
-      background-color: var(--gray5);
-      box-shadow: inset 0 0 0 1px var(--primary);
-
-      iconify-icon {
-        &[data-status=active] {
-          display: block;
-          color: var(--primary);
-        }
-
-        &[data-status=default] {
-          display: none;
-        }
-      }
-    }
-
-    &:has(~:is(input:not(:is([type=checkbox], [type=radio], [type=file])), select, textarea)) {
-      display: flex;
-      gap: var(--size1em);
-      place-items: center;
-      font-weight: 600;
-
-
-      &:has(~:focus) iconify-icon {
-        &[data-status=active] {
-          display: block;
-          color: var(--primary);
-        }
-
-        &[data-status=default] {
-          display: none;
-        }
-      }
-    }
-  }
-
-
-  input:not(:is([type=checkbox], [type=radio], [type=file])),
-  textarea,
-  select {
-    --border-color: color-mix(in oklab, var(--black) var(--border-percentage), transparent);
-    --shadow-color: var(--border-color);
-    --border-size: 1px;
-    --border-percentage: 20%;
-    height: 2.75em;
-    border: var(--border-size) solid var(--border-color);
-    font-family: inherit;
-    padding: 0 0.75em;
-    border-radius: 0.5em;
-    box-shadow: 0 1px 1px var(--shadow-color);
-    outline: none;
-    font-size: inherit;
+  >span {
+    position: absolute;
+    transition: inherit;
+    color: var(--color);
+    left: var(--padding);
+    top: 50%;
+    translate: 0 -50%;
     background-color: var(--white);
-    color: var(--black);
-    transition: 0.3s;
+    cursor: pointer;
+  }
 
-    &:focus {
-      box-shadow: 0 2px 0px var(--primary);
+  &:has(> :is(input, select, textarea):is(:not(:placeholder-shown)))>span {
+    top: -2px;
+    font-size: 0.8125rem;
+  }
 
+  &:has(> :is(input, select, textarea):is(:focus)) {
+    --color: var(--primary);
+    --shadow-size: 2px;
+
+    >span {
+      top: -2px;
+      font-size: 0.8125rem;
     }
   }
 
-}
+  &:has(> input:user-invalid) {
+    --color: var(--red);
+  }
 
+  > :is(input:not(:is([type=checkbox], [type=radio])), select, textarea) {
+    border: none;
+    outline: none;
+    padding: var(--padding);
+    border-radius: var(--border-radius);
+    font-size: inherit;
+    transition: 0.3s;
+    background-color: var(--white);
+  }
 
+  &.button {
+    height: auto;
+    padding: var(--padding);
+    border-radius: var(--border-radius);
+    --padding: 0.76em;
 
+    &[data-size=medium] {
+      --padding: 0.625em;
+      font-size: var(--normal);
+    }
 
-input:is([type=checkbox], [type=radio]) {
-  accent-color: var(--primary);
-  aspect-ratio: 1;
-  height: 1rem;
+    &[data-size=small] {
+      --padding: 0.54em;
+      font-size: var(--small);
+    }
 
-}
-
-input[type=button] {
-  text-align: left;
-}
-
-
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
+    &[data-size=tiny] {
+      --padding: var(--size80em);
+      font-size: var(--size90);
+    }
+  }
 }

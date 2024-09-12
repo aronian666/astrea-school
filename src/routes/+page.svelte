@@ -1,12 +1,14 @@
 <script lang="ts">
   import { Icon } from "$lib/components";
   import { groupBy } from "$lib/utils/groupBy";
-  import Algo from "./Algo.svelte";
+  import Home from "./Home.svelte";
   export let data;
 </script>
 
 {#if data.session && data.class_season_level_courses}
-  {@const levels = groupBy(data.class_season_level_courses, ({ class: clas }) => JSON.stringify(clas?.level))}
+  {@const levels = groupBy(data.class_season_level_courses, ({ class: clas }) =>
+    JSON.stringify(clas?.level),
+  )}
   {#if !data.session.user.user_metadata.dni}
     <section class="panel flex items gap0">
       <iconify-icon style="color: orange" width="1.5rem" icon="ph:warning" />
@@ -17,7 +19,9 @@
     </section>
   {:else}
     {#each Object.entries(levels) as [level_string, class_season_level_courses]}
-      {@const classes = groupBy(class_season_level_courses, ({ class: clas }) => JSON.stringify(clas))}
+      {@const classes = groupBy(class_season_level_courses, ({ class: clas }) =>
+        JSON.stringify(clas),
+      )}
       {@const level = JSON.parse(level_string)}
       <section class="grid gap2">
         <hgroup class="flex content" style="--c: space-between">
@@ -33,7 +37,9 @@
                   {clas.section.name}
                 </h4>
               </hgroup>
-              <small style="color: var(--gray70)">{class_season_level_courses?.length} cursos</small>
+              <small style="color: var(--gray70)"
+                >{class_season_level_courses?.length} cursos</small
+              >
             </a>
           {/each}
         </div>
@@ -41,5 +47,5 @@
     {/each}
   {/if}
 {:else}
-  <Algo />
+  <Home />
 {/if}
