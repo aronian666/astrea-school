@@ -9,7 +9,6 @@
 
   export let data;
   let carts: typeof data.carts = [];
-  let concept = data.concepts[0];
   let insert_order: TablesInsert<"orders"> = {
     class_person_id: data.class_person.id,
     person_id: 0,
@@ -22,7 +21,15 @@
     last_name1: "",
     last_name2: "",
   };
+  let insert_cart: TablesInsert<"carts"> = {
+    class_person_id: data.class_person.id,
+    concept_id: 0,
+  };
   let payments: TablesInsert<"payments">[];
+  $: concept =
+    data.concepts.find((c) => c.id === insert_cart.concept_id) ||
+    data.concepts[0];
+  let copy_insert_cart = structuredClone(insert_cart);
 </script>
 
 <section class="flex content items" style="--c: space-between">
@@ -123,20 +130,43 @@
               <Icon icon="ph:trash" {loading} />
               Eliminar
             </Button>
-            <button data-style="text" style="--c: start">
+            <Button
+              data-style="text"
+              style="--c: start"
+              on:click={() =>
+                (insert_cart = {
+                  id: Number(cart.id),
+                  class_person_id: Number(cart.class_person_id),
+                  concept_id: Number(cart.concept_id),
+                  discount_id: cart.discount_id,
+                  last_date: cart.last_date,
+                })}
+              onclick="add_cart.showModal()"
+            >
               <Icon icon="ph:pen" />
               Editar
-            </button>
+            </Button>
           </section>
         </div>
       </section>
       {#if cart.discount || cart.penalty}
         <section class="flex gap0" style="--i: center">
-          <button
-            data-size="tiny"
-            data-style="tonal"
-            style="--color: var(--green)">{cart.discount?.name}</button
-          >
+          {#if cart.discount}
+            <button
+              data-size="tiny"
+              data-style="tonal"
+              style="--color: var(--green)">{cart.discount?.name}</button
+            >
+          {/if}
+          {#if cart.penalty}
+            <button
+              data-size="tiny"
+              data-style="tonal"
+              style="--color: var(--red)"
+            >
+              {formatNumber(cart.penalty)}
+            </button>
+          {/if}
         </section>
       {/if}
     </label>
@@ -147,34 +177,45 @@
   <Form
     let:loading
     onSubmit={async (e) => {
-      const formValues = setNull(formToJson(new FormData(e.currentTarget)));
-      const { data: new_cart, error: err } = await data.supabase
-        .from("carts")
-        .insert({
-          class_person_id: data.class_person.id,
-          concept_id: concept.id,
-          ...formValues,
-        });
-
+      let err;
+      if (insert_cart.id) {
+        err = (
+          await data.supabase
+            .from("carts")
+            .update(setNull(insert_cart))
+            .eq("id", insert_cart.id)
+        ).error;
+      } else {
+        err = (await data.supabase.from("carts").insert(setNull(insert_cart)))
+          .error;
+      }
       if (err) return message.set(err);
       await invalidate("update:carts");
       dialog.close();
     }}
   >
-    <h2>Agregar al carrito</h2>
+    <h2>
+      {#if insert_cart.id}
+        Actualizar carrito
+      {:else}
+        Agregar carrito
+      {/if}
+    </h2>
     <section class="grid gap3">
-      <label>
-        <span>Producto</span>
-        <select bind:value={concept}>
-          {#each data.concepts as concept (concept.id)}
-            <option value={concept}>{concept.name}</option>
-          {/each}
-        </select>
-      </label>
+      {#if !insert_cart.id}
+        <label>
+          <span>Producto</span>
+          <select bind:value={insert_cart.concept_id}>
+            {#each data.concepts as concept (concept.id)}
+              <option value={concept.id}>{concept.name}</option>
+            {/each}
+          </select>
+        </label>
+      {/if}
       {#if concept.discounts.length}
         <label>
           <span>Descuento</span>
-          <select name="discount_id">
+          <select bind:value={insert_cart.discount_id}>
             <option value="null"></option>
             {#each concept.discounts as discount (discount.id)}
               <option value={discount.id}>{discount.name}</option>
@@ -182,12 +223,29 @@
           </select>
         </label>
       {/if}
+      {#if insert_cart.id}
+        <label>
+          <span>Ultimo dia de pago</span>
+          <input type="date" bind:value={insert_cart.last_date} />
+        </label>
+      {/if}
     </section>
-    <button> <Icon {loading} /> Agregar</button>
+    <button>
+      <Icon {loading} />
+      {#if insert_cart.id}
+        Actualizar
+      {:else}
+        Agregar
+      {/if}
+    </button>
   </Form>
 </Modal>
 
-<Modal id="sell" let:dialog>
+<Modal
+  id="sell"
+  let:dialog
+  onClose={() => (insert_cart = structuredClone(copy_insert_cart))}
+>
   <Form
     let:loading
     onSubmit={async () => {

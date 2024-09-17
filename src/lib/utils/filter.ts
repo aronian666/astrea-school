@@ -26,7 +26,7 @@ export const formToJson = <T = { [key: string]: string | null }>(formData: FormD
   return formObject as T;
 };
 
-export const setNull = (object: { [key: string]: string | null }) => {
+export const setNull = <T>(object: T) => {
   Object.entries(object).forEach(([key, value]) => {
     if (value === "null" || value === "") object[key] = null
   })
