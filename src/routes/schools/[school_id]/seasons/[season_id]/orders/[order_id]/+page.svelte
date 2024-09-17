@@ -72,7 +72,11 @@
               <td>
                 {payment.concept?.name}
                 {#if payment.finish}
-                  ({new ExtendedDate(payment.finish).toIntl({ month: "long" })})
+                  <small>
+                    ({new ExtendedDate(payment.finish).toIntl({
+                      month: "long",
+                    })})
+                  </small>
                 {/if}
               </td>
               <td>{payment.value.toFixed(2)}</td>
@@ -102,7 +106,7 @@
 
 <style>
   #print * {
-    font-size: var(--small) !important;
+    font-size: var(--size90) !important;
     font-family:
       system-ui,
       -apple-system,
