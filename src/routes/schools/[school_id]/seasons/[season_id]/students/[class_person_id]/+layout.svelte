@@ -7,12 +7,13 @@
     { name: "Inicio", href: "", match: true },
     { name: "Pagos", href: "orders" },
     { name: "Notas", href: "notes" },
+    { name: "Vender", href: "cart" },
   ];
 </script>
 
-<section class="flex direction gap1">
+<section class="flex direction gap2">
   <hgroup class="grid">
-    <h1>{data.class_person.person?.full_name}</h1>
+    <h2>{data.class_person.person?.full_name}</h2>
     <small
       >{data.class_person.class.level?.name}
       {data.class_person.class.grade}
@@ -21,8 +22,8 @@
   </hgroup>
   <Menu
     {options}
-    root="/schools/{data.school_user.school_id}/seasons/{$page.params.season_id}/students/{$page.params
-      .class_person_id}"
+    root="/schools/{data.school_user.school_id}/seasons/{$page.params
+      .season_id}/students/{$page.params.class_person_id}"
   ></Menu>
 </section>
 

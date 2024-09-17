@@ -22,17 +22,20 @@ html {
 }
 
 h1 {
-  font-size: var(--size500);
+  font-size: var(--size600);
 }
 
 h2 {
-  font-size: var(--size300);
+  font-size: var(--size400);
 }
 
 h3 {
-  font-size: var(--size100);
+  font-size: var(--size200);
 }
 
+h4 {
+  font-size: var(--size100);
+}
 
 
 small {
@@ -40,7 +43,7 @@ small {
 }
 
 p {
-  font-size: var(--normal);
+  font-size: 1rem;
 }
 
 main {
@@ -67,6 +70,7 @@ body {
   color: var(--black);
   display: grid;
   grid-template: 4rem 1fr / 1fr 4fr 1fr;
+  font-size: var(--normal);
 }
 
 aside {
@@ -116,6 +120,7 @@ main {
 
 img {
   width: 100%;
+  max-height: 100%;
 }
 
 @media (width < 1024px) {

@@ -1,7 +1,7 @@
 button,
 .button {
   --height: var(--size700);
-  --color: var(--primary);
+  --color: var(--black);
   --constrast-color: rgb(from var(--color) clamp(0, calc((0.2126 * r + 0.7152 * g + 0.0722 * b - 165) * -1000), 255) clamp(0, calc((0.2126 * r + 0.7152 * g + 0.0722 * b - 165) * -1000), 255) clamp(0, calc((0.2126 * r + 0.7152 * g + 0.0722 * b - 165) * -1000), 255));
   --bg-percentage: 94%;
   --shadow-size: 0px;
@@ -38,11 +38,12 @@ button,
     --bg-percentage: 0%;
 
     &:hover {
-      --bg-percentage: 10%;
+      --bg-percentage: 5%;
     }
 
-    &[data-active=true] {
-      --bg-percentage: 10%;
+    &:is([data-active=true], :has(input:checked)) {
+      --shadow-size: 1px;
+      --border-percentage: 100%;
     }
   }
 
@@ -59,7 +60,7 @@ button,
 
   &[data-style=tonal] {
     color: var(--color);
-    --bg-percentage: 8%;
+    --bg-percentage: 6%;
 
     &:hover {
       --bg-percentage: 12%
@@ -72,7 +73,7 @@ button,
       &[data-hover=outline] {
         color: var(--color);
         --border-percentage: 100%;
-        --bg-percentage: 8%;
+        --bg-percentage: 6%;
         --shadow-size: 1px;
       }
     }
@@ -120,15 +121,13 @@ button,
 
   /* global */
 
-  &:active {
-    translate: 0 0.25em;
-  }
 
-  &:is([data-active=false], :has(input:not(:checked))) {
+
+  &[data-active=false] {
     font-weight: 400;
   }
 
-  &:is([data-active=true], :has(input:checked)) {
+  &[data-active=true] {
     font-weight: 700;
   }
 
@@ -145,13 +144,13 @@ button,
 button,
 .button,
 a {
-  iconify-icon {
+  >iconify-icon {
     &[data-status=active] {
       display: none;
     }
   }
 
-  &:is(:hover, :focus) iconify-icon {
+  &:is(:hover, :focus)>iconify-icon {
     &[data-status=active] {
       display: block;
     }

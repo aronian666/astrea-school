@@ -1,6 +1,15 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { BreadCrumb, Button, Field, Form, Icon, Modal, Person, Table } from "$lib/components";
+  import {
+    BreadCrumb,
+    Button,
+    Field,
+    Form,
+    Icon,
+    Modal,
+    Person,
+    Table,
+  } from "$lib/components";
   import { message } from "$lib/stores/message";
   import type { TablesInsert } from "$lib/types/supabase";
   import { formatNumber } from "$lib/utils";
@@ -21,7 +30,11 @@
         <th>Deuda</th>
         <td>
           <div class="flex content">
-            <Button data-shape="square" data-size="small" onclick="assing_student.showModal()">
+            <Button
+              data-shape="square"
+              data-size="small"
+              onclick="assing_student.showModal()"
+            >
               <Icon icon="ph:user-plus" />
             </Button>
           </div>
@@ -31,21 +44,18 @@
     <tbody>
       {#each data.class.class_persons as class_person, index}
         {@const popoverId = `options${class_person.id}`}
-        {@const debt = class_person.view_carts.reduce((a, b) => a + Number(b.final_value), 0)}
+
         <tr>
           <td>
-            <a href="/schools/{$page.params.school_id}/seasons/{$page.params.season_id}/students/{class_person.id}">
+            <a
+              href="/schools/{$page.params.school_id}/seasons/{$page.params
+                .season_id}/students/{class_person.id}"
+            >
               {index + 1}
               {class_person.person.full_name}
             </a>
           </td>
-          <td>
-            <div class="grid content">
-              <button data-size="tiny" data-style="tonal" style="--color: {!debt ? 'var(--green)' : 'var(--red)'}">
-                {formatNumber(debt)}
-              </button>
-            </div>
-          </td>
+          <td> </td>
           <td>
             <div class="grid content">
               <button
@@ -63,9 +73,15 @@
                 id={popoverId}
                 style="position-anchor: --{popoverId}; inset-area: bottom span-left; --display: grid; --c: start"
               >
-                <Button data-shape="menu" data-style="text"><Icon icon="ph:trash" />Eliminar</Button>
-                <Button data-shape="menu" data-style="text"><Icon icon="ph:pen" />Editar</Button>
-                <Button data-shape="menu" data-style="text"><Icon icon="ph:books" />Descuentos</Button>
+                <Button data-shape="menu" data-style="text"
+                  ><Icon icon="ph:trash" />Eliminar</Button
+                >
+                <Button data-shape="menu" data-style="text"
+                  ><Icon icon="ph:pen" />Editar</Button
+                >
+                <Button data-shape="menu" data-style="text"
+                  ><Icon icon="ph:books" />Descuentos</Button
+                >
               </div>
             </div>
           </td>
@@ -76,11 +92,53 @@
 </section>
 
 <Modal id="assing_student" let:dialog>
-  <Form>
-    <Person bind:person />
-    <Field bind:value={person.last_name1} name="last_name1" label="Apellido Paterno"></Field>
-    <Field bind:value={person.last_name2} name="last_name2" label="Apellido Materno"></Field>
-    <Field bind:value={person.first_name} name="first_name" label="Nombres"></Field>
+  <Form
+    onSubmit={async () => {
+      const { error, data: new_class_person } = await data.supabase
+        .from("class_persons")
+        .insert({
+          class_id: data.class.id,
+          person_id: Number(person.id),
+        })
+        .select(`id, person:persons!inner(full_name),view_carts(*)`)
+        .single();
+      if (error) return message.set(error);
+      data.class.class_persons.push(new_class_person);
+      data = data;
+      dialog.close();
+    }}
+  >
+    <h2 class="tcenter">Agregar estudiante</h2>
+    <section class="grid gap3">
+      <Person bind:person />
+      <label>
+        <span>Apellido paterno</span>
+        <input
+          type="text"
+          name="last_name1"
+          placeholder=" "
+          bind:value={person.last_name1}
+        />
+      </label>
+      <label>
+        <span>Apellido materno</span>
+        <input
+          type="text"
+          name="last_name2"
+          placeholder=" "
+          bind:value={person.last_name2}
+        />
+      </label>
+      <label>
+        <span>Apellido paterno</span>
+        <input
+          type="text"
+          name="first_name"
+          placeholder=" "
+          bind:value={person.first_name}
+        />
+      </label>
+    </section>
     <button>Agregar estudiante</button>
   </Form>
 </Modal>

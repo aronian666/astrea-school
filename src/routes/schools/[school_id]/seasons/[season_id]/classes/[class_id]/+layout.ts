@@ -6,8 +6,7 @@ export const load = async ({ params: { class_id }, parent }) => {
     *, 
     class_persons(
       id, 
-      person:persons!inner(full_name),
-      view_carts(*)
+      person:persons!inner(full_name)
     ), 
     level:levels(name), 
     section:sections(name),

@@ -1,6 +1,6 @@
 import { ExtendedDate } from "./extendedDate";
 
-export const formToJson = <T = { [key: string]: string }>(formData: FormData | URLSearchParams) => {
+export const formToJson = <T = { [key: string]: string | null }>(formData: FormData | URLSearchParams) => {
   const formObject: { [key: string]: any } = {};
   for (let [key, value] of formData.entries()) {
     const regex = /([^[]+)|\[(.*?)\]/g
@@ -25,6 +25,13 @@ export const formToJson = <T = { [key: string]: string }>(formData: FormData | U
   }
   return formObject as T;
 };
+
+export const setNull = (object: { [key: string]: string | null }) => {
+  Object.entries(object).forEach(([key, value]) => {
+    if (value === "null" || value === "") object[key] = null
+  })
+  return object
+}
 export class Filter {
   ascending: "true" | "false" = "true"
   order?: string

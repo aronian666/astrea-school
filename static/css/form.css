@@ -14,7 +14,7 @@ label {
   --color: var(--gray70);
   --padding: var(--size100);
   --shadow-size: 1px;
-  --border-radius: calc(0.75 * var(--padding));
+  --border-radius: calc(0.6 * var(--padding));
   font-size: 1rem;
   display: grid;
   position: relative;

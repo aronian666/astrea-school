@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { Icon } from ".";
 
-  export let onClose: (() => void) | undefined = undefined;
-  export let onOpen: (() => void) | undefined = undefined;
+  /*  import { onMount } from "svelte"; */
+
+  /* export let onClose: (() => void) | undefined = undefined;
+  export let onOpen: (() => void) | undefined = undefined; */
   export let id: string;
   let dialog: HTMLDialogElement;
-  onMount(() => {
+  /*  onMount(() => {
     if (onClose) dialog.addEventListener("close", onClose);
     if (onOpen) dialog.addEventListener("open", onOpen);
     const handleClick = (event: MouseEvent) => {
@@ -18,11 +20,19 @@
       if (onOpen) dialog.removeEventListener("open", onOpen);
       dialog.removeEventListener("click", handleClick);
     };
-  });
+  }); */
 </script>
 
 <dialog bind:this={dialog} {id}>
-  <article {...$$restProps}>
-    <slot {dialog} />
-  </article>
+  <slot {dialog} />
+  <button
+    data-shape="square"
+    data-size="small"
+    data-style="text"
+    data-radius="circle"
+    style="position: absolute; top: var(--size70); right: var(--size70)"
+    on:click={() => dialog.close()}
+  >
+    <Icon icon="ph:x" active="bold" />
+  </button>
 </dialog>

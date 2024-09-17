@@ -8,8 +8,14 @@
 </script>
 
 <section class="flex gap0">
-  <Button data-style="gradient" onclick="add_season.showModal()">Nueva temporada</Button>
-  <Button data-style="tonal" style="--color: var(--primary)" onclick="add_school.showModal()">Nueva institucion</Button>
+  <Button data-style="gradient" onclick="add_season.showModal()"
+    >Nueva temporada</Button
+  >
+  <Button
+    data-style="tonal"
+    style="--color: var(--primary)"
+    onclick="add_school.showModal()">Nueva institucion</Button
+  >
 </section>
 <section class="flex direction gap3">
   {#each data.school_users as { school, role }}
@@ -22,8 +28,7 @@
               {season.name}
             </h4>
             <small class="gray70">
-              {new ExtendedDate(season.start).toIntl({ day: "2-digit", year: "numeric", month: "2-digit" })}
-              - {new ExtendedDate(season.finish).toIntl({ day: "2-digit", year: "numeric", month: "2-digit" })}
+              {season.period}
             </small>
           </a>
         {/each}
@@ -38,11 +43,19 @@
     onSubmit={async (e) => {
       // @ts-ignore
       const { school } = formToJson(new FormData(e.currentTarget));
-      const { data: newSchool, error } = await data.supabase.from("schools").insert(school).select("id").single();
+      const { data: newSchool, error } = await data.supabase
+        .from("schools")
+        .insert(school)
+        .select("id")
+        .single();
       if (error) return message.set(error);
       const { error: err } = await data.supabase
         .from("school_users")
-        .insert({ school_id: newSchool.id, user_id: data.session.user.id, role_id: 2 });
+        .insert({
+          school_id: newSchool.id,
+          user_id: data.session.user.id,
+          role_id: 2,
+        });
       if (err) return message.set(err);
       return goto(`/schools/${newSchool.id}`);
     }}
@@ -79,7 +92,11 @@
         user_id: data.session.user.id,
         period: `[${start}, ${end})`,
       });
-      const { data: newSeason, error: err } = await data.supabase.from("seasons").insert(season).select("id").single();
+      const { data: newSeason, error: err } = await data.supabase
+        .from("seasons")
+        .insert(season)
+        .select("id")
+        .single();
       if (err) return message.set(err);
       await goto(`/schools/${season.school_id}/seasons/${newSeason.id}`);
     }}

@@ -1,12 +1,19 @@
 <script lang="ts">
-  import { Form, Table } from "$lib/components";
+  import { Form, Pagination, Table } from "$lib/components";
   import { debounce } from "$lib/utils";
 
   export let data;
 </script>
 
-<section class="flex direction gap2">
-  <Form let:button data-sveltekit-keepfocus data-sveltekit-noscroll data-sveltekit-replacestate class="grid auto-fill">
+<Form
+  let:button
+  data-sveltekit-keepfocus
+  data-sveltekit-noscroll
+  data-sveltekit-replacestate
+  class="grid auto-fill"
+>
+  <label>
+    <span>Buscar</span>
     <input
       type="search"
       placeholder="Buscar"
@@ -15,11 +22,16 @@
         button.click();
       }, 200)}
     />
-  </Form>
+  </label>
+</Form>
+<section class="flex direction gap1">
   <Table array={data.class_persons} let:item>
     <tr>
       <td>
-        <a href="students/{item.id}">
+        <a
+          href="students/{item.id}"
+          style="font-weight: 400; color: var(--black); font-size: var(--normal)"
+        >
           <hgroup class="grid">
             {item.person?.full_name}
             <small style="color: var(--gray70)">
@@ -32,4 +44,7 @@
       </td>
     </tr>
   </Table>
+  {#if data.count}
+    <Pagination count={data.count} />
+  {/if}
 </section>

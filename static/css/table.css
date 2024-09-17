@@ -1,6 +1,14 @@
 table {
+  border-collapse: collapse;
+
   td {
-    padding: var(--size70);
+    padding: var(--size70) 0;
+  }
+
+  tr {
+    &:hover {
+      background-color: color-mix(in srgb, var(--primary) 5%, transparent);
+    }
   }
 
   tr.input td {
