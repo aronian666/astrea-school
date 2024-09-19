@@ -26,4 +26,8 @@ table {
       padding: 0.25rem;
     }
   }
+
+  &.bordered :is(td, th) {
+    border: 1px solid var(--gray30);
+  }
 }

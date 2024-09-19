@@ -8,6 +8,7 @@ export const DATE_TO_GROUP: {
   7: { interval: "day", intl: { day: "2-digit" } },
   8: { interval: "day", intl: { weekday: "long" } },
   10: { interval: "hour", intl: { hour: "2-digit", hour12: true } },
+  0: { interval: "day", intl: { day: "2-digit", month: "2-digit" } },
 };
 
 export const AXES = [

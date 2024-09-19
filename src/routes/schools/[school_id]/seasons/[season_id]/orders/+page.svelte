@@ -1,14 +1,143 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import { DateManager, Graph, Pagination, Table } from "$lib/components";
-  import { DATE_TO_GROUP, ExtendedDate, formatNumber } from "$lib/utils";
+  import { message } from "$lib/stores/message.js";
+  import {
+    DATE_TO_GROUP,
+    downloadCSV,
+    ExtendedDate,
+    Filter,
+    formatNumber,
+  } from "$lib/utils";
 
   export let data;
-  $: value =
-    $page.url.searchParams.get("value") || new ExtendedDate().toInput();
+  $: value = $page.url.searchParams.get("value") || "";
+  async function download() {
+    const months = [
+      "marzo",
+      "abril",
+      "mayo",
+      "junio",
+      "julio",
+      "agosto",
+      "septiembre",
+      "octubre",
+      "noviembre",
+      "diciembre",
+    ];
+    const today = new ExtendedDate();
+    const tomorrow = new ExtendedDate();
+    tomorrow.setDate(today.getDate() + 1);
+    let start: Date, end: Date;
+    if (value) [start, end] = ExtendedDate.getRanges(value);
+    else
+      [start, end] = [
+        new Date($page.url.searchParams.get("start") || today),
+        new Date($page.url.searchParams.get("end") || tomorrow),
+      ];
+
+    const { data: orders, error: err } = await data.supabase
+      .from("orders")
+      .select(
+        "*, person:persons(full_name, dni), class_person:class_persons!inner(class:classes(level:levels(name), grade, section:sections(name)),person:persons!inner(dni, full_name,first_name, last_name1, last_name2)), payments(value, penalty, percent, final_value, concept_id, middle_date)",
+        { count: "exact" },
+      )
+      .eq("season_id", $page.params.season_id)
+      .gte("created_at", start.toISOString())
+      .lte("created_at", end.toISOString());
+    if (err) return message.set(err);
+    const rows = orders.map((row) => {
+      const payments = [3, 7, 5, 6, 4, 1].map((concept_id) => {
+        const vp = row.payments.filter((vp) => concept_id === vp.concept_id);
+        if (vp.length === 0) return [0];
+        if (concept_id === 1) {
+          return vp
+            .map(({ value, penalty, percent, middle_date }) => {
+              return months.map((month) => {
+                if (
+                  month ==
+                  new ExtendedDate(String(middle_date)).toIntl({
+                    month: "long",
+                  })
+                ) {
+                  return [
+                    (value * (1 - percent / 100)).toFixed(2),
+                    Number(penalty),
+                  ];
+                }
+                return [0, 0];
+              });
+            })
+            .flat();
+        }
+        return vp.map(({ final_value }) => Number(final_value));
+      });
+      return [
+        row.id,
+        new ExtendedDate(row.created_at).toIntl({
+          month: "2-digit",
+          year: "2-digit",
+          day: "2-digit",
+        }),
+        row.class_person?.class?.level?.name,
+        row.class_person?.class?.grade,
+        row.class_person?.class?.section?.name,
+        row.class_person?.person?.dni,
+        row.class_person?.person?.full_name,
+        row.person?.dni,
+        row.person?.full_name,
+        ...payments,
+      ].flat();
+    });
+    const head = [
+      "Voleta",
+      "Fecha",
+      "Nivel",
+      "Grado",
+      "Seccion",
+      "Dni Estudiante",
+      "Estudiante",
+      "DNI pagante",
+      "Pagante",
+      "Inscripcion",
+      "Cuota de ingreso nuevo",
+      "Material",
+      "Agenda",
+      "Matricula",
+      "Marzo",
+      "Mora",
+      "Abril",
+      "Mora",
+      "Mayo",
+      "Mora",
+      "Junio",
+      "Mora",
+      "Julio",
+      "Mora",
+      "Agosto",
+      "Mora",
+      "Septiembre",
+      "Mora",
+      "Octubre",
+      "Mora",
+      "Noviembre",
+      "Mora",
+      "Diciembre",
+      "Mora",
+    ];
+    downloadCSV([head, ...rows], `Estudiantes`);
+  }
 </script>
 
-<DateManager />
+<section class="flex content" style="--c: space-between">
+  <DateManager />
+  <button
+    on:click={download}
+    data-style="gradient"
+    style="--color: var(--primary)">Descargar</button
+  >
+</section>
 
 <section class="grid auto-fill gap3">
   <Graph
@@ -56,11 +185,9 @@
         <tr>
           <td><b>TOTAL</b></td>
           <td class="tright">
-            <b
-              >{formatNumber(
-                data.group_payments.reduce((a, b) => a + b.sum, 0),
-              )}</b
-            >
+            <b>
+              {formatNumber(data.group_payments.reduce((a, b) => a + b.sum, 0))}
+            </b>
           </td>
         </tr>
       </tfoot>

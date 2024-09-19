@@ -1,13 +1,18 @@
-import { dateToGroup, ExtendedDate } from '$lib/utils/extendedDate.js';
+import { DATE_TO_GROUP } from '$lib/utils/constraints.js';
+import { ExtendedDate } from '$lib/utils/extendedDate.js';
 import { Filter } from '$lib/utils/filter';
 import { error } from '@sveltejs/kit';
 
 
 export const load = async ({ parent, params: { season_id }, url }) => {
-  const input = url.searchParams.get("value") || new ExtendedDate().toInput()
-
-  const [start, end] = ExtendedDate.getRanges(input)
-  const interval = `date_trunc('${dateToGroup[input.length].interval}', created_at AT TIME ZONE 'UTC' AT TIME ZONE '-5') AT TIME ZONE 'UTC' AT TIME ZONE '+5' as interval`
+  const input = url.searchParams.get("value") || ""
+  const today = new ExtendedDate()
+  const tomorrow = new ExtendedDate()
+  tomorrow.setDate(today.getDate() + 1)
+  let start: Date, end: Date;
+  if (input) [start, end] = ExtendedDate.getRanges(input)
+  else[start, end] = [new Date(url.searchParams.get("start") || today), new Date(url.searchParams.get("end") || tomorrow)]
+  const interval = `date_trunc('${DATE_TO_GROUP[input.length].interval}', created_at AT TIME ZONE 'UTC' AT TIME ZONE '-5') AT TIME ZONE 'UTC' AT TIME ZONE '+5' as interval`
   const where = `where created_at >= '${start.toISOString()}' and created_at < '${end.toISOString()}'`
   const { supabase } = await parent()
   const filter = new Filter(url)
