@@ -52,24 +52,22 @@
         const vp = row.payments.filter((vp) => concept_id === vp.concept_id);
         if (vp.length === 0) return [0];
         if (concept_id === 1) {
-          return vp
-            .map(({ value, penalty, percent, middle_date }) => {
-              return months.map((month) => {
-                if (
-                  month ==
-                  new ExtendedDate(String(middle_date)).toIntl({
-                    month: "long",
-                  })
-                ) {
-                  return [
-                    (value * (1 - percent / 100)).toFixed(2),
-                    Number(penalty),
-                  ];
-                }
-                return [0, 0];
+          return months.map((month) => {
+            const find_month = vp.find(({ middle_date }) => {
+              const payment_month = new ExtendedDate(
+                String(middle_date),
+              ).toIntl({
+                month: "long",
               });
-            })
-            .flat();
+              return month === payment_month;
+            });
+            if (find_month)
+              return [
+                (find_month.value * (1 - find_month.percent / 100)).toFixed(2),
+                Number(find_month.penalty),
+              ];
+            return [0, 0];
+          });
         }
         return vp.map(({ final_value }) => Number(final_value));
       });
