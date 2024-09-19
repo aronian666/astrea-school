@@ -18,6 +18,9 @@ export { default as Field } from "./Field.svelte"
 export { default as Details } from "./Details.svelte"
 export { default as Person } from "./Person.svelte"
 export { default as Pagination } from "./Pagination.svelte"
+export { default as DateManager } from "./DateManager.svelte"
+export { default as Graph } from "./Graph.svelte"
+
 
 
 

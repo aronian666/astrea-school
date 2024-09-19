@@ -79,9 +79,9 @@
           <h4>
             {cart.concept.name}
           </h4>
-          {#if cart.finish}
+          {#if cart.middle_date}
             <small style="font-size: var(--size90);">
-              {new ExtendedDate(cart.finish).toIntl({
+              {new ExtendedDate(cart.middle_date).toIntl({
                 month: "long",
               })}
             </small>
@@ -173,7 +173,11 @@
   {/each}
 </section>
 
-<Modal id="add_cart" let:dialog>
+<Modal
+  id="add_cart"
+  let:dialog
+  onClose={() => (insert_cart = structuredClone(copy_insert_cart))}
+>
   <Form
     let:loading
     onSubmit={async (e) => {
@@ -241,11 +245,7 @@
   </Form>
 </Modal>
 
-<Modal
-  id="sell"
-  let:dialog
-  onClose={() => (insert_cart = structuredClone(copy_insert_cart))}
->
+<Modal id="sell" let:dialog>
   <Form
     let:loading
     onSubmit={async () => {

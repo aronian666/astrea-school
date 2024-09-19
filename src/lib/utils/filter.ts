@@ -27,7 +27,9 @@ export const formToJson = <T = { [key: string]: string | null }>(formData: FormD
 };
 
 export const setNull = <T>(object: T) => {
+  // @ts-ingore
   Object.entries(object).forEach(([key, value]) => {
+    // @ts-ingore
     if (value === "null" || value === "") object[key] = null
   })
   return object

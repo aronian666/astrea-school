@@ -68,8 +68,8 @@
         <tr>
           <td>
             {item.concept.name}
-            {#if item.finish}
-              ({new ExtendedDate(item.finish).toIntl({ month: "long" })})
+            {#if item.middle_date}
+              ({new ExtendedDate(item.middle_date).toIntl({ month: "long" })})
             {/if}
           </td>
 

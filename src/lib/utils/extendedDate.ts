@@ -1,4 +1,15 @@
 type InputDate = "year" | "month" | "week" | "date"
+export const dateToGroup: {
+  [key: number]: {
+    interval: "month" | "week" | "day" | "hour",
+    intl: Intl.DateTimeFormatOptions
+  }
+} = {
+  4: { interval: "month", intl: { month: "long" } },
+  7: { interval: "day", intl: { day: "2-digit" } },
+  8: { interval: "day", intl: { weekday: "long" } },
+  10: { interval: "hour", intl: { hour: "2-digit", hour12: true } },
+};
 export class ExtendedDate extends Date {
   toInput(type: InputDate = "date") {
     if (type === "year") return this.getFullYear().toString()
