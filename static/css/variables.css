@@ -1,9 +1,9 @@
 :root {
   --white: white;
   --black: black;
-  --primary: hsl(210, 100%, 50%);
+  --primary: hsl(220, 100%, 50%);
   --red: red;
-  --blue: blue;
+  --blue: hsl(240, 100%, 50%);
   --green: green;
 
   --small: 0.8125rem;
