@@ -26,7 +26,7 @@
           data-style="gradient"
           href="/auth?signUp=true"
         >
-          Empezar
+          Empezar ahora
         </a>
         <a class="button" data-size="large" data-style="outline" href="/auth">
           Ya tengo una cuenta

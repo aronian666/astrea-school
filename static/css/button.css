@@ -1,7 +1,7 @@
 button,
 .button {
   --height: var(--size700);
-  --color: var(--black);
+  --color: var(--primary);
   --constrast-color: rgb(from var(--color) clamp(0, calc((0.2126 * r + 0.7152 * g + 0.0722 * b - 165) * -1000), 255) clamp(0, calc((0.2126 * r + 0.7152 * g + 0.0722 * b - 165) * -1000), 255) clamp(0, calc((0.2126 * r + 0.7152 * g + 0.0722 * b - 165) * -1000), 255));
   --bg-percentage: 94%;
   --shadow-size: 0px;
@@ -19,7 +19,7 @@ button,
   gap: calc(var(--height) / 8);
   transition: 0.2s;
   font-weight: 600;
-  box-shadow: 0 0 0 var(--shadow-size) color-mix(in srgb, var(--color) var(--border-percentage), transparent);
+  box-shadow: inset 0 0 0 var(--shadow-size) color-mix(in srgb, var(--color) var(--border-percentage), transparent);
 
 
   /* Shapes */
