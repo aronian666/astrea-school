@@ -28,6 +28,11 @@ button,
     aspect-ratio: 1;
   }
 
+  &[data-shape=padding] {
+    height: auto;
+    padding: calc(var(--height) / 3);
+  }
+
   &[data-radius=circle] {
     border-radius: 10rem;
   }
@@ -39,11 +44,6 @@ button,
 
     &:hover {
       --bg-percentage: 5%;
-    }
-
-    &:is([data-active=true], :has(input:checked)) {
-      --shadow-size: 1px;
-      --border-percentage: 100%;
     }
   }
 
@@ -64,18 +64,6 @@ button,
 
     &:hover {
       --bg-percentage: 12%
-    }
-
-    &:is([data-active=true], :has(input:checked)) {
-      --bg-percentage: 100%;
-      color: var(--constrast-color);
-
-      &[data-hover=outline] {
-        color: var(--color);
-        --border-percentage: 100%;
-        --bg-percentage: 6%;
-        --shadow-size: 1px;
-      }
     }
   }
 
@@ -119,17 +107,25 @@ button,
     font-size: var(--size90);
   }
 
-  /* global */
 
 
+  &:is([data-active=true], :has(input:checked)) {
+    --bg-percentage: 100%;
+    color: var(--constrast-color);
 
-  &[data-active=false] {
-    font-weight: 400;
+    &[data-focus=tonal] {
+      --bg-percentage: 20%;
+      color: var(--color);
+    }
+
+    &[data-focus=outline] {
+      color: var(--color);
+      --border-percentage: 100%;
+      --bg-percentage: 6%;
+      --shadow-size: 1px;
+    }
   }
 
-  &[data-active=true] {
-    font-weight: 700;
-  }
 
   &[disabled] {
     opacity: 0.5;
@@ -150,7 +146,7 @@ a {
     }
   }
 
-  &:is(:hover, :focus)>iconify-icon {
+  &:is(:hover, :focus, [data-active=true], :has(input:checked))>iconify-icon {
     &[data-status=active] {
       display: block;
     }
