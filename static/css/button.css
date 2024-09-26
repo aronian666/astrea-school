@@ -17,7 +17,6 @@ button,
   color: var(--constrast-color);
   background-color: color-mix(in srgb, var(--color) var(--bg-percentage), transparent);
   gap: calc(var(--height) / 8);
-  transition: 0.2s;
   font-weight: 600;
   box-shadow: inset 0 0 0 var(--shadow-size) color-mix(in srgb, var(--color) var(--border-percentage), transparent);
 
@@ -39,6 +38,7 @@ button,
 
   /* styles */
   &[data-style=text] {
+    --color: var(--black);
     color: var(--color);
     --bg-percentage: 0%;
 
@@ -48,6 +48,7 @@ button,
   }
 
   &[data-style=outline] {
+
     --border-percentage: 75%;
     --bg-percentage: 0%;
     --shadow-size: 1px;
@@ -59,11 +60,12 @@ button,
   }
 
   &[data-style=tonal] {
+    --color: var(--black);
     color: var(--color);
     --bg-percentage: 6%;
 
     &:hover {
-      --bg-percentage: 12%
+      --bg-percentage: 12%;
     }
   }
 
@@ -110,19 +112,19 @@ button,
 
 
   &:is([data-active=true], :has(input:checked)) {
-    --bg-percentage: 100%;
-    color: var(--constrast-color);
+    --bg-percentage: 100% !important;
+    color: var(--constrast-color) !important;
 
     &[data-focus=tonal] {
-      --bg-percentage: 20%;
-      color: var(--color);
+      --bg-percentage: 20% !important;
+      color: var(--color) !important;
     }
 
     &[data-focus=outline] {
-      color: var(--color);
-      --border-percentage: 100%;
-      --bg-percentage: 6%;
-      --shadow-size: 1px;
+      color: var(--color) !important;
+      --border-percentage: 100% !important;
+      --bg-percentage: 6% !important;
+      --shadow-size: 1px !important;
     }
   }
 

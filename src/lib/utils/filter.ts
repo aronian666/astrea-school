@@ -62,7 +62,7 @@ export class Filter {
     if (this.order) query.order(this.order, { ascending: this.ascending === 'true' })
     //@ts-ignore
 
-    if (this.search) query.textSearch(column, this.search.split(" ").filter(Boolean).map(word => `'${word}':*`).join(' | '), { config: "spanish" })
+    if (this.search) query.textSearch(column, this.search.split(" ").filter(Boolean).map(word => `'${word}':*`).join(' & '), { config: "spanish" })
     const filterString = this.getFilterString("JS")
     //@ts-ignore
     if (filterString) query.or(`and(${filterString})`)

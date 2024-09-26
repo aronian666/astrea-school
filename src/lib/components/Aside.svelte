@@ -23,6 +23,7 @@
               class="button"
               style="--c: start"
               data-style="text"
+              data-focus="tonal"
             >
               {#if path.icon}
                 <Icon icon={path.icon} normal="light" width="1.5rem" />
@@ -47,10 +48,11 @@
             ? $page.url.pathname === href
             : $page.url.pathname.startsWith(href)}
           class="button flex direction"
-          style="--c: start; gap:0; padding: var(--size0)"
+          style="--c: start; gap:0"
           data-style="text"
           data-shape="padding"
           data-size="small"
+          data-focus="tonal"
         >
           {#if path.icon}
             <Icon icon={path.icon} normal="light" width="1.5rem" />

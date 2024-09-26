@@ -8,7 +8,6 @@ dialog {
   border-radius: var(--size100);
   transition: 0.3s, display 0.3s allow-discrete;
   transform: var(--start);
-  position: relative;
 
   &.full {
     width: 100vw;
@@ -35,7 +34,6 @@ dialog {
   margin: 0;
   border: none;
   transition: 0.3s;
-
 
   &:popover-open {
     display: var(--display);

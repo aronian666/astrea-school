@@ -35,9 +35,9 @@
           <hgroup class="grid">
             {item.person?.full_name}
             <small style="color: var(--gray70)">
-              {item.class?.level?.name}
-              {item.class?.grade}
-              {item.class?.section?.name}
+              {item.class.level.name}
+              {item.class.grade}
+              {item.class.section.name}
             </small>
           </hgroup>
         </a>
