@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Field, Icon, Table } from "$lib/components";
+  import { Icon, Table } from "$lib/components";
   import { message } from "$lib/stores/message";
   import { debounce } from "$lib/utils/debounce.js";
   import {
@@ -10,28 +10,26 @@
   } from "$lib/utils/models.js";
 
   export let data;
-  let cycle_id = data.clas.season?.cycles[1].id!;
+  /* let cycle_id = data.clas.season?.cycles[1].id!;
   $: notes = data.class_season_course.notes.filter(
     (note) => cycle_id === note.cycle_id,
-  );
+  ); */
 </script>
 
 <form>
-  <Field>
-    <div class="grid auto-fit gap1" style="--width: 10rem">
-      {#each data.clas.season?.cycles || [] as cycle}
-        <label class="button" data-style="tonal">
-          <input
-            data-display="none"
-            type="radio"
-            value={cycle.id}
-            bind:group={cycle_id}
-          />
-          {cycle.name}
-        </label>
-      {/each}
-    </div>
-  </Field>
+  <div class="grid auto-fit gap1" style="--width: 10rem">
+    {#each data.clas.season?.cycles || [] as cycle}
+      <label class="button" data-style="tonal">
+        <input
+          data-display="none"
+          type="radio"
+          value={cycle.id}
+          bind:group={cycle_id}
+        />
+        {cycle.name}
+      </label>
+    {/each}
+  </div>
 </form>
 <section class="grid">
   <table class="bordered">

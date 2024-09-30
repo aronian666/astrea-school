@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { Button, Field, Form, Icon, Modal, Table } from "$lib/components";
+  import { Button, Form, Icon, Modal, Table } from "$lib/components";
   import { message } from "$lib/stores/message";
   import { formToJson } from "$lib/utils";
   import { groupBy } from "$lib/utils/groupBy";
@@ -90,12 +90,10 @@
                 if (error) return (e.currentTarget.checked = false);
                 else selected_season_course.competences.push(competence);
               } else {
-                const { error } = await instance
-                  .delete()
-                  .match({
-                    competence_id: competence.id,
-                    season_course_id: selected_season_course.id,
-                  });
+                const { error } = await instance.delete().match({
+                  competence_id: competence.id,
+                  season_course_id: selected_season_course.id,
+                });
                 if (error) return (e.currentTarget.checked = true);
                 else
                   selected_season_course.competences =
@@ -133,22 +131,22 @@
     }}
   >
     <h2>Agregar curso</h2>
-    <Field>
-      <label for="level_id"> Nivel </label>
+    <label>
+      <span> Nivel </span>
       <select name="level_id" id="level_id">
         {#each data.levels as level}
           <option value={level.id}>{level.name}</option>
         {/each}
       </select>
-    </Field>
-    <Field>
-      <label for="course_id">Curso</label>
+    </label>
+    <label>
+      <span>Curso</span>
       <select name="course_id" id="course_id">
         {#each data.courses as course}
           <option value={course.id}>{course.name}</option>
         {/each}
       </select>
-    </Field>
+    </label>
     <button> Agregar </button>
   </Form>
 </Modal>

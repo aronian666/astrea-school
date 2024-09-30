@@ -1,6 +1,5 @@
 <script lang="ts">
   import { Button, Form, Icon, Modal, Table } from "$lib/components";
-  import Field from "$lib/components/Field.svelte";
   import { message } from "$lib/stores/message";
   import { formatNumber, formToJson } from "$lib/utils";
 
@@ -103,9 +102,12 @@
       conceptSelected.discounts.push(newDiscount);
     }}
   >
-    <Field label="Nombre" name="name" required></Field>
-    <Field>
-      <label for="value">Porcentaje</label>
+    <label>
+      <span>Nombre</span>
+      <input type="text" name="name" required />
+    </label>
+    <label>
+      <span>Porcentaje</span>
       <input
         type="number"
         placeholder="0"
@@ -114,7 +116,7 @@
         name="value"
         id="value"
       />
-    </Field>
+    </label>
     <button> Agregar </button>
   </Form>
 </Modal>

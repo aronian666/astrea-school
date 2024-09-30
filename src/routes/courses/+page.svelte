@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Field, Form, Icon, Modal, Select, Table } from "$lib/components";
+  import { Button, Form, Icon, Modal, Select, Table } from "$lib/components";
   import { message } from "$lib/stores/message";
 
   export let data;
@@ -7,14 +7,21 @@
   $: compentences = data.courses
     .map((course) => course.competences)
     .flat()
-    .filter((item, index, self) => index === self.findIndex((t) => t.id === item.id));
+    .filter(
+      (item, index, self) => index === self.findIndex((t) => t.id === item.id),
+    );
   let competence_ids: number[] = [];
 </script>
 
 <main>
   <h1>Cursos</h1>
   <section class="flex direction">
-    <Table array={data.courses} let:index let:item header={[{ name: "Curso" }, { name: "Competencias" }]}>
+    <Table
+      array={data.courses}
+      let:index
+      let:item
+      header={[{ name: "Curso" }, { name: "Competencias" }]}
+    >
       <tr>
         <td>{item.name}</td>
         <td>
@@ -35,8 +42,12 @@
               data-style="tonal"
               let:loading
               onClick={async () => {
-                if (!confirm("Esta seguro de querer eliminar este curso?")) return;
-                const { error } = await data.supabase.from("courses").delete().eq("id", item.id);
+                if (!confirm("Esta seguro de querer eliminar este curso?"))
+                  return;
+                const { error } = await data.supabase
+                  .from("courses")
+                  .delete()
+                  .eq("id", item.id);
                 if (error) return message.set(error);
                 data.courses.splice(index, 1);
                 data = data;
@@ -57,17 +68,23 @@
   {#if course}
     <form
       on:submit|preventDefault={async (e) => {
-        const { error } = await data.supabase
-          .from("course_competences")
-          .upsert(competence_ids.map((competence_id) => ({ competence_id, course_id: course.id })));
+        const { error } = await data.supabase.from("course_competences").upsert(
+          competence_ids.map((competence_id) => ({
+            competence_id,
+            course_id: course.id,
+          })),
+        );
         if (error) return message.set(error);
-        course.competences = compentences.filter(({ id }) => competence_ids.includes(id));
+        course.competences = compentences.filter(({ id }) =>
+          competence_ids.includes(id),
+        );
         competence_ids = [];
         course = course;
         data = data;
       }}
     >
-      <Field label="Competencias">
+      <label>
+        <span>Competencias</span>
         <Select
           array={compentences}
           on:keydown={async (e) => {
@@ -93,7 +110,7 @@
           }}
           bind:value={competence_ids}
         ></Select>
-      </Field>
+      </label>
       <button>
         <Icon icon="ph:plus" />
         Agregar
@@ -109,7 +126,10 @@
             data-size="tiny"
             data-style="tonal"
             onClick={async () => {
-              const { error } = await data.supabase.from("competences").delete().eq("id", item.id);
+              const { error } = await data.supabase
+                .from("competences")
+                .delete()
+                .eq("id", item.id);
               if (error) return message.set(error);
               course.competences.splice(index, 1);
               course = course;

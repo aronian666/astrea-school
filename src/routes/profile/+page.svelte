@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto, invalidateAll } from "$app/navigation";
-  import { Form, Icon, Modal, Field, Person, Button } from "$lib/components";
+  import { Form, Icon, Modal, Person, Button } from "$lib/components";
   import { message } from "$lib/stores/message";
   import { formToJson } from "$lib/utils/filter.js";
 
@@ -76,8 +76,8 @@
     }}
   >
     <h3>Editar perfil</h3>
-    <Field>
-      <label for="data[name]">Nombre</label>
+    <label>
+      <span>Nombre</span>
       <input
         type="text"
         id="data[name]"
@@ -85,16 +85,16 @@
         value={user.user_metadata.name}
         placeholder="John Doe"
       />
-    </Field>
-    <Field>
-      <label for="phone">Telefono</label>
+    </label>
+    <label>
+      <span>Telefono</span>
       <input
         type="text"
         id="data[phone]"
         name="data[phone]"
         value={user.user_metadata.phone}
       />
-    </Field>
+    </label>
     <Person
       placeholder="38372671"
       name="data[dni]"
