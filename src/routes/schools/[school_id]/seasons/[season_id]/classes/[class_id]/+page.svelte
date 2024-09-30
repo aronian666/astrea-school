@@ -3,7 +3,6 @@
   import {
     BreadCrumb,
     Button,
-    Field,
     Form,
     Icon,
     Modal,
@@ -26,8 +25,9 @@
   <table>
     <thead>
       <tr>
+        <th></th>
         <th>Estudiante</th>
-        <th>Deuda</th>
+
         <td>
           <div class="flex content">
             <Button
@@ -46,20 +46,21 @@
         {@const popoverId = `options${class_person.id}`}
 
         <tr>
+          <td class="tcenter">{index + 1}</td>
           <td>
             <a
               href="/schools/{$page.params.school_id}/seasons/{$page.params
                 .season_id}/students/{class_person.id}"
+              style="color: var(--black)"
             >
-              {index + 1}
               {class_person.person.full_name}
             </a>
           </td>
-          <td> </td>
+
           <td>
             <div class="grid content">
               <button
-                data-size="tiny"
+                data-size="small"
                 data-shape="square"
                 data-style="tonal"
                 popovertarget={popoverId}

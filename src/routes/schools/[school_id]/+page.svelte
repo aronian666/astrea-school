@@ -6,10 +6,13 @@
 
 <section class="flex wrap auto-fit" style="--gap: var(--size3)">
   <picture class="panel" style="aspect-ratio: 1; --max: 30%">
-    <img src={data.school_user.school.logo} alt={data.school_user.school.name} />
+    <img
+      src={data.school_user.school.logo}
+      alt={data.school_user.school.name}
+    />
   </picture>
   <div style="--max: 70%">
-    <hgroup class="flex gap0 content" style="--c: space-between">
+    <hgroup class="flex gap1 content" style="--c: space-between">
       <h1>{data.school_user.school.name}</h1>
       <button
         data-shape="square"

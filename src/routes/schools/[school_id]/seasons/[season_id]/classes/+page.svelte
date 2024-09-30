@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Field, Form, Icon, Modal, Person, Table } from "$lib/components";
+  import { Button, Form, Icon, Modal, Person, Table } from "$lib/components";
   import { page } from "$app/stores";
   import { groupBy } from "$lib/utils/groupBy";
   import type { TablesInsert } from "$lib/types/supabase.js";
@@ -24,21 +24,33 @@
 </script>
 
 <section>
-  <Button data-style="gradient" onclick="add_class.showModal()">Agregar clase</Button>
+  <Button data-style="gradient" onclick="add_class.showModal()"
+    >Agregar clase</Button
+  >
 </section>
 <div class="grid auto-fit gap3" style="--width: 20rem">
   {#each Object.entries(levels) as [level, classesByLevel]}
     {@const classesByGrade = groupBy(classesByLevel, (clas) => clas.grade)}
     <section class="flex direction gap2 panel">
       <h3>{level}</h3>
-      <Table array={Object.entries(classesByGrade)} header={[{ name: "Grado" }, { name: "Secciones" }]} let:item>
+      <Table
+        array={Object.entries(classesByGrade)}
+        header={[{ name: "Grado" }, { name: "Secciones" }]}
+        let:item
+      >
         <tr>
           <td class="tcenter">{item[0]}</td>
 
           <td>
-            <div class="flex content wrap gap0">
+            <div class="flex content wrap gap1">
               {#each item[1] || [] as clas}
-                <a data-size="small" data-shape="square" data-style="tonal" class="button" href="classes/{clas.id}">
+                <a
+                  data-size="small"
+                  data-shape="square"
+                  data-style="tonal"
+                  class="button"
+                  href="classes/{clas.id}"
+                >
                   {clas.section?.name}
                 </a>
               {/each}
@@ -87,7 +99,9 @@
           season_id: Number($page.params.season_id),
           section_id: 1,
         })
-        .select("*, level:levels(name), section:sections(name), person:persons(dni, full_name)")
+        .select(
+          "*, level:levels(name), section:sections(name), person:persons(dni, full_name)",
+        )
         .single();
       if (error) return message.set(error);
       data.classes.push(new_class);
@@ -99,22 +113,22 @@
       <h1>Agregar clase</h1>
       <small class="gray70">Seleccione el nivel y grado.</small>
     </hgroup>
-    <Field>
-      <label for="level_id">Nivel</label>
+    <label>
+      <span>Nivel</span>
       <select name="level_id" id="level_id" bind:value={levelSelected}>
         {#each data.levels as level}
           <option value={level}>{level.name}</option>
         {/each}
       </select>
-    </Field>
-    <Field>
-      <label for="grade">Grado</label>
+    </label>
+    <label>
+      <span>Grado</span>
       <select name="grade" id="grade">
         {#each levelSelected.grades as grade}
           <option value={grade}>{grade}</option>
         {/each}
       </select>
-    </Field>
+    </label>
     <button> Agregar </button>
   </Form>
 </Modal>

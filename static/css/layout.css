@@ -36,44 +36,44 @@
   grid-template-columns: repeat(auto-fill, minmax(var(--width, 16rem), 1fr));
 }
 
-.gap0 {
-  gap: var(--size70em) !important;
-}
+/* .gap1 {
+  gap: var(--size70) !important;
+} */
 
 .gap1 {
-  gap: var(--size80em) !important;
+  gap: var(--size80) !important;
 }
 
 .gap2 {
-  gap: var(--size90em) !important;
+  gap: var(--size90) !important;
 }
 
 .gap3 {
-  gap: var(--size100em) !important;
+  gap: var(--size100) !important;
 }
 
 .gap4 {
-  gap: var(--size200em) !important;
+  gap: var(--size200) !important;
 }
 
 .gap5 {
-  gap: var(--size300em) !important;
+  gap: var(--size300) !important;
 }
 
 .gap6 {
-  gap: var(--size400em) !important;
+  gap: var(--size400) !important;
 }
 
 .gap7 {
-  gap: var(--size500em) !important;
+  gap: var(--size500) !important;
 }
 
 .gap8 {
-  gap: var(--size600em) !important;
+  gap: var(--size600) !important;
 }
 
 .gap9 {
-  gap: var(--size700em) !important;
+  gap: var(--size700) !important;
 }
 
 .content {

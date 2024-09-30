@@ -2,7 +2,7 @@ table {
   border-collapse: collapse;
 
   td {
-    padding: var(--size70) 0;
+    padding: var(--size80) 0;
   }
 
   tr {
@@ -13,7 +13,7 @@ table {
 
   tr.input td {
 
-    padding: 0;
+    padding: var(--size80);
     position: relative;
 
     input:is([type=number], [type=text]) {

@@ -202,7 +202,7 @@
         style="font-weight: 600; --color: var(--black);"
         class="grid"
       >
-        <span>
+        <span style="text-transform: lowercase;">
           {item.class_person.person.last_name1}
           {item.class_person.person.last_name2}
         </span>
@@ -214,9 +214,7 @@
     <td>
       <div class="grid">
         <span>{hour}</span>
-        <span style="color: var(--gray70); font-size: var(--size90);"
-          >{date}</span
-        >
+        <small>{date}</small>
       </div>
     </td>
     <td class="tright"> {formatNumber(item.total_value)} </td>

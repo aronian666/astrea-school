@@ -10,7 +10,7 @@ button,
   border: none;
   cursor: pointer;
   border-radius: calc(var(--height) / 5);
-  font-size: var(--normal);
+  font-size: inherit;
   display: flex;
   align-items: var(--i, center);
   place-content: var(--c, center);
@@ -71,7 +71,7 @@ button,
 
   &[data-style=gradient] {
     --initial-angle: 45deg;
-    --final-angle: 135deg;
+    --final-angle: 225deg;
     --angle: var(--initial-angle);
     --gradient-color1: hsl(from var(--color) calc(h + 70) s l);
     --gradient-color2: hsl(from var(--color) calc(h - 70) s l);
@@ -91,8 +91,8 @@ button,
   /* Sizes */
   &[data-size=large] {
     --height: var(--size800);
-    font-size: var(--size100);
-    font-weight: 800;
+    font-size: var(--large);
+    font-weight: 700;
   }
 
   &[data-size=medium] {
@@ -104,11 +104,6 @@ button,
     font-size: var(--small);
   }
 
-  &[data-size=tiny] {
-    --height: var(--size400);
-    font-size: var(--size90);
-  }
-
 
 
   &:is([data-active=true], :has(input:checked)) {
@@ -116,14 +111,14 @@ button,
     color: var(--constrast-color) !important;
 
     &[data-focus=tonal] {
-      --bg-percentage: 20% !important;
+      --bg-percentage: 15% !important;
       color: var(--color) !important;
     }
 
     &[data-focus=outline] {
       color: var(--color) !important;
       --border-percentage: 100% !important;
-      --bg-percentage: 6% !important;
+      --bg-percentage: 0% !important;
       --shadow-size: 1px !important;
     }
   }

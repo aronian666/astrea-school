@@ -24,7 +24,7 @@
     data-size="small"
     data-style="text"
     data-radius="circle"
-    style="position: absolute; top: var(--size70); right: var(--size70)"
+    style="position: absolute; top: var(--size80); right: var(--size80)"
     on:click={() => dialog.close()}
   >
     <Icon icon="ph:x" active="bold" />

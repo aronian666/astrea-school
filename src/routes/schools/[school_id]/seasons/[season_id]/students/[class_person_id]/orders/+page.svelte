@@ -11,7 +11,7 @@
   {#each data.orders as order, index (order.id)}
     {@const anchor_id = `anchor${order.id}`}
     <div class="panel flex direction gap2">
-      <section class="flex content gap0" style="--c: space-between">
+      <section class="flex content gap1" style="--c: space-between">
         <hgroup>
           <h4>{order.id}</h4>
           <small

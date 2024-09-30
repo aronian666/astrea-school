@@ -2,13 +2,16 @@ import { error } from '@sveltejs/kit';
 
 export const load = async ({ parent }) => {
   const { supabase, session } = await parent()
-  const { data: school_users, error: err } = await supabase
-    .from("school_users")
+  const { data: user, error: err } = await supabase
+    .from("users")
     .select(`
-      school:schools!inner(name, id, seasons(name, id, period)), 
-      role:roles(name)
+      school_users(*, 
+        school:schools!inner(name, id, seasons:seasons(name, id, start_at, end_at)), 
+        role:roles(name)
+      ),
+      schools!schools_user_id_fkey!inner(name, id)
     `)
-    .eq("user_id", session.user.id)
+    .eq("id", session.user.id).single()
   if (err) throw error(500, err.message)
-  return { school_users }
+  return { user }
 };

@@ -28,14 +28,17 @@
             <Icon icon="ph:plus" active="bold" />
           </Button>
         </hgroup>
-        <ul class="flex direction gap0">
+        <ul class="flex direction gap1">
           {#each concept.discounts as discount, index}
             {@const id = `discount${discount.id}`}
-            <li class="flex content items" style="--c: space-between; font-size: var(--small)">
+            <li
+              class="flex content items"
+              style="--c: space-between; font-size: var(--small)"
+            >
               <span>
                 {discount.name}
               </span>
-              <div class="flex gap0 items">
+              <div class="flex gap1 items">
                 <span>{formatNumber(discount.value)}%</span>
                 <button
                   data-size="tiny"
@@ -57,7 +60,10 @@
                     data-size="small"
                     data-shape="menu"
                     onClick={async () => {
-                      const { error } = await data.supabase.from("discounts").delete().eq("id", discount.id);
+                      const { error } = await data.supabase
+                        .from("discounts")
+                        .delete()
+                        .eq("id", discount.id);
                       if (error) return message.set(error);
                       concept.discounts.splice(index, 1);
                       data = data;
@@ -88,7 +94,11 @@
     onSubmit={async (e) => {
       const new_discount = formToJson(new FormData(e.currentTarget));
       new_discount.concept_id = conceptSelected.id;
-      const { error, data: newDiscount } = await data.supabase.from("discounts").insert(new_discount).select().single();
+      const { error, data: newDiscount } = await data.supabase
+        .from("discounts")
+        .insert(new_discount)
+        .select()
+        .single();
       if (error) return message.set(error);
       conceptSelected.discounts.push(newDiscount);
     }}
@@ -96,7 +106,14 @@
     <Field label="Nombre" name="name" required></Field>
     <Field>
       <label for="value">Porcentaje</label>
-      <input type="number" placeholder="0" required step="0.01" name="value" id="value" />
+      <input
+        type="number"
+        placeholder="0"
+        required
+        step="0.01"
+        name="value"
+        id="value"
+      />
     </Field>
     <button> Agregar </button>
   </Form>

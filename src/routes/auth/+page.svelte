@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
-  import { Form, Field, Icon, Fieldset } from "$lib/components";
+  import { Form, Icon, Fieldset } from "$lib/components";
   import { formToJson } from "$lib/utils/filter.js";
 
   export let data;
@@ -79,7 +79,7 @@
         />
       </label>
       {#if signUp}
-        <Fieldset let:handleError>
+        <Fieldset let:setError>
           <label>
             <span>Repetir contrasena</span>
             <input
@@ -90,9 +90,10 @@
               minlength="6"
               placeholder=" "
               on:change={(e) => {
-                if (e.currentTarget.value !== inputPassword.value)
-                  handleError(e, "Las contrasenas no son iguales");
-                else handleError(e, "");
+                const input = e.currentTarget;
+                if (input.value !== inputPassword.value)
+                  setError(input, "Las contrasenas no son iguales");
+                else setError(input, "");
               }}
             />
           </label>

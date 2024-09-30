@@ -6,28 +6,36 @@
 
   export let data;
   let { user } = data.session;
-  console.log(data.session);
 </script>
 
-<section class="flex direction gap0">
-  <div style="height: 5rem; background: linear-gradient(100deg, tomato, var(--black));"></div>
+<section class="flex direction gap1">
+  <div
+    style="height: 5rem; background: linear-gradient(100deg, tomato, var(--black));"
+  ></div>
   <div class="flex content items" style="height: 3rem; --c: space-between">
-    <div class="flex gap0 wrap">
+    <div class="flex gap1 wrap">
       <picture>
         <img src={user.user_metadata.picture} alt={user.user_metadata.name} />
       </picture>
       <h1 style="place-self: center;">{user.user_metadata.name}</h1>
     </div>
-    <Button onclick="edit_profile.showModal()" data-size="tiny" style="--color: var(--black); border-radius: 0.25rem">
+    <Button
+      onclick="edit_profile.showModal()"
+      data-size="tiny"
+      style="--color: var(--black); border-radius: 0.25rem"
+    >
       Editar perfil
     </Button>
   </div>
-  <div class="panel flex gap3 direction" style="background-color: var(--white);">
-    <div class="grid gap0">
+  <div
+    class="panel flex gap3 direction"
+    style="background-color: var(--white);"
+  >
+    <div class="grid gap1">
       <h4>Correo electronico</h4>
       <p class="w300">{user.email}</p>
     </div>
-    <div class="grid gap0">
+    <div class="grid gap1">
       <h4>teléfono</h4>
       <p class="w300">
         {#if user.user_metadata.phone}
@@ -37,7 +45,7 @@
         {/if}
       </p>
     </div>
-    <div class="grid gap0">
+    <div class="grid gap1">
       <h4>DNI</h4>
       <p class="w300">
         {#if user.user_metadata.dni}
@@ -57,7 +65,11 @@
       const userForm = formToJson(new FormData(e.currentTarget));
       // @ts-ignore
       const { error } = await data.supabase.auth.updateUser(userForm);
-      if (error) return message.set({ message: error.message, details: "No hay detalles" });
+      if (error)
+        return message.set({
+          message: error.message,
+          details: "No hay detalles",
+        });
       await invalidateAll();
       dialog.close();
       await goto("/");
@@ -66,13 +78,28 @@
     <h3>Editar perfil</h3>
     <Field>
       <label for="data[name]">Nombre</label>
-      <input type="text" id="data[name]" name="data[name]" value={user.user_metadata.name} placeholder="John Doe" />
+      <input
+        type="text"
+        id="data[name]"
+        name="data[name]"
+        value={user.user_metadata.name}
+        placeholder="John Doe"
+      />
     </Field>
     <Field>
       <label for="phone">Telefono</label>
-      <input type="text" id="data[phone]" name="data[phone]" value={user.user_metadata.phone} />
+      <input
+        type="text"
+        id="data[phone]"
+        name="data[phone]"
+        value={user.user_metadata.phone}
+      />
     </Field>
-    <Person placeholder="38372671" name="data[dni]" value={user.user_metadata.dni}>
+    <Person
+      placeholder="38372671"
+      name="data[dni]"
+      value={user.user_metadata.dni}
+    >
       <label for="data[dni]">DNI</label>
     </Person>
     <button> <Icon {loading} /> Guardar </button>

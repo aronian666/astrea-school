@@ -5,7 +5,7 @@ form {
 
 fieldset {
   display: grid;
-  gap: var(--size70);
+  gap: var(--size80);
   border: none;
 
 }
@@ -69,18 +69,12 @@ label {
     --padding: 0.76em;
 
     &[data-size=medium] {
-      --padding: 0.625em;
-      font-size: var(--normal);
+      --padding: var(--size90);
     }
 
     &[data-size=small] {
-      --padding: 0.54em;
+      --padding: var(--size85);
       font-size: var(--small);
-    }
-
-    &[data-size=tiny] {
-      --padding: var(--size80em);
-      font-size: var(--size90);
     }
   }
 }

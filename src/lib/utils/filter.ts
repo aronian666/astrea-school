@@ -1,6 +1,6 @@
 import { ExtendedDate } from "./extendedDate";
 
-export const formToJson = <T = { [key: string]: string | null }>(formData: FormData | URLSearchParams) => {
+export const formToJson = <T = any>(formData: FormData | URLSearchParams) => {
   const formObject: { [key: string]: any } = {};
   for (let [key, value] of formData.entries()) {
     const regex = /([^[]+)|\[(.*?)\]/g

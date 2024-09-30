@@ -30,7 +30,7 @@
       <td>
         <a
           href="students/{item.id}"
-          style="font-weight: 400; color: var(--black); font-size: var(--normal)"
+          style="font-weight: 400; color: var(--black)"
         >
           <hgroup class="grid">
             {item.person?.full_name}

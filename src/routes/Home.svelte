@@ -12,14 +12,14 @@
     style="height: 100dvh; --min: 30rem; --gap: var(--size1000); padding: var(--size100)"
   >
     <picture class="self">
-      <img src="/images/children.svg" alt="NInios saltando" />
+      <img src="/images/children.svg" alt="Ninios saltando" />
     </picture>
 
     <div class="self flex items content direction gap7">
-      <h1 style="font-size: var(--size500);" class="tcenter">
+      <h1 style="font-size: var(--size600);" class="tcenter">
         La forma sencilla y rápida de gestionar tu entidad educativa.
       </h1>
-      <div class="flex gap2 direction" style="width: 20rem;">
+      <div class="flex gap2 direction" style="width: 22rem;">
         <a
           class="button"
           data-size="large"

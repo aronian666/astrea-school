@@ -12,8 +12,8 @@
     {
       paths: [
         { href: "/", name: "Inicio", icon: "iconamoon:home", match: true },
-        { href: "/classes", name: "Clases", icon: "ph:building" },
-        { href: "/behaviors", name: "Tutoria", icon: "ph:user-check" },
+        { href: "/classes", name: "Clases", icon: "ph:address-book" },
+
         { href: "/schools", name: "Instituciones", icon: "ph:building" },
       ],
     },

@@ -5,11 +5,14 @@
   import { formToJson } from "$lib/utils";
   import { groupBy } from "$lib/utils/groupBy";
   export let data;
-  $: levels = groupBy(data.season_courses, (season_course) => season_course.level.name);
+  $: levels = groupBy(
+    data.season_courses,
+    (season_course) => season_course.level.name,
+  );
   let selected_season_course = data.season_courses[0];
 </script>
 
-<section class="wrap flex content gap0" style="--c: space-between">
+<section class="wrap flex content gap1" style="--c: space-between">
   <hgroup class="grid">
     <h1>Cursos</h1>
     <small>Agrege los cursos para cada area de su vida.</small>
@@ -24,7 +27,7 @@
   {#each Object.entries(levels) as [level, season_courses], id}
     <section class="panel">
       <h2>{level}</h2>
-      <div class="grid gap0">
+      <div class="grid gap1">
         {#each season_courses as season_course}
           {@const anchorName = `options${season_course.id}`}
           <div class="flex content items" style="--c: space-between;">
@@ -68,13 +71,15 @@
 <Modal id="competences_modal">
   {#if selected_season_course}
     <h2>Competencias de {selected_season_course.course.name}</h2>
-    <section class="grid gap0">
+    <section class="grid gap1">
       {#each selected_season_course.course.competences as competence}
         <label>
           <input
             type="checkbox"
             value={competence.id}
-            checked={selected_season_course.competences.some(({ id }) => id === competence.id)}
+            checked={selected_season_course.competences.some(
+              ({ id }) => id === competence.id,
+            )}
             on:click={async (e) => {
               const instance = data.supabase.from("season_course_competences");
               if (e.currentTarget.checked) {
@@ -87,12 +92,16 @@
               } else {
                 const { error } = await instance
                   .delete()
-                  .match({ competence_id: competence.id, season_course_id: selected_season_course.id });
+                  .match({
+                    competence_id: competence.id,
+                    season_course_id: selected_season_course.id,
+                  });
                 if (error) return (e.currentTarget.checked = true);
                 else
-                  selected_season_course.competences = selected_season_course.competences.filter(
-                    ({ id }) => competence.id != id,
-                  );
+                  selected_season_course.competences =
+                    selected_season_course.competences.filter(
+                      ({ id }) => competence.id != id,
+                    );
               }
               selected_season_course = selected_season_course;
               data = data;
@@ -113,7 +122,9 @@
       const { error, data: new_season_course } = await data.supabase
         .from("season_courses")
         .insert(season_course)
-        .select("*, level:levels!inner(id, name), course:courses!inner(name, competences(*)), competences(id, name)")
+        .select(
+          "*, level:levels!inner(id, name), course:courses!inner(name, competences(*)), competences(id, name)",
+        )
         .single();
       if (error) return message.set(error);
       data.season_courses.push(new_season_course);

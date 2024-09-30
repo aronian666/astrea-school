@@ -3,7 +3,8 @@
   import { message } from "$lib/stores/message";
   import type { TablesInsert } from "$lib/types/supabase";
 
-  import { Icon, Field } from ".";
+  import { Icon } from ".";
+  import Fieldset from "./Fieldset.svelte";
   export let type: "dni" | "ruc" = "dni";
   export let required = false;
 
@@ -17,7 +18,7 @@
   export let value: string | undefined | null = person.dni;
 </script>
 
-<Field let:bindLoading let:setError let:loading>
+<Fieldset let:bindLoading let:setError let:loading>
   <slot />
   <label>
     <span>{type.toUpperCase()}</span>
@@ -96,4 +97,4 @@
       </hgroup>
     </article>
   {/if}
-</Field>
+</Fieldset>

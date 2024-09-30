@@ -65,7 +65,7 @@
       transition:scale
       class="button flex direction gap3"
       data-style="text"
-      data-hover="outline"
+      data-focus="outline"
       style="--i: normal; --c: normal"
     >
       <input
@@ -80,14 +80,14 @@
             {cart.concept.name}
           </h4>
           {#if cart.middle_date}
-            <small style="font-size: var(--size90);">
+            <small>
               {new ExtendedDate(cart.middle_date).toIntl({
                 month: "long",
               })}
             </small>
           {/if}
         </hgroup>
-        <div class="flex gap0 items content" style="--i: center; --c: center">
+        <div class="flex gap1 items content" style="--i: center; --c: center">
           <span>
             {formatNumber(cart.final_value || 0)}
           </span>
@@ -107,7 +107,7 @@
           </button>
           <section
             id={anchor_id}
-            class="gap0 menu"
+            class="gap1 menu"
             style="position-anchor: --{anchor_id}; inset-area: bottom span-left; --display: grid"
             popover="auto"
           >
@@ -150,17 +150,18 @@
         </div>
       </section>
       {#if cart.discount || cart.penalty}
-        <section class="flex gap0" style="--i: center">
+        <section class="flex gap1" style="--i: center">
           {#if cart.discount}
             <button
-              data-size="tiny"
+              data-size="small"
               data-style="tonal"
-              style="--color: var(--green)">{cart.discount?.name}</button
-            >
+              style="--color: var(--green)"
+              >{cart.discount?.name}
+            </button>
           {/if}
           {#if cart.penalty}
             <button
-              data-size="tiny"
+              data-size="small"
               data-style="tonal"
               style="--color: var(--red)"
             >

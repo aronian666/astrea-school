@@ -6,7 +6,6 @@
   const options = [
     { name: "Inicio", href: "", match: true },
     { name: "Pagos", href: "orders" },
-    { name: "Notas", href: "notes" },
     { name: "Vender", href: "cart" },
   ];
 </script>

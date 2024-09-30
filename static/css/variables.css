@@ -6,31 +6,37 @@
   --blue: hsl(240, 100%, 50%);
   --green: green;
 
-  --small: 0.8125rem;
-  --normal: 0.875rem;
+  --small: 0.85rem;
+  --large: 1.15rem;
 
-  --d70: 0.25;
-  --d80: 0.5;
-  --d90: 0.75;
+  /* --d70: 0.1; */
+  --d80: 0.4;
+  --d85: 0.55;
+  --d90: 0.7;
+  --d95: 0.85;
   --d100: 1;
-  --d200: 1.25;
-  --d300: 1.5;
-  --d400: 1.75;
-  --d500: 2;
-  --d600: 2.25;
-  --d700: 2.5;
-  --d800: 2.75;
-  --d900: 3;
-  --d1000: 3.25;
+  --d200: 1.3;
+  --d300: 1.6;
+  --d400: 1.9;
+  --d500: 2.2;
+  --d550: 2.35;
+  --d600: 2.5;
+  --d700: 2.8;
+  --d800: 3.1;
+  --d900: 3.4;
+  --d1000: 3.7;
 
-  --size70: calc(var(--d70) * 1rem);
+  /* --size70: calc(var(--d70) * 1rem); */
   --size80: calc(var(--d80) * 1rem);
+  --size85: calc(var(--d85) * 1rem);
   --size90: calc(var(--d90) * 1rem);
+  --size95: calc(var(--d95) * 1rem);
   --size100: calc(var(--d100) * 1rem);
   --size200: calc(var(--d200) * 1rem);
   --size300: calc(var(--d300) * 1rem);
   --size400: calc(var(--d400) * 1rem);
   --size500: calc(var(--d500) * 1rem);
+  --size550: calc(var(--d550) * 1rem);
   --size600: calc(var(--d600) * 1rem);
   --size700: calc(var(--d700) * 1rem);
   --size800: calc(var(--d800) * 1rem);
