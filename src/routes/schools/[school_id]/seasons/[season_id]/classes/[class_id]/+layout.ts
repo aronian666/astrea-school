@@ -6,13 +6,14 @@ export const load = async ({ params: { class_id }, parent }) => {
     *, 
     class_persons(
       id, 
-      person:persons!inner(full_name)
+      person:persons!inner(full_name, first_name, last_name1, last_name2)
     ), 
-    level:levels(name), 
-    section:sections(name),
+    level:levels!inner(name), 
+    section:sections!inner(name),
+    season:seasons!inner(cycles(id, name)),
     class_courses(
       course_id,
-      course:courses!inner(name, id),
+      course:courses!inner(name, id, competences!course_competences(id, name)),
       person:persons(full_name)
     )`).eq("id", class_id).single()
 

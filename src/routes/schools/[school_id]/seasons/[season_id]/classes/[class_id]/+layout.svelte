@@ -3,7 +3,10 @@
 
   export let data;
   $: root = `/schools/${$page.params.school_id}/seasons/${$page.params.season_id}/classes/${$page.params.class_id}`;
-  const links = [{ name: "Estudiantes", path: "", icon: "ph:student" }];
+  const links = [
+    { name: "Estudiantes", path: "", icon: "ph:student" },
+    { name: "Cursos", path: "/courses" },
+  ];
 </script>
 
 <section class="grid gap4">
