@@ -72,11 +72,11 @@
               <td>
                 {payment.concept?.name}
                 {#if payment.finish}
-                  <small>
+                  
                     ({new ExtendedDate(payment.finish).toIntl({
                       month: "long",
                     })})
-                  </small>
+                
                 {/if}
               </td>
               <td>{payment.value.toFixed(2)}</td>
