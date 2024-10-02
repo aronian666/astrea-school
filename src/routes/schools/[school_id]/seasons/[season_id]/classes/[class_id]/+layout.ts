@@ -15,7 +15,7 @@ export const load = async ({ params: { class_id }, parent }) => {
       course_id,
       course:courses!inner(name, id, competences!course_competences(id, name)),
       person:persons(full_name)
-    )`).eq("id", class_id).single()
+    )`).eq("id", class_id).eq("class_persons.status_id", 1).single()
 
   if (err) throw error(500, err.message)
   data.class_courses.sort((a, b) => a.course_id - b.course_id)

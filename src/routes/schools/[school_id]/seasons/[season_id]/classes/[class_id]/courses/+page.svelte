@@ -88,25 +88,9 @@
           <tr>
             <th></th>
             <th>Estudiante</th>
-            {#each course?.competences || [] as competence, index}
+            {#each course?.competences.sort((a, b) => a.id - b.id) || [] as competence, index}
               <th>
                 <div class="flex items content">
-                  <button
-                    popovertarget="competence{index}"
-                    style="anchor-name: --competence{index}"
-                    data-style="text"
-                    data-shape="square"
-                    data-size="small"
-                  >
-                    <Icon icon="ph:warning-circle" width="1.5rem" />
-                  </button>
-                </div>
-                <div
-                  popover="auto"
-                  class="panel"
-                  id="competence{index}"
-                  style="position-anchor: --competence{index}; inset-area: bottom span-left;"
-                >
                   {competence.name}
                 </div>
               </th>
@@ -128,7 +112,7 @@
                   </span>
                 </small>
               </td>
-              {#each course?.competences || [] as competence, x (`${competence.id}-${class_person.id}-${cycle_id}`)}
+              {#each course?.competences.sort((a, b) => a.id - b.id) || [] as competence, x (`${competence.id}-${class_person.id}-${cycle_id}`)}
                 {@const competence_note = ratings.find(
                   (note) =>
                     note.competence_id === competence.id &&
@@ -139,7 +123,7 @@
                     ? 'var(--red)'
                     : 'var(--blue)'}"
                 >
-                  {competence_note?.value || ""}
+                  {competence_note?.value}
                   <span
                     class="tcenter w700"
                     style="position: absolute; z-index: 1; top: 50%; translate: 0 -50%; right: 0.5rem"
