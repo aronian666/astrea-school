@@ -31,7 +31,7 @@
 </script>
 
 <hgroup class="grid">
-  <h1>{data.clas.level.name} {data.clas.grade} {data.clas.section.name}</h1>
+  <h1>{data.clas.level.name} {data.clas.area.name} {data.clas.section.name}</h1>
   <small>{data.clas.season.school?.name}</small>
 </hgroup>
 

@@ -22,7 +22,7 @@
         <a class="panel flex direction gap1" href="/classes/{clas.id}">
           <hgroup>
             <h4>
-              {clas.grade}
+              {clas.area.name}
               {clas.section.name}
             </h4>
           </hgroup>

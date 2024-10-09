@@ -8,7 +8,7 @@ export const load = async ({ params: { season_id }, parent, url }) => {
     id, 
     person:persons(full_name, dni), 
     class:classes!inner(level:levels!inner(name), 
-    grade, 
+    area:areas!inner(name), 
     section:sections!inner(name))
     `, { count: "exact" }).eq('class.season_id', season_id)
   const { data: class_persons, error: err, count } = await filter.paginate(query)

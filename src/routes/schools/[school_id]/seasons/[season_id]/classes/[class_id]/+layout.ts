@@ -7,7 +7,8 @@ export const load = async ({ params: { class_id }, parent }) => {
     class_persons(
       id, 
       person:persons!inner(full_name, first_name, last_name1, last_name2)
-    ), 
+    ),
+    area:areas!inner(name),
     level:levels!inner(name), 
     section:sections!inner(name),
     season:seasons!inner(cycles(id, name)),

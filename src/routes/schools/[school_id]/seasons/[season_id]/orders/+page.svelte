@@ -40,7 +40,7 @@
     const { data: orders, error: err } = await data.supabase
       .from("orders")
       .select(
-        "*, person:persons(full_name, dni), class_person:class_persons!inner(class:classes(level:levels(name), grade, section:sections(name)),person:persons!inner(dni, full_name,first_name, last_name1, last_name2)), payments(value, penalty, percent, final_value, concept_id, middle_date)",
+        "*, person:persons(full_name, dni), class_person:class_persons!inner(class:classes(level:levels(name), area:areas!inner(short_name), section:sections(name)),person:persons!inner(dni, full_name,first_name, last_name1, last_name2)), payments(value, penalty, percent, final_value, concept_id, middle_date)",
         { count: "exact" },
       )
       .eq("season_id", $page.params.season_id)
@@ -79,7 +79,7 @@
           day: "2-digit",
         }),
         row.class_person?.class?.level?.name,
-        row.class_person?.class?.grade,
+        row.class_person?.class?.area.short_name,
         row.class_person?.class?.section?.name,
         row.class_person?.person?.dni,
         row.class_person?.person?.full_name,

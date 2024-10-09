@@ -50,7 +50,7 @@
         <b>Clase</b>
         <i>
           {data.order.class_person?.class?.level?.name}
-          {data.order.class_person?.class?.grade}
+          {data.order.class_person?.class?.area.short_name}
           {data.order.class_person?.class?.section?.name}
         </i>
       </p>
@@ -72,11 +72,9 @@
               <td>
                 {payment.concept?.name}
                 {#if payment.finish}
-                  
-                    ({new ExtendedDate(payment.finish).toIntl({
-                      month: "long",
-                    })})
-                
+                  ({new ExtendedDate(payment.finish).toIntl({
+                    month: "long",
+                  })})
                 {/if}
               </td>
               <td>{payment.value.toFixed(2)}</td>

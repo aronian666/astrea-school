@@ -13,7 +13,7 @@
   <hgroup class="grid">
     <h1>
       {data.class.level?.name}
-      {data.class.grade}
+      {data.class.area.name}
       {data.class.section?.name}
     </h1>
     <p class="gray70">{data.class.class_persons.length} estudiantes</p>

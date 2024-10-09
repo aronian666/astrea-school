@@ -6,7 +6,7 @@ export const load = async ({ parent, params: { class_id } }) => {
       id,
       season:seasons!inner(cycles(id, name), school:schools(name)), 
       level:levels!inner(name), 
-      grade, 
+      area:areas!inner(name, short_name), 
       section:sections!inner(name), 
       class_persons(
         id, person:persons!inner(full_name, first_name, last_name1, last_name2)

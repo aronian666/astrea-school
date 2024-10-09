@@ -16,7 +16,7 @@
     <h2>{data.class_person.person?.full_name}</h2>
     <small
       >{data.class_person.class.level?.name}
-      {data.class_person.class.grade}
+      {data.class_person.class.area.name}
       {data.class_person.class.section?.name}</small
     >
   </hgroup>

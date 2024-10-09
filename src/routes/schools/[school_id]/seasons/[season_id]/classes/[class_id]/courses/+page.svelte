@@ -1,13 +1,7 @@
 <script>
   import { page } from "$app/stores";
   import { Form, Icon } from "$lib/components";
-  import { message } from "$lib/stores/message";
-  import {
-    onKeyDownExcel,
-    onPasteExcel,
-    opInputExcel,
-    setNote,
-  } from "$lib/utils";
+  import { setNote } from "$lib/utils";
 
   export let data;
   $: course_id = Number(

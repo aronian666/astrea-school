@@ -15,12 +15,6 @@
   };
   let clase = data.classes[0];
   let levelSelected = data.levels[0];
-  /* let newClass: TablesInsert<"classes"> = {
-    grade: data.levels[0].grades[0],
-    level_id: data.levels[0].id,
-    season_id: Number($page.params.season_id),
-    section_id: 0,
-  }; */
 </script>
 
 <section>
@@ -30,7 +24,7 @@
 </section>
 <div class="grid auto-fit gap3" style="--width: 20rem">
   {#each Object.entries(levels) as [level, classesByLevel]}
-    {@const classesByGrade = groupBy(classesByLevel, (clas) => clas.grade)}
+    {@const classesByGrade = groupBy(classesByLevel, (clas) => clas.area?.name)}
     <section class="flex direction gap2 panel">
       <h3>{level}</h3>
       <Table
@@ -61,74 +55,3 @@
     </section>
   {/each}
 </div>
-
-<Modal id="assign_person" let:dialog>
-  <Form
-    let:loading
-    onSubmit={async () => {
-      const { error: err, data: new_class } = await data.supabase
-        .from("classes")
-        .update({ person_dni: person.dni || null })
-        .eq("id", clase.id)
-        .select("person:persons(full_name, dni)")
-        .single();
-      if (err) return message.set(err);
-      Object.assign(clase, new_class);
-      clase = clase;
-      data = data;
-      dialog.close();
-    }}
-  >
-    <Person bind:person name="person[dni]">
-      <label for="person[dni]">DNI</label>
-    </Person>
-    <button> <Icon {loading} /> Asignar </button>
-  </Form>
-</Modal>
-
-<Modal id="add_class" let:dialog>
-  <Form
-    let:loading
-    onSubmit={async (e) => {
-      const form = formToJson(new FormData(e.currentTarget));
-      const { error, data: new_class } = await data.supabase
-        .from("classes")
-        .insert({
-          grade: Number(form.grade),
-          level_id: levelSelected.id,
-          season_id: Number($page.params.season_id),
-          section_id: 1,
-        })
-        .select(
-          "*, level:levels(name), section:sections(name), person:persons(dni, full_name)",
-        )
-        .single();
-      if (error) return message.set(error);
-      data.classes.push(new_class);
-      data = data;
-      dialog.close();
-    }}
-  >
-    <hgroup class="grid">
-      <h1>Agregar clase</h1>
-      <small class="gray70">Seleccione el nivel y grado.</small>
-    </hgroup>
-    <label>
-      <span>Nivel</span>
-      <select name="level_id" id="level_id" bind:value={levelSelected}>
-        {#each data.levels as level}
-          <option value={level}>{level.name}</option>
-        {/each}
-      </select>
-    </label>
-    <label>
-      <span>Grado</span>
-      <select name="grade" id="grade">
-        {#each levelSelected.grades as grade}
-          <option value={grade}>{grade}</option>
-        {/each}
-      </select>
-    </label>
-    <button> Agregar </button>
-  </Form>
-</Modal>
