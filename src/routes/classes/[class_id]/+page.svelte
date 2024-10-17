@@ -93,7 +93,7 @@
           <tr>
             <th></th>
             <th>Estudiante</th>
-            {#each course?.competences || [] as competence, index}
+            {#each course?.competences.sort((a, b) => a.id - b.id) || [] as competence, index}
               <th>
                 <div class="flex items content">
                   <button
@@ -133,7 +133,7 @@
                   </span>
                 </small>
               </td>
-              {#each course?.competences || [] as competence, x (`${competence.id}-${class_person.id}-${cycle_id}`)}
+              {#each course?.competences.sort((a, b) => a.id - b.id) || [] as competence, x (`${competence.id}-${class_person.id}-${cycle_id}`)}
                 {@const competence_note = ratings.find(
                   (note) =>
                     note.competence_id === competence.id &&
