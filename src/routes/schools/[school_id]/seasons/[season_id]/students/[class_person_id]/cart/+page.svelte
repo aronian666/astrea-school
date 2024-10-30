@@ -251,6 +251,7 @@
     let:loading
     onSubmit={async () => {
       insert_order.person_id = Number(person.id);
+      if (insert_order.created_at === "") insert_order.created_at = undefined;
       const { data: new_order, error: err } = await data.supabase
         .from("orders")
         .insert(insert_order)
