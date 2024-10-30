@@ -254,7 +254,7 @@
       const { data: new_order, error: err } = await data.supabase
         .from("orders")
         .insert(insert_order)
-        .select("id")
+        .select("id, created_at")
         .single();
       if (err) return message.set(err);
       payments = carts.map((cart) => {
@@ -266,6 +266,7 @@
           percent: cart.discount?.value || 0,
           discount_id: cart.discount_id,
           penalty: Number(cart.penalty),
+          created_at: new_order.created_at,
         };
       });
       const { error } = await data.supabase.from("payments").insert(payments);
@@ -287,6 +288,10 @@
   >
     <h3>Resumen de venta</h3>
     <Person bind:person />
+    <label>
+      <span>Fecha de pago</span>
+      <input type="datetime-local" bind:value={insert_order.created_at} />
+    </label>
     <hgroup>
       <h2>
         {formatNumber(carts.reduce((a, b) => a + Number(b.final_value), 0))}

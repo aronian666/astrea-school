@@ -85,38 +85,17 @@
     >
       <label>
         <span>Competencias</span>
-        <Select
-          array={compentences}
-          on:keydown={async (e) => {
-            const input = e.currentTarget;
-            // @ts-ingore
-            if (e.key === "Enter") {
-              e.preventDefault();
-              const { data: competence, error } = await data.supabase
-                .from("competences")
-                // @ts-ignore
-                .insert({ name: input.value })
-                .select("id, name")
-                .single();
-              if (error) return message.set(error);
-              const { error: err } = await data.supabase
-                .from("course_competences")
-                .insert({ competence_id: competence.id, course_id: course.id });
-              if (err) return message.set(err);
-              course.competences.push(competence);
-              data = data;
-              input.value = "";
-            }
-          }}
-          bind:value={competence_ids}
-        ></Select>
       </label>
       <button>
         <Icon icon="ph:plus" />
         Agregar
       </button>
     </form>
-    <Table array={course.competences} let:item let:index>
+    <Table
+      array={course.competences.sort((a, b) => a.id - b.id)}
+      let:item
+      let:index
+    >
       <tr>
         <td>{item.name}</td>
         <td>
@@ -127,9 +106,10 @@
             data-style="tonal"
             onClick={async () => {
               const { error } = await data.supabase
-                .from("competences")
+                .from("course_competences")
                 .delete()
-                .eq("id", item.id);
+                .match({ course_id: course.id, competence_id: item.id });
+
               if (error) return message.set(error);
               course.competences.splice(index, 1);
               course = course;
