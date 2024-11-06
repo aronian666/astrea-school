@@ -72,11 +72,19 @@
   </section>
 </Form>
 
-<section class="grid">
+<section class="grid gap2" id="print">
   {#await query_ratings}
     Cargando...
   {:then { data: ratings, error }}
     {#if ratings}
+      <hgroup>
+        <h1>{course?.name}</h1>
+        <p>
+          {data.class.level.name} - {data.class.area.name} - {data.class.section
+            .name} - {data.class.season.cycles.find(({ id }) => id === cycle_id)
+            ?.name}
+        </p>
+      </hgroup>
       <table class="bordered">
         <thead>
           <tr>
@@ -133,3 +141,5 @@
     {/if}
   {/await}
 </section>
+
+<button on:click={() => window.print()}> Imprimir </button>
