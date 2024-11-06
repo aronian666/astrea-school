@@ -91,10 +91,8 @@
             <th></th>
             <th>Estudiante</th>
             {#each course?.competences.sort((a, b) => a.id - b.id) || [] as competence, index}
-              <th>
-                <div class="flex items content">
-                  {competence.name}
-                </div>
+              <th style="max-width: 10rem; padding: 0.25rem">
+                {competence.name}
               </th>
             {/each}
           </tr>
