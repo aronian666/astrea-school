@@ -47,13 +47,13 @@
 </button>
 
 <section class="grid gap2" id="print">
-  <h3 class="tcenter">"BOLETA DE NOTAS DEL EDUCANDO"</h3>
+  <h4 class="tcenter">"BOLETA DE NOTAS DEL EDUCANDO"</h4>
   <section class="flex items content" style="--c: space-around">
-    <picture style="width: 6rem;">
+    <picture style="width: 5rem;">
       <img src="/images/sfa.jpg" alt="" />
     </picture>
-    <section class="flex direction gap3">
-      <div class="grid gap1" style="grid-template-columns: 1fr 2fr;">
+    <section class="flex direction">
+      <div class="grid" style="grid-template-columns: 1fr 2fr;">
         <b>NOMBRE</b>
         <span>{data.class_person.person?.full_name}</span>
         <b>NIVEL</b>
@@ -68,7 +68,7 @@
         <span>{data.class_person.class.season?.name}</span>
       </div>
     </section>
-    <picture style="width: 9rem;">
+    <picture style="width: 8rem;">
       <img src="/images/logosfa.svg" alt="" />
     </picture>
   </section>
@@ -157,3 +157,9 @@
     {/await}
   </div>
 </section>
+
+<style>
+  #print {
+    font-size: 0.9rem;
+  }
+</style>
