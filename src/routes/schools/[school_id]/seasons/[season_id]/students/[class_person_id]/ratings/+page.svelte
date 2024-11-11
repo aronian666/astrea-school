@@ -126,9 +126,9 @@
                         ({ competence_id }) => competence_id === competence.id,
                       )}
 
-                      <td style="color: {setColor(note?.value)}"
-                        >{note?.value ?? ""}</td
-                      >
+                      <td style="color: {setColor(note?.value)}">
+                        {note ? Math.round(note.value) : ""}
+                      </td>
                     {/each}
                     <td class="w500" style="color: {setColor(average)}"
                       >{average}</td
