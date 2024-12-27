@@ -93,6 +93,15 @@
     <tr>
       <td>{item.concept_id}</td>
       <td>{item.class_person.person.full_name}</td>
+      <td>
+        <div class="grid">
+          <strong>{item.class_person.class?.level?.name}</strong>
+          <small
+            >{item.class_person?.class?.area?.short_name} - {item.class_person
+              .class?.section?.name}</small
+          >
+        </div>
+      </td>
       <td>{item.concept.name}</td>
       <td>{item.concept.value}</td>
     </tr>
