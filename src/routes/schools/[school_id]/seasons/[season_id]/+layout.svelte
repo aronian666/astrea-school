@@ -8,6 +8,7 @@
         { href: "students", name: "Estudiantes", icon: "ph:user" },
         { href: "classes", name: "Clases", icon: "ph:buildings" },
         { href: "orders", name: "Ventas", icon: "ph:money-wavy" },
+        { href: "carts", name: "Pagos pendientes", icon: "ph:shopping-cart" },
       ],
     },
   ];
