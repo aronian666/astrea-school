@@ -47,21 +47,22 @@
             .eq("dni", value)
             .maybeSingle();
           if (p) return (person = p);
-          const personReniec = await fetch(
-            `/api/person?query=${type}?numero=${value}`,
+          const { data: personReniec, success } = await fetch(
+            `/api/person?type=dni&number=${value}`,
           ).then((r) => r.json());
-          if (!personReniec.numeroDocumento) {
-            return setError(input, `No se encontro al ${type}: ${value}`);
+
+          if (!success) {
+            person.dni = value;
+            return message.set({ message: "No se encontro", details: "" });
           }
-          console.log(personReniec);
-          const [last_name1, last_name2, ...first_name] =
-            personReniec.nombre.split(" ");
+
           person = {
-            last_name1,
-            last_name2,
-            first_name: first_name.join(" "),
+            last_name1: personReniec.apellido_paterno,
+            last_name2: personReniec.apellido_materno,
+            first_name: personReniec.nombres,
             dni: value,
           };
+          console.log(person);
 
           const { data: new_person, error: err } = await $page.data.supabase
             .from("persons")

@@ -95,13 +95,26 @@
 <Modal id="assing_student" let:dialog>
   <Form
     onSubmit={async () => {
+      if (!person.id) {
+        console.log(person);
+        const { data: new_person, error: err } = await $page.data.supabase
+          .from("persons")
+          .insert(person)
+          .select()
+          .single();
+
+        if (err) return message.set(err);
+        person = new_person;
+      }
       const { error, data: new_class_person } = await data.supabase
         .from("class_persons")
         .insert({
           class_id: data.class.id,
           person_id: Number(person.id),
         })
-        .select(`id, person:persons!inner(full_name),view_carts(*)`)
+        .select(
+          `id, person:persons!inner(full_name, first_name, last_name1, last_name2)`,
+        )
         .single();
       if (error) return message.set(error);
       data.class.class_persons.push(new_class_person);

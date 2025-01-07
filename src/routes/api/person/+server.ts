@@ -1,11 +1,15 @@
 export const GET = async ({ url }) => {
-    const query = url.searchParams.get("query")
-    const request = await fetch(`https://api.apis.net.pe/v2/${query}`, {
+    const type = url.searchParams.get("type")
+    const number = url.searchParams.get("number")
+    const getRequest = `https://apis.aqpfact.pe/api/${type}/${number}`
+    console.log(getRequest)
+    const request = await fetch(getRequest, {
         headers: {
-            Authorization: `Bearer apis-token-5992.v6KOglT82pE2X-vsl5O4gKilMLGSOq6e`
+            Authorization: `Bearer 7204|ER1rW6iRWwmcD4thwAwHRsyKh9xljdFkYdf3j9H5`
         }
     })
     const person = await request.json()
+
     const response = new Response(JSON.stringify(person), {
         status: 200,
         headers: { 'Content-Type': "application/json" }

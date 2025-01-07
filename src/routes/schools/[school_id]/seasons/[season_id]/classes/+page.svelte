@@ -18,9 +18,9 @@
 </script>
 
 <section>
-  <Button data-style="gradient" onclick="add_class.showModal()"
-    >Agregar clase</Button
-  >
+  <Button data-style="gradient" onclick="add_class.showModal()">
+    Agregar clase
+  </Button>
 </section>
 <div class="grid auto-fit gap3" style="--width: 20rem">
   {#each Object.entries(levels) as [level, classesByLevel]}
@@ -55,3 +55,63 @@
     </section>
   {/each}
 </div>
+
+<Modal id="add_class" let:dialog>
+  <Form
+    let:loading
+    onSubmit={async (e) => {
+      console.log({
+        area_id: e.currentTarget.area_id.value,
+        season_id: Number($page.params.season_id),
+        level_id: levelSelected.id,
+        section_id: e.currentTarget.section_id.value,
+      });
+      const { data: new_class, error: err } = await data.supabase
+        .from("classes")
+        .insert({
+          area_id: e.currentTarget.area_id.value,
+          season_id: Number($page.params.season_id),
+          level_id: levelSelected.id,
+          section_id: e.currentTarget.section_id.value,
+        })
+        .select(
+          "*, area:areas!inner(name, short_name), level:levels(name), section:sections(name)",
+        )
+        .single();
+      if (err) return message.set(err);
+      data.classes.push(new_class);
+      data = data;
+      dialog.close();
+    }}
+  >
+    <label>
+      <span>Nivel</span>
+      <select bind:value={levelSelected} name="level_id" id="level_id">
+        {#each data.levels as level}
+          <option value={level}>{level.name}</option>
+        {/each}
+      </select>
+    </label>
+    <label>
+      <span>Area</span>
+      <select name="area_id" id="area_id">
+        {#each levelSelected.areas as area}
+          <option value={area.id}>{area.name}</option>
+        {/each}
+      </select>
+    </label>
+    <label>
+      <span>Seccion</span>
+      <select name="section_id" id="section_id">
+        {#each { length: 5 } as _, i}
+          <option value={i + 1}>{String.fromCharCode(65 + i)}</option>
+        {/each}
+      </select>
+    </label>
+
+    <button>
+      <Icon {loading} />
+      Agregar
+    </button>
+  </Form>
+</Modal>
