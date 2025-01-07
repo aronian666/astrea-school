@@ -219,6 +219,7 @@
           type="text"
           name="last_name1"
           placeholder=" "
+          required
           bind:value={person.last_name1}
         />
       </label>
@@ -228,6 +229,7 @@
           type="text"
           name="last_name2"
           placeholder=" "
+          required
           bind:value={person.last_name2}
         />
       </label>
@@ -237,6 +239,7 @@
           type="text"
           name="first_name"
           placeholder=" "
+          required
           bind:value={person.first_name}
         />
       </label>
