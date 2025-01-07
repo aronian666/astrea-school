@@ -108,7 +108,7 @@
           <section
             id={anchor_id}
             class="gap1 menu"
-            style="position-anchor: --{anchor_id}; inset-area: bottom span-left; --display: grid"
+            style="position-anchor: --{anchor_id}; position-area: bottom span-left; --display: grid"
             popover="auto"
           >
             <Button

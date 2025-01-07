@@ -9,7 +9,13 @@
 </script>
 
 <header class="flex content items" style="--c: space-between">
-  <a href="/" class="button" data-shape="square" data-style="text" style="--color: var(--primary)">
+  <a
+    href="/"
+    class="button"
+    data-shape="square"
+    data-style="text"
+    style="--color: var(--primary)"
+  >
     <img src="/images/logo.svg" alt="Logo de la empresa" />
   </a>
   <button
@@ -18,13 +24,17 @@
     name="Boton del usuario"
     data-shape="square"
   >
-    <img src={session.user.user_metadata.avatar_url} alt={session.user.email} style="width: 2.5rem; aspect-ratio: 1" />
+    <img
+      src={session.user.user_metadata.avatar_url}
+      alt={session.user.email}
+      style="width: 2.5rem; aspect-ratio: 1"
+    />
   </button>
   <div
     class="panel gap3"
     id="user_popover"
     popover="auto"
-    style="--display: grid; position-anchor: --user; inset-area: bottom span-left;"
+    style="--display: grid; position-anchor: --user; position-area: bottom span-left;"
   >
     <section class="flex gap2">
       <img
@@ -48,7 +58,11 @@
         let:loading
         onClick={async () => {
           const { error } = await $page.data.supabase.auth.signOut();
-          if (error) return message.set({ details: "No se pudo cerrar sesion.", message: error.message });
+          if (error)
+            return message.set({
+              details: "No se pudo cerrar sesion.",
+              message: error.message,
+            });
         }}
       >
         <Icon {loading} icon="ph:sign-out" />

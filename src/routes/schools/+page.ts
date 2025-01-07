@@ -8,8 +8,7 @@ export const load = async ({ parent }) => {
       school_users(*, 
         school:schools!inner(name, id, seasons:seasons(name, id, start_at, end_at)), 
         role:roles(name)
-      ),
-      schools!schools_user_id_fkey!inner(name, id)
+      )
     `)
     .eq("id", session.user.id).single()
   if (err) throw error(500, err.message)

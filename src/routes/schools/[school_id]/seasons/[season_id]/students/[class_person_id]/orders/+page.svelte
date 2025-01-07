@@ -34,7 +34,7 @@
         <div
           id={anchor_id}
           popover="auto"
-          style="position-anchor: --{anchor_id}; inset-area: bottom span-left; --display: grid"
+          style="position-anchor: --{anchor_id}; position-area: bottom span-left; --display: grid"
           class="menu"
         >
           <a

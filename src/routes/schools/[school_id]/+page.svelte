@@ -1,7 +1,11 @@
 <script lang="ts">
-  import { Icon } from "$lib/components";
+  import { page } from "$app/stores";
+  import { Button, Icon, Modal, Table } from "$lib/components";
+  import Form from "$lib/components/Form.svelte";
+  import { message } from "$lib/stores/message";
 
   export let data;
+  const usersPromise = data.supabase.from("users").select("id, name");
 </script>
 
 <section class="flex wrap auto-fit" style="--gap: var(--size3)">
@@ -27,7 +31,7 @@
         popover="auto"
         class="panel menu"
         id="store_options"
-        style="position-anchor: --store_options; inset-area: bottom span-left; --display: grid; --c: start"
+        style="position-anchor: --store_options; position-area: bottom span-left; --display: grid; --c: start"
       >
         <button data-style="text" data-size="small" data-shape="menu">
           <Icon icon="ph:trash" normal="light" />
@@ -41,3 +45,70 @@
     </hgroup>
   </div>
 </section>
+<section class="grid gap3">
+  <hgroup class="flex content items" style="--c: space-between">
+    <h2>Usuarios</h2>
+    <Button onclick="add_school_user.showModal()">Agregar usuarios</Button>
+  </hgroup>
+  <Table array={data.school_users} let:item let:index>
+    <tr>
+      <td>{item.user?.email}</td>
+      <td>{item.user?.name}</td>
+      <td>{item.role?.name}</td>
+      <td>
+        <div>
+          <Button
+            data-style="text"
+            data-size="small"
+            data-shape="square"
+            let:loading
+            onClick={async () => {
+              if (!confirm("Estas seguro?")) return;
+              const { error } = await data.supabase
+                .from("school_users")
+                .delete()
+                .match({ user_id: item.user_id, school_id: item.school_id });
+              if (error) message.set(error);
+              data.school_users.splice(index, 1);
+              data = data;
+            }}
+          >
+            <Icon icon="ph:trash" {loading} />
+          </Button>
+        </div>
+      </td>
+    </tr>
+  </Table>
+</section>
+
+<Modal id="add_school_user" let:dialog>
+  <Form
+    onSubmit={async (e) => {
+      const { data: school_user, error: err } = await data.supabase
+        .from("school_users")
+        .insert({
+          user_id: e.currentTarget.user_id.value,
+          school_id: Number($page.params.school_id),
+          role_id: 1,
+        })
+        .select("*, user:users(name, email, picture), role:roles(*)")
+        .single();
+      if (err) return message.set(err);
+      data.school_users.push(school_user);
+      data = data;
+      dialog.close();
+    }}
+  >
+    <label>
+      <span>Usuario</span>
+      <select name="user_id" id="user_id">
+        {#await usersPromise then { data: users, error: err }}
+          {#each users || [] as user}
+            <option value={user.id}>{user.name}</option>
+          {/each}
+        {/await}
+      </select>
+    </label>
+    <button> Agregar </button>
+  </Form>
+</Modal>

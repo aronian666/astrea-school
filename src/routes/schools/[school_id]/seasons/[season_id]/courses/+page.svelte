@@ -45,7 +45,7 @@
               class="panel menu"
               popover="auto"
               id={anchorName}
-              style="position-anchor: --{anchorName}; inset-area: bottom span-left; --display: grid; --c: start"
+              style="position-anchor: --{anchorName}; position-area: bottom span-left; --display: grid; --c: start"
             >
               <Button
                 data-shape="menu"

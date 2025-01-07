@@ -13,7 +13,7 @@ export const load = async ({ parent, params: { season_id }, url }) => {
   if (input) [start, end] = ExtendedDate.getRanges(input)
   else[start, end] = [new Date(url.searchParams.get("start") || today), new Date(url.searchParams.get("end") || tomorrow)]
   const interval = `date_trunc('${DATE_TO_GROUP[input.length].interval}', created_at AT TIME ZONE 'UTC' AT TIME ZONE '-5') AT TIME ZONE 'UTC' AT TIME ZONE '+5' as interval`
-  const where = `where created_at >= '${start.toISOString()}' and created_at < '${end.toISOString()}'`
+  const where = `where orders.created_at >= '${start.toISOString()}' and orders.created_at < '${end.toISOString()}' `
   const { supabase } = await parent()
   const filter = new Filter(url)
   const query = supabase
@@ -23,8 +23,13 @@ export const load = async ({ parent, params: { season_id }, url }) => {
     .order("created_at", { ascending: false })
   const [{ data: orders, error: err1, count }, { data: group_orders, error: err2 }, { data: group_payments, error: err3 }] = await Promise.all([
     filter.paginate(query),
-    supabase.rpc("run_query", { query: `select ${interval}, sum(total_value), count(*) from orders ${where} group by interval order by interval` }).returns<{ interval: string, sum: number, count: number }[]>(),
-    supabase.rpc("run_query", { query: `select concepts.name, sum(final_value) from payments inner join concepts on concepts.id = payments.concept_id ${where} group by concepts.name` }).returns<{ name: string, sum: number }[]>()
+    supabase.rpc("run_query", { query: `select ${interval}, sum(total_value), count(*) from orders ${where} and season_id = ${season_id} group by interval order by interval` }).returns<{ interval: string, sum: number, count: number }[]>(),
+    supabase.rpc("run_query", {
+      query: `select concepts.name, sum(final_value) from payments 
+      inner join concepts on concepts.id = payments.concept_id 
+      inner join orders on orders.id = payments.order_id 
+      ${where} and orders.season_id = ${season_id} group by concepts.name`
+    }).returns<{ name: string, sum: number }[]>()
   ])
 
   if (orders && group_orders && group_payments) return { orders, group_orders, group_payments, count }

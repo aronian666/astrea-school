@@ -110,7 +110,7 @@
                   popover="auto"
                   class="panel"
                   id="competence{index}"
-                  style="position-anchor: --competence{index}; inset-area: bottom span-left;"
+                  style="position-anchor: --competence{index}; position-area: bottom span-left;"
                 >
                   {competence.name}
                 </div>

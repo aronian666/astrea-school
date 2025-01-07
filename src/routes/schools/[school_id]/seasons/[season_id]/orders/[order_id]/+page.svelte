@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import { Button, Icon, Modal, Table } from "$lib/components";
+  import { message } from "$lib/stores/message";
   import { ExtendedDate } from "$lib/utils/extendedDate.js";
   import { formatNumber } from "$lib/utils/formatNumber.js";
   function getDateDifference(daysDifference: number, today = new Date()): Date {
@@ -99,7 +100,30 @@
       </table>
     </section>
   </div>
-  <button on:click={() => window.print()}>Imprimir</button>
+  <div class="flex gap1">
+    <button on:click={() => window.print()}>
+      <Icon icon="ph:printer" />
+      Imprimir
+    </button>
+    <Button
+      data-style="text"
+      let:loading
+      on:click={async () => {
+        if (!confirm("Esta seguro")) return;
+        const { error } = await data.supabase
+          .from("orders")
+          .delete()
+          .eq("id", data.order.id);
+        if (error) return message.set(error);
+        goto(
+          `/schools/${data.school_user.school_id}/seasons/${data.order.season_id}/orders`,
+        );
+      }}
+    >
+      <Icon icon="ph:trash" {loading}></Icon>
+      Eliminar
+    </Button>
+  </div>
 </main>
 
 <style>

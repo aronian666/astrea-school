@@ -2,7 +2,6 @@
   import { goto } from "$app/navigation";
   import { Form, Icon, Modal, Button, Header } from "$lib/components";
   import { message } from "$lib/stores/message";
-  import { ExtendedDate } from "$lib/utils/extendedDate.js";
   import { formToJson } from "$lib/utils/filter";
   export let data;
 </script>
@@ -22,7 +21,10 @@
 <section class="flex direction gap3">
   {#each data.user.school_users as { school, role }}
     <section class="grid gap2">
-      <h3>{school.name}</h3>
+      <a
+        style="font-size: 2rem; color: var(--black)"
+        href="/schools/{school.id}">{school.name}</a
+      >
       <div class="grid auto-fill gap1" style="grid-auto-rows: 8rem">
         {#each school.seasons as season}
           <a class="panel" href="/schools/{school.id}/seasons/{season.id}">
