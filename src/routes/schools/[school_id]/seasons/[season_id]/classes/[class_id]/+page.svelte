@@ -22,10 +22,10 @@
   function parseCSV(data: string) {
     const lines = data.trim().split("\n"); // Split data into rows
     const persons: TablesInsert<"persons">[] = [];
-    lines.slice(7, -1).forEach((line) => {
+    lines.forEach((line) => {
       const columns = line.split(";"); // Split each row by semicolon
       const rows = columns.map((col) => col.trim()); // Trim whitespace and add to result
-      if (!rows[0] || !rows[4]) return;
+      if (!rows[0] || !rows[4] || rows[4].length !== 8) return;
       const names = rows[1];
       const [last_name1, last_name2, ...first_name] = names.split(" ");
       persons.push({
@@ -56,15 +56,29 @@
                 const content = e.target.result; // Get file content as text
                 //@ts-ignore
                 const persons = parseCSV(content);
-
-                const { data: new_persons, error } = await data.supabase
-                  .from("persons")
-                  .insert(persons)
-                  .select();
-                if (error) return message.set(error);
+                //@ts-ignore
+                const new_persons = await Promise.all(
+                  persons.map(async (person) => {
+                    const { data: exits_person, error: err } =
+                      await data.supabase
+                        .from("persons")
+                        .select("id")
+                        .eq("dni", person.dni)
+                        .maybeSingle();
+                    if (exits_person) return exits_person.id;
+                    const { data: new_person, error } = await data.supabase
+                      .from("persons")
+                      .upsert(person)
+                      .select("id")
+                      .single();
+                    if (error) return message.set(error);
+                    return new_person.id;
+                  }),
+                );
+                console.log(new_persons);
                 const class_persons = new_persons.map((person) => {
                   return {
-                    person_id: person.id,
+                    person_id: Number(person),
                     class_id: data.class.id,
                   };
                 });
@@ -140,11 +154,14 @@
                       .from("class_persons")
                       .delete()
                       .eq("id", class_person.id);
+
                     if (error) return message.set(error);
+                    data.class.class_persons.splice(index, 1);
+                    data = data;
                   }}
                   data-shape="menu"
                   data-style="text"
-                  ><Icon icon="ph:trash" />
+                >
                   <Icon icon="ph:trash" {loading} />
                   Eliminar
                 </Button>
