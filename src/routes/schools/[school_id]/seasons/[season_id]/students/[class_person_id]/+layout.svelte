@@ -7,7 +7,6 @@
     { name: "Inicio", href: "", match: true },
     { name: "Pagos", href: "orders" },
     { name: "Vender", href: "cart" },
-    { name: "Notas", href: "ratings" },
   ];
 </script>
 
