@@ -202,14 +202,23 @@
         style="font-weight: 600; --color: var(--black);"
         class="grid"
       >
-        <span style="text-transform: lowercase;">
+        <span>
           {item.class_person.person.last_name1}
           {item.class_person.person.last_name2}
         </span>
-        <small style="font-weight: 400;">
+        <small>
           {item.class_person.person.first_name}
         </small>
       </a>
+    </td>
+    <td>
+      <div class="grid">
+        <span>{item.class_person.class.level?.name}</span>
+        <small
+          >{item.class_person.class.area?.short_name}
+          {item.class_person.class.section?.name}</small
+        >
+      </div>
     </td>
     <td>
       <div class="grid">

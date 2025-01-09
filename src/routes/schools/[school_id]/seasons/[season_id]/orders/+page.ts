@@ -18,7 +18,7 @@ export const load = async ({ parent, params: { season_id }, url }) => {
   const filter = new Filter(url)
   const query = supabase
     .from("orders")
-    .select("*, class_person:class_persons!inner(person:persons!inner(first_name, last_name1, last_name2))", { count: "exact" })
+    .select("*, class_person:class_persons!inner(person:persons!inner(first_name, last_name1, last_name2), class:classes!inner(section:sections(name), area:areas(name, short_name), level:levels(name)))", { count: "exact" })
     .eq("season_id", season_id).gte("created_at", start.toISOString()).lte("created_at", end.toISOString())
     .order("created_at", { ascending: false })
   const [{ data: orders, error: err1, count }, { data: group_orders, error: err2 }, { data: group_payments, error: err3 }] = await Promise.all([
