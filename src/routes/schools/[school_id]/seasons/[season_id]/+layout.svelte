@@ -9,6 +9,7 @@
         { href: "classes", name: "Clases", icon: "ph:buildings" },
         { href: "orders", name: "Ventas", icon: "ph:money-wavy" },
         { href: "concepts", name: "Conceptos", icon: "ph:book-open" },
+        { href: "payments", name: "Pagos", icon: "ph:money-coin" },
       ],
     },
   ];
